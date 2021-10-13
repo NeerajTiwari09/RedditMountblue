@@ -4,15 +4,14 @@ import com.reddit.RedditClone.model.CommunityType;
 import com.reddit.RedditClone.model.Subreddit;
 import com.reddit.RedditClone.repository.CommunityTypeRepository;
 import com.reddit.RedditClone.repository.SubredditRepository;
-import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.util.HashSet;
 
 @Service
 public class SubredditServiceImp implements SubredditService{
+
     @Autowired
     private SubredditRepository subredditRepository;
 
