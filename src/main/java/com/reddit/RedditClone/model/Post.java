@@ -32,6 +32,6 @@ public class Post {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "post_image_urls", joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "post_id"))
-    private List<Image> imageUrl;
+    private List<Image> images;
 
 }
