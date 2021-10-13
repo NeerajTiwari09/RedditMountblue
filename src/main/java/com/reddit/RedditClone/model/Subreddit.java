@@ -16,10 +16,10 @@ public class Subreddit {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "sub_reddit_type", joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "community_id"))
-    private Set<CommunityType> communityType =new HashSet<>();
+    private CommunityType communityType;
 
     public Long getId() {
         return id;
@@ -53,11 +53,22 @@ public class Subreddit {
         this.createdAt = createdAt;
     }
 
-    public Set<CommunityType> getCommunityType() {
+    public CommunityType getCommunityType() {
         return communityType;
     }
 
-    public void setCommunityType(Set<CommunityType> communityType) {
+    public void setCommunityType(CommunityType communityType) {
         this.communityType = communityType;
+    }
+
+    @Override
+    public String toString() {
+        return "Subreddit{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", createdAt=" + createdAt +
+                ", communityType=" + communityType +
+                '}';
     }
 }
