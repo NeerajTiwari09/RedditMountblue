@@ -8,6 +8,7 @@ import java.util.Set;
 @Entity
 @Table(name = "sub_reddit")
 public class Subreddit {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -61,14 +62,4 @@ public class Subreddit {
         this.communityType = communityType;
     }
 
-    @Override
-    public String toString() {
-        return "Subreddit{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", createdAt=" + createdAt +
-                ", communityType=" + communityType +
-                '}';
-    }
 }
