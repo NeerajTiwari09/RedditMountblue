@@ -5,33 +5,62 @@
     <title>Create a Community</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
           integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+
 </head>
 <body>
-<section class="container my-5 border border-2 border-dark p-5">
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="src/main/resources/static/images/reddit_logo.png" width="100" height="40" alt="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+            </form>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Create Post</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<section class="container my-5 border border-2 border-dark p-5" >
     <div class="row">
         <h1>Create a Community</h1>
-        <form th:action="@{/saveSubreddit}" method="post" >
+        <form th:action="@{/saveSubreddit}" method="post" th:object="${subReddit}">
             <div class="form-group">
                 <label for="subreddit">Community Name</label>
-                <input type="text" name="name" class="form-control" id="subreddit" placeholder="Enter Community Name" required  >
+                <input type="text" name="name" th:field="${subReddit.name}" class="form-control" id="subreddit" placeholder="Enter Community Name" required  >
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea rows="4" cols="9" name="description" class="form-control" id="description" placeholder="Description for your community"></textarea>
+                <textarea rows="4" cols="9" name="description" th:field="${subReddit.description}" class="form-control" id="description" placeholder="Description for your community"></textarea>
             </div>
 
             <div class="custom-control custom-radio">
-                <input type="radio" id="public" name="communityType" class="custom-control-input" checked>
+                <input type="radio" id="public" name="communityType" th:field="${subReddit.communityType.name}"
+                       value="public" class="custom-control-input" checked>
                 <label class="custom-control-label" for="public">Public</label>
                 <small>Anyone can view, post, and comment to this community</small>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" id="restricted" name="communityType" class="custom-control-input">
+                <input type="radio" id="restricted" name="communityType" th:field="${subReddit.communityType.name}"
+                       value="restricted" class="custom-control-input">
                 <label class="custom-control-label" for="restricted">Restricted</label>
                 <small>Anyone can view this community, but only approved users can post</small>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" id="private" name="communityType" class="custom-control-input">
+                <input type="radio" id="private" name="communityType" th:field="${subReddit.communityType.name}"
+                       value="private" class="custom-control-input">
                 <label class="custom-control-label" for="private">Private</label>
                 <small>Only approved users can view and submit to this community</small>
             </div>

@@ -23,6 +23,6 @@ public class SubredditController {
     @PostMapping("/saveSubreddit")
     public String saveSubreddit(@ModelAttribute("subReddit") Subreddit subreddit){
         Subreddit subredditResult = this.subredditService.saveSubreddit(subreddit);
-        return "redirect:/my-homepage";
+        return "my-homepage";
     }
 }
