@@ -29,8 +29,7 @@ public class PostServiceImpl implements  PostService{
 
         Optional<Subreddit> subReddit = subredditRepository.findById(1L);
         if(subReddit.isPresent()){
-            post.getSubRedditId().add(subReddit.get());
-//            System.out.println(subReddit.get());
+            post.setSubRedditId(subReddit.get());
         }
 
         return postRepository.save(post);

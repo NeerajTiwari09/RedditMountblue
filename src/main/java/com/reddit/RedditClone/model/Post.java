@@ -19,10 +19,10 @@ public class Post {
     private Long id;
     private String title;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "sub_reddit_post", joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "sub_reddit_id"))
-    private Set<Subreddit> subRedditId = new HashSet<>();
+    private Subreddit subRedditId;
     private String content;
     private Timestamp createdAt;
     private Timestamp updatedAt;
