@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 public class SubredditController {
     @Autowired
     private SubredditService subredditService;
@@ -18,9 +18,9 @@ public class SubredditController {
     }
 
     @PostMapping("/saveSubreddit")
-    public Subreddit saveSubreddit(@RequestBody Subreddit subreddit){
-        System.out.println("subreddit "+subreddit);
+    public String saveSubreddit(@RequestBody Subreddit subreddit){
         Subreddit subredditResult = this.subredditService.saveSubreddit(subreddit);
-        return subreddit;
+        System.out.println("subredditResult "+subredditResult);
+        return "redirect:/create_subreddit";
     }
 }

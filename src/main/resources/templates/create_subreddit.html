@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th=“http://www.thymeleaf.org”>
 <head>
     <meta charset="UTF-8">
     <title>Create a Community</title>
@@ -10,10 +10,10 @@
 <section class="container my-5 border border-2 border-dark p-5">
     <div class="row">
         <h1>Create a Community</h1>
-        <form>
+        <form th:action="@{/saveSubreddit}" method="post" >
             <div class="form-group">
                 <label for="subreddit">Community Name</label>
-                <input type="text" name="communityName" class="form-control" id="subreddit" placeholder="Enter Community Name" required  >
+                <input type="text" name="name" class="form-control" id="subreddit" placeholder="Enter Community Name" required  >
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
