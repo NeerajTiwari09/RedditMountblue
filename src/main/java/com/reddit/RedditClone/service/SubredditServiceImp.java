@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.List;
 
 @Service
 public class SubredditServiceImp implements SubredditService{
@@ -24,6 +25,11 @@ public class SubredditServiceImp implements SubredditService{
         subreddit.setCreatedAt(new Date(System.currentTimeMillis()));
         subreddit.setCommunityType(communityType);
         return this.subredditRepository.save(subreddit);
+    }
+
+    @Override
+    public List<Subreddit> findAllSubReddits() {
+        return subredditRepository.findAll();
     }
 
 }

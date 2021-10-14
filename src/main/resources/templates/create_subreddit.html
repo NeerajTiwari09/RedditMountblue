@@ -48,7 +48,7 @@
 
             <div class="custom-control custom-radio">
                 <input type="radio" id="public" name="communityType" th:field="${subReddit.communityType.name}"
-                       value="public" class="custom-control-input" checked>
+                       th:value="public" class="custom-control-input" checked>
                 <label class="custom-control-label" for="public">Public</label>
                 <small>Anyone can view, post, and comment to this community</small>
             </div>

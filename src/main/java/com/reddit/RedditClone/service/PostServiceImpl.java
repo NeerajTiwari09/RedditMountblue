@@ -1,5 +1,6 @@
 package com.reddit.RedditClone.service;
 
+import com.reddit.RedditClone.model.Image;
 import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.Subreddit;
 import com.reddit.RedditClone.repository.PostRepository;
@@ -23,15 +24,10 @@ public class PostServiceImpl implements  PostService{
     @Override
     public Post savePost(Post post) {
         Timestamp timestamp = Timestamp.from(Instant.now());
-
+        Optional<Subreddit> subreddit = subredditRepository.findById(post.getSubredditId());
         post.setCreatedAt(timestamp);
         post.setUpdatedAt(timestamp);
-
-        Optional<Subreddit> subReddit = subredditRepository.findById(1L);
-        if(subReddit.isPresent()){
-            post.setSubRedditId(subReddit.get());
-        }
-
+        post.setSubReddit(subreddit.get());
         return postRepository.save(post);
     }
 }

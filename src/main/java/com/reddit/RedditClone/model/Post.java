@@ -5,12 +5,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "post")
+@Table(name = "posts")
 @Getter @Setter
 public class Post {
 
@@ -22,17 +22,19 @@ public class Post {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "sub_reddit_post", joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "sub_reddit_id"))
-    private Subreddit subRedditId;
+    private Subreddit subReddit;
     private String content;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private String videoUrl;
     private String author;
     private String links;
+    @Transient
+    private Long subredditId;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "post_image_urls", joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "post_id"))
-    private List<Image> images;
+    private List<Image> images = new ArrayList<>();
 
 }

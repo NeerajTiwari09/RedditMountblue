@@ -1,5 +1,8 @@
 package com.reddit.RedditClone.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.HashSet;
@@ -7,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "sub_reddit")
+@Getter @Setter
 public class Subreddit {
 
     @Id
