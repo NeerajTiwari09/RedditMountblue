@@ -23,7 +23,7 @@ public class PostController {
 
     @GetMapping("/createPost")
     public String viewCreatePostPage(Model model){
-        List<Subreddit> subreddits = subredditService.findAllSubReddits();
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
         Post post = new Post();
 
         model.addAttribute("subreddits" ,subreddits);

@@ -14,7 +14,7 @@
 <section class="container my-5">
     <div class="row shadow-sm p-5 border border-dark rounded">
         <div class="col-md-3 mx-auto">
-            <h1>The Title</h1>
+            <h3 th:text="${subReddit.name}">The Title</h3>
         </div>
         <div class="col-md-9 mx-auto">
 
@@ -47,7 +47,7 @@
                                     </th:block>
                                 </div>
                                 <div class="col-md-10 mx-auto ">
-                                    <p class="card-text" th:field="${post.content}" th:text="${post.content}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+<!--                                    <p class="card-text" th:field="${post.content}" th:text="${post.content}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
                                 </div>
                             </div>
                             <a href="#" class="btn btn-primary">Go somewhere</a>
