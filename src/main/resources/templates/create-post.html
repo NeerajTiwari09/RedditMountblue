@@ -31,6 +31,7 @@
                         </div>
 
                     <img th:if="${imgUrl!=null}" th:src="${imgUrl}" />
+
                     <input type="file" th:name="image" />
                     <input type="hidden" name="id" th:value="${newPost.id}" />
                     <button type="submit" class="btn btn-primary my-3">Submit</button>
