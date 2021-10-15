@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SubredditServiceImp implements SubredditService{
+public class SubredditServiceImpl implements SubredditService{
 
     @Autowired
     private SubredditRepository subredditRepository;
