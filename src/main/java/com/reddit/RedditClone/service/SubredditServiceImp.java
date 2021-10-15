@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SubredditServiceImp implements SubredditService{
@@ -30,6 +31,12 @@ public class SubredditServiceImp implements SubredditService{
     @Override
     public List<Subreddit> findAllSubReddits() {
         return subredditRepository.findAll();
+    }
+
+    @Override
+    public Subreddit getRedditById(Long id) {
+        Optional<Subreddit> subreddit = subredditRepository.findById(id);
+        return subreddit.orElse(null);
     }
 
 }

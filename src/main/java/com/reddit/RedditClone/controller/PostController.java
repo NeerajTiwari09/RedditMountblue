@@ -8,10 +8,7 @@ import com.reddit.RedditClone.service.SubredditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,7 +33,16 @@ public class PostController {
 
     @PostMapping("/createPost")
     public String createPost(@ModelAttribute("newPost") Post post){
+        System.out.println(post.getImage());
         postService.savePost(post);
-        return "";
+        return "my-homepage";
+    }
+
+
+    @GetMapping("/post")
+    public String getAllPosts(Model model){
+        List<Post> posts = postService.getAllPosts();
+        model.addAttribute("posts", posts);
+        return "sub-reddit";
     }
 }

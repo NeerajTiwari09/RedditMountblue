@@ -8,4 +8,6 @@ public interface SubredditService {
     Subreddit saveSubreddit(Subreddit subreddit);
 
     List<Subreddit> findAllSubReddits();
+
+    Subreddit getRedditById(Long id);
 }

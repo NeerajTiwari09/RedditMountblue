@@ -13,8 +13,7 @@
             <div class="col-md-10 mx-auto ">
                 <h1>Create a Post</h1>
                 
-                <form action="#" th:action="@{/createPost}" th:method="post" th:object="${newPost}">
-                    
+                <form action="#" th:action="@{/createPost}" th:method="post" th:object="${newPost}" enctype="multipart/form-data" >
                     <label for="community">Choose a community</label>
                     <input name="subredditId" list="community" id="community1">
                     <datalist  id="community">
@@ -31,6 +30,7 @@
                             <label for="content" class="form-label">Content</label>
                                 <textarea type="text" th:name="content" th:field="${newPost.content}" class="form-control" id="content"></textarea>
                         </div>
+                    <input type="file" th:name="image" />
                     <button type="submit" class="btn btn-primary my-3">Submit</button>
                 </form>
             </div>
