@@ -25,9 +25,6 @@ public class Subreddit {
             inverseJoinColumns = @JoinColumn(name = "community_id"))
     private CommunityType communityType;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//        @JoinTable(name = "sub_reddit_post", joinColumns = @JoinColumn(name = "sub_reddit_id"),
-//            inverseJoinColumns = @JoinColumn(name = "id"))
     @Transient
     private List<Post> posts;
 }

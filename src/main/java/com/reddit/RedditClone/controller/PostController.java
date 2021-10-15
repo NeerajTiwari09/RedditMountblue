@@ -45,4 +45,23 @@ public class PostController {
         model.addAttribute("posts", posts);
         return "sub-reddit";
     }
+
+    @GetMapping("/update/{postId}")
+    public String getUpdateViewPage(@PathVariable Long postId, Model model){
+        Post post = postService.getPostById(postId);
+        model.addAttribute("post", post);
+        return "";
+    }
+
+    @PostMapping("/update")
+    public String updatePost(@ModelAttribute("post") Post post){
+        postService.updatePostById(post);
+        return "";
+    }
+
+    @GetMapping("/delete/{postId}")
+    public String deletePostById(@PathVariable Long postId){
+        postService.deleteById(postId);
+        return "Ok!";
+    }
 }

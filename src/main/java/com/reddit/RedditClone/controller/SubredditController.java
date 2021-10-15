@@ -1,6 +1,5 @@
 package com.reddit.RedditClone.controller;
 
-import com.reddit.RedditClone.model.CommunityType;
 import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.Subreddit;
 import com.reddit.RedditClone.service.PostService;
@@ -37,7 +36,7 @@ public class SubredditController {
     @GetMapping("/reddit/{id}")
     public String getRedditById(@PathVariable Long id, Model model){
         Subreddit subreddit = subredditService.getRedditById(id);
-        List<Post> posts = postService.getBySubReditId(id);
+        List<Post> posts = postService.getBySubRedditId(id);
         model.addAttribute("subReddit", subreddit);
         model.addAttribute("posts", posts);
         return "sub-reddit";

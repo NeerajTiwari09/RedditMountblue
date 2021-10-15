@@ -10,5 +10,11 @@ public interface PostService {
 
     List<Post> getAllPosts();
 
-    List<Post> getBySubReditId(Long id);
+    List<Post> getBySubRedditId(Long id);
+
+    Post getPostById(Long postId);
+
+    void updatePostById(Post post);
+
+    void deleteById(Long postId);
 }

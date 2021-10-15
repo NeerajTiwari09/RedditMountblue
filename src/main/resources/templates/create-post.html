@@ -17,8 +17,7 @@
                     <label for="community">Choose a community</label>
                     <input name="subredditId" list="community" id="community1">
                     <datalist  id="community">
-                        <option>Select</option>>
-                        <option th:each="sub: ${subreddits}" th:value="${sub.id}" th:text="${sub.name}"></option>
+                        <option th:each="sub: ${subreddits}" th:value="${sub.id}" th:utext="${sub.name}"></option>
                     </datalist>
 
                     <h1>Post</h1>
