@@ -43,4 +43,12 @@ public class Post {
             inverseJoinColumns = @JoinColumn(name = "post_id"))
     private List<Image> images = new ArrayList<>();
 
+    @Column(name = "vote_count", nullable = false)
+    private Long voteCount = 0L;
+
+    @Column(name = "up_vote_count", nullable = false)
+    private Long upVoteCount = 0L;
+
+    @Column(name = "down_vote_count", nullable = false)
+    private Long downVoteCount = 0L;
 }
