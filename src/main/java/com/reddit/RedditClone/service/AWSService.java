@@ -18,7 +18,7 @@ import java.io.IOException;
 @Slf4j
 public class AWSService {
 
-    private String bucketName = "reddit-clone-spring-boot";
+    private final String bucketName = "reddit-clone-spring-boot";
 
     @Autowired
     private AmazonS3 s3Client;

@@ -49,14 +49,18 @@ public class PostController {
     @GetMapping("/update/{postId}")
     public String getUpdateViewPage(@PathVariable Long postId, Model model){
         Post post = postService.getPostById(postId);
-        model.addAttribute("post", post);
-        return "";
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
+        String imgUrl = post.getImages().get(0).getUrls();
+        model.addAttribute("newPost", post);
+        model.addAttribute("subreddits",subreddits);
+        model.addAttribute("imgUrl", imgUrl);
+        return "create-post";
     }
 
     @PostMapping("/update")
     public String updatePost(@ModelAttribute("post") Post post){
         postService.updatePostById(post);
-        return "";
+        return "my-homepage";
     }
 
     @GetMapping("/delete/{postId}")
@@ -64,4 +68,5 @@ public class PostController {
         postService.deleteById(postId);
         return "Ok!";
     }
+
 }

@@ -60,6 +60,12 @@ public class PostServiceImpl implements  PostService{
 
     @Override
     public void updatePostById(Post post) {
+        Optional<Post> optional = postRepository.findById(post.getId());
+
+        if(!optional.isPresent()){
+            return;
+        }
+        Post existingPost = optional.get();
         Timestamp timestamp = Timestamp.from(Instant.now());
         Optional<Subreddit> subreddit = subredditRepository.findById(post.getSubredditId());
         String url = awsService.uploadFile(post.getImage());
@@ -67,11 +73,10 @@ public class PostServiceImpl implements  PostService{
         Image image = new Image();
         image.setUrls(url);
         images.add(image);
-        post.setImages(images);
-        post.setCreatedAt(timestamp);
-        post.setUpdatedAt(timestamp);
-        post.setSubredditId(subreddit.get().getId());
-        postRepository.save(post);
+        existingPost.setImages(images);
+        existingPost.setUpdatedAt(timestamp);
+        existingPost.setSubredditId(subreddit.get().getId());
+        postRepository.save(existingPost);
     }
 
     @Override
