@@ -21,6 +21,6 @@ public class Vote {
     private Long postId;
     private Long userId;
     private boolean contributed;
-    @Transient
-    private boolean isVote;
+//    @Transient
+//    private boolean isVote;
 }

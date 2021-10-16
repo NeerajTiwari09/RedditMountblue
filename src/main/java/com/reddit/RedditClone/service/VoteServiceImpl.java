@@ -33,7 +33,8 @@ public class VoteServiceImpl implements VoteService {
 
         //if user has already contributed but resetting the contribution.
         if (voteByPostIdAndUserId != null && voteByPostIdAndUserId.isVote() == vote.isVote()) {
-            voteByPostIdAndUserId.setContributed(false);
+            System.out.println("resetting the contribution");
+            vote.setContributed(false);
             voteRepository.delete(voteByPostIdAndUserId);
             if (vote.isVote()) {
                 post.setVoteCount(post.getVoteCount() - 1);
@@ -44,7 +45,8 @@ public class VoteServiceImpl implements VoteService {
             }
             //already contributes but reversing the contribution.
         }else if(voteByPostIdAndUserId != null && voteByPostIdAndUserId.isVote() != vote.isVote()){
-            voteByPostIdAndUserId.setContributed(true);
+            System.out.println("reversing the contribution");
+            vote.setContributed(true);
             vote.setId(voteByPostIdAndUserId.getId());
             if (vote.isVote()) {
                 post.setVoteCount(post.getVoteCount() + 2);
@@ -59,7 +61,8 @@ public class VoteServiceImpl implements VoteService {
             voteRepository.save(vote);
         }//contributing first time
         else {
-            voteByPostIdAndUserId.setContributed(true);
+            System.out.println("Contributing First time");
+            vote.setContributed(true);
             if (vote.isVote()) {
                 post.setVoteCount(post.getVoteCount() + 1);
                 post.setUpVoteCount(post.getUpVoteCount()+1);

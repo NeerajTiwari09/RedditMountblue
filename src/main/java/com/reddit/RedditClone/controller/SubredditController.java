@@ -1,6 +1,7 @@
 package com.reddit.RedditClone.controller;
 
 import com.reddit.RedditClone.model.Post;
+import com.reddit.RedditClone.model.PostVote;
 import com.reddit.RedditClone.model.Subreddit;
 import com.reddit.RedditClone.model.Vote;
 import com.reddit.RedditClone.service.PostService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +50,7 @@ public class SubredditController {
         List<Post> posts = postService.getBySubRedditId(id);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
         Map<Long,Vote> votes = voteService.getVotesByPosts(posts);
+
         System.out.println("votes: "+votes);
 
         model.addAttribute("subReddit", subreddit);
