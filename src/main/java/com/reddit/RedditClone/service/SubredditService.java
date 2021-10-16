@@ -7,7 +7,7 @@ import java.util.List;
 public interface SubredditService {
     Subreddit saveSubreddit(Subreddit subreddit);
 
-    List<Subreddit> findAllSubReddits();
+    List<Subreddit> findAllSubreddits();
 
     Subreddit getRedditById(Long id);
 }

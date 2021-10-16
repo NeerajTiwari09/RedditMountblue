@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "post")
 @Getter @Setter
 public class Post {
 
@@ -39,8 +39,8 @@ public class Post {
     private MultipartFile image;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "post_image_urls", joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id"))
+    @JoinTable(name = "post_image_urls", joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id"))
     private List<Image> images = new ArrayList<>();
 
 }

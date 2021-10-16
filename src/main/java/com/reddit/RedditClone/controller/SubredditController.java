@@ -1,6 +1,5 @@
 package com.reddit.RedditClone.controller;
 
-import com.reddit.RedditClone.model.CommunityType;
 import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.Subreddit;
 import com.reddit.RedditClone.service.PostService;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class SubredditController {
 
     @Autowired
@@ -35,12 +34,11 @@ public class SubredditController {
     }
 
     @GetMapping("/reddit/{id}")
-    public Subreddit getRedditById(@PathVariable Long id, Model model){
+    public String getRedditById(@PathVariable Long id, Model model){
         Subreddit subreddit = subredditService.getRedditById(id);
-        List<Post> posts = postService.getBySubReditId(id);
+        List<Post> posts = postService.getBySubRedditId(id);
         model.addAttribute("subReddit", subreddit);
         model.addAttribute("posts", posts);
-        subreddit.setPosts(posts);
-        return subreddit;
+        return "sub-reddit";
     }
 }

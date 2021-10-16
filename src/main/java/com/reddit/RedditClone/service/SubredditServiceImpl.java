@@ -29,7 +29,7 @@ public class SubredditServiceImpl implements SubredditService{
     }
 
     @Override
-    public List<Subreddit> findAllSubReddits() {
+    public List<Subreddit> findAllSubreddits() {
         return subredditRepository.findAll();
     }
 

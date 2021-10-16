@@ -17,7 +17,6 @@
                     <label for="community">Choose a community</label>
                     <input name="subredditId" list="community" id="community1">
                     <datalist  id="community">
-                        <option>Select</option>>
                         <option th:each="sub: ${subreddits}" th:value="${sub.id}" th:text="${sub.name}"></option>
                     </datalist>
 
@@ -30,7 +29,11 @@
                             <label for="content" class="form-label">Content</label>
                                 <textarea type="text" th:name="content" th:field="${newPost.content}" class="form-control" id="content"></textarea>
                         </div>
+
+                    <img th:if="${imgUrl!=null}" th:src="${imgUrl}" />
+
                     <input type="file" th:name="image" />
+                    <input type="hidden" name="id" th:value="${newPost.id}" />
                     <button type="submit" class="btn btn-primary my-3">Submit</button>
                 </form>
             </div>

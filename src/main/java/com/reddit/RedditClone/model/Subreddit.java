@@ -5,9 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "sub_reddit")
@@ -27,9 +25,6 @@ public class Subreddit {
             inverseJoinColumns = @JoinColumn(name = "community_id"))
     private CommunityType communityType;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//        @JoinTable(name = "sub_reddit_post", joinColumns = @JoinColumn(name = "sub_reddit_id"),
-//            inverseJoinColumns = @JoinColumn(name = "id"))
     @Transient
     private List<Post> posts;
 }

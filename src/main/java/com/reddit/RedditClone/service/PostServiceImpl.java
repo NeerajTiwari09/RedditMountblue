@@ -48,7 +48,47 @@ public class PostServiceImpl implements  PostService{
     }
 
     @Override
-    public List<Post> getBySubReditId(Long id) {
+    public List<Post> getBySubRedditId(Long id) {
         return postRepository.findAllBySubredditId(id);
+    }
+
+    @Override
+    public Post getPostById(Long postId) {
+        Optional<Post> post = postRepository.findById(postId);
+        return post.orElse(null);
+    }
+
+    @Override
+    public void updatePostById(Post post) {
+        Optional<Post> optional = postRepository.findById(post.getId());
+
+        if(!optional.isPresent()){
+            return;
+        }
+        Post existingPost = optional.get();
+        Timestamp timestamp = Timestamp.from(Instant.now());
+        Optional<Subreddit> subreddit = subredditRepository.findById(post.getSubredditId());
+        String url = awsService.uploadFile(post.getImage());
+        List<Image> images = new ArrayList<>();
+        Image image = new Image();
+        image.setUrls(url);
+        images.add(image);
+        existingPost.setImages(images);
+        existingPost.setUpdatedAt(timestamp);
+        existingPost.setSubredditId(subreddit.get().getId());
+        postRepository.save(existingPost);
+    }
+
+    @Override
+    public void deleteById(Long postId) {
+        Optional<Post> post = postRepository.findById(postId);
+        if(post.isPresent()){
+            postRepository.deleteById(postId);
+            if(!post.get().getImages().isEmpty()) {
+                String file = post.get().getImages().get(0).getUrls();
+                String[] fileName = file.split("com/");
+                awsService.deleteFile(fileName[1]);
+            }
+        }
     }
 }
