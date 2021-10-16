@@ -51,26 +51,39 @@
                         <th:block th:each="post : ${posts}">
                             <a th:href="'/viewPost/'+${post.id}">
                                 <div class="col-sm-2">
+
                                     <div class="">
-                                        <button aria-label="upvote" aria-pressed="false" class="voteButton" data-click-id="upvote" id="">
-                                            <th:block  th:if = "condition">
-                                                <i class="bi bi-caret-up" style='font-size:24px'></i>
-                                            </th:block>
-                                            <th:block  th:unless = "condition">
-                                                <i class="bi bi-caret-up-fill" style='font-size:24px'></i>
-                                            </th:block>
-                                        </button>
-                                        <div class="  " style="color: rgb(26, 26, 27);">27</div>
-                                        <button aria-label="downvote" aria-pressed="false" class="voteButton" data-click-id="downvote">
-                                            <th:block th:if = "condition">
-                                                <i class="bi bi-caret-down" style='font-size:24px'></i>
-                                            </th:block>
-                                            <th:block  th:unless = "condition">
-                                                <i class="bi bi-caret-down-fill" style='font-size:24px'></i>
-                                            </th:block>
-                                        </button>
+<!--                                        <th:block th:each="vote: ${votes}">-->
+<!--                                            <th:block th:if="${vote.postId} == post.postId">-->
+<!--                                            th:if="${vote.isVote}"-->
+<!--                                        ${vote.vote} == ${post.id}-->
+
+<!--                                                <button  aria-label="upvote" aria-pressed="false" class="voteButton" data-click-id="upvote" id="">-->
+<!--                                                        <th:block th:if="${votes.contains(post.id)} or ${votes.get($post.id).postId != post.id}">-->
+<!--                                                            <i class="bi bi-caret-up" style='font-size:24px'></i>-->
+<!--                                                        </th:block>-->
+<!--                                                        <th:block  th:if="${votes.contains(${post.id})} and ${votes.get(${post.id}).postId == post.id}">-->
+<!--                                                            <i class="bi bi-caret-up-fill" style='font-size:24px'></i>-->
+<!--                                                        </th:block>-->
+<!--                                                </button>-->
+<!--    &lt;!&ndash;                                        </th:block>&ndash;&gt;-->
+<!--                                        <div class="" style="color: rgb(26, 26, 27);">27</div>-->
+<!--    &lt;!&ndash;                                        <th:block>&ndash;&gt;-->
+<!--                                                <button aria-label="downvote" aria-pressed="false" class="voteButton" data-click-id="downvote">-->
+<!--                                                    <th:block th:if = "${vote.vote} == ${post.id}">-->
+<!--                                                        <i class="bi bi-caret-down" style='font-size:24px'></i>-->
+<!--                                                    </th:block>-->
+<!--                                                    <th:block  th:unless="${vote.vote}==post.id">-->
+<!--                                                        <i class="bi bi-caret-down-fill" style='font-size:24px'></i>-->
+<!--                                                    </th:block>-->
+<!--                                                </button>-->
+
+<!--                                            </th:block>-->
+<!--                                        </th:block>-->
                                     </div>
+
                                 </div>
+
                                 <div class="col-sm-10">
                                     <div class="card">
                                         <div class="card-body">
