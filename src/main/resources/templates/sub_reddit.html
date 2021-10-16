@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th=“http://www.thymeleaf.org”>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.6.0/font/bootstrap-icons.min.css" integrity="sha512-7w04XesEFaoeeKX0oxkwayDboZB/+AKNF5IUE50fCUDUywLvDN4gv2513TLQS+RDenAeHEK3O40jZZVrkpnWWw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
+          integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+</head>
+<body>
+<section class="container my-5">
+    <div class="row shadow-sm p-5 border border-dark rounded">
+        <div class="col-md-3 mx-auto">
+            <h3 th:text="${subReddit.name}">The Title</h3>
+        </div>
+        <div class="col-md-9 mx-auto">
+
+        </div>
+    </div>
+</section>
+
+    <section class="container my-5">
+        <div class="row">
+            <th:block th:each="post : ${posts}">
+                <div class="col-md-4 mx-auto">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title" th:field="${post.title}" th:text="*{title}">Card title</h5>
+                            <div class="row">
+                                <div class="col-md-2 mx-auto ">
+                                    <th:block  th:if = "condition">
+                                    <i class="bi bi-caret-up" style='font-size:24px'></i>
+                                    </th:block>
+                                    <th:block  th:unless = "condition">
+                                    <i class="bi bi-caret-up-fill" style='font-size:24px'></i>
+                                    </th:block>
+                                    <span>1</span>
+                                    <th:block th:if = "condition">
+                                    <i class="bi bi-caret-down" style='font-size:24px'></i>
+                                    </th:block>
+                                    <th:block  th:unless = "condition">
+                                    <i class="bi bi-caret-down-fill" style='font-size:24px'></i>
+                                    </th:block>
+                                </div>
+                                <div class="col-md-10 mx-auto ">
+<!--                                    <p class="card-text" th:field="${post.content}" th:text="${post.content}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </section>
+</body>
+</html>
