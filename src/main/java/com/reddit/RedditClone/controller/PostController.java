@@ -35,7 +35,7 @@ public class PostController {
     public String createPost(@ModelAttribute("newPost") Post post){
         System.out.println(post.getImage());
         postService.savePost(post);
-        return "my-homepage";
+        return "redirect:/reddit/"+post.getSubredditId();
     }
 
 

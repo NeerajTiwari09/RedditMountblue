@@ -30,7 +30,7 @@ public class SubredditController {
     public String saveSubreddit(@ModelAttribute("subReddit") Subreddit subreddit){
         System.out.println(subreddit.getCommunityType().getName());
         Subreddit subredditResult = this.subredditService.saveSubreddit(subreddit);
-        return "my-homepage";
+        return "redirect:/reddit/"+subredditResult.getId();
     }
 
     @GetMapping("/reddit/{id}")
