@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "post")
+@Table(name = "posts")
 @Getter @Setter
 public class Post {
 
