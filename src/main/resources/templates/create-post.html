@@ -13,7 +13,7 @@
             <div class="col-md-10 mx-auto ">
                 <h1>Create a Post</h1>
                 
-                <form action="#" th:action="@{/createPost}" th:method="post" th:object="${newPost}" enctype="multipart/form-data" >
+                <form action="#" th:action="@{/savePost}" th:method="post" th:object="${newPost}" enctype="multipart/form-data" >
                     <label for="community">Choose a community</label>
                     <input name="subredditId" list="community" id="community1">
                     <datalist  id="community">

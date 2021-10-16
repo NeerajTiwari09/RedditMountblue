@@ -27,9 +27,12 @@ public class SubredditController {
     }
 
     @PostMapping("/saveSubreddit")
-    public String saveSubreddit(@ModelAttribute("subReddit") Subreddit subreddit){
+    public String saveSubreddit(@ModelAttribute("subReddit") Subreddit subreddit, Model model){
         System.out.println(subreddit.getCommunityType().getName());
         Subreddit subredditResult = this.subredditService.saveSubreddit(subreddit);
+        List<Post> posts = postService.getAllPosts();
+//        model.addAttribute("subredditResult",subredditResult);
+//        model.addAttribute("posts", posts);
         return "redirect:/reddit/"+subredditResult.getId();
     }
 
@@ -37,8 +40,10 @@ public class SubredditController {
     public String getRedditById(@PathVariable Long id, Model model){
         Subreddit subreddit = subredditService.getRedditById(id);
         List<Post> posts = postService.getBySubRedditId(id);
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
         model.addAttribute("subReddit", subreddit);
         model.addAttribute("posts", posts);
-        return "sub-reddit";
+        model.addAttribute("subreddits",subreddits);
+        return "sub_reddit";
     }
 }

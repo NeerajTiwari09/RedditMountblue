@@ -21,7 +21,7 @@ public class PostController {
     @Autowired
     private SubredditService subredditService;
 
-    @GetMapping("/createPost")
+    @GetMapping("/viewCreatePostPage")
     public String viewCreatePostPage(Model model){
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
         Post post = new Post();
@@ -31,19 +31,28 @@ public class PostController {
         return "create-post";
     }
 
-    @PostMapping("/createPost")
-    public String createPost(@ModelAttribute("newPost") Post post){
+    @PostMapping("/savePost")
+    public String savePost(@ModelAttribute("newPost") Post post){
         System.out.println(post.getImage());
         postService.savePost(post);
         return "redirect:/reddit/"+post.getSubredditId();
     }
 
-
     @GetMapping("/post")
     public String getAllPosts(Model model){
         List<Post> posts = postService.getAllPosts();
         model.addAttribute("posts", posts);
-        return "sub-reddit";
+        System.out.println("posts"+posts);
+        return "sub_reddit";
+    }
+
+    @RequestMapping("/viewPost/{postId}")
+    public String viewPost(@PathVariable Long postId, Model model){
+        Post post = postService.getPostById(postId);
+        String url = post.getImages().get(0).getUrls();
+        model.addAttribute("post",post);
+        model.addAttribute("url", url);
+        return "view_post";
     }
 
     @GetMapping("/update/{postId}")
@@ -60,7 +69,7 @@ public class PostController {
     @PostMapping("/update")
     public String updatePost(@ModelAttribute("post") Post post){
         postService.updatePostById(post);
-        return "my-homepage";
+        return "my_homepage";
     }
 
     @GetMapping("/delete/{postId}")

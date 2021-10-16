@@ -11,51 +11,111 @@
           integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
 </head>
 <body>
-<section class="container my-5">
-    <div class="row shadow-sm p-5 border border-dark rounded">
-        <div class="col-md-3 mx-auto">
-            <h3 th:text="${subReddit.name}">The Title</h3>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img th:src="@{/../static/images/reddit_logo.png}"
+                 src="/../static/images/reddit_logo.png" class="img-responsive" alt="Responsive image"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+            </form>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/viewCreatePostPage">Create Post</a>
+                </li>
+            </ul>
         </div>
-        <div class="col-md-9 mx-auto">
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Post content-->
+            <article>
+                <div>
+                    <header class="mb-4">
+                        <h1 class="fw-bolder mb-1" th:text="${subReddit.name}">Subreddit name</h1>
+                        <div class="text-muted fst-italic mb-2" th:text="${subReddit.createdAt}"></div>
+                    </header>
+                </div>
+                <!-- Content-->
+                <section class="">
+                    <div class="row">
+                        <th:block th:each="post : ${posts}">
+                            <a th:href="'/viewPost/'+${post.id}">
+                                <div class="col-sm-2">
+                                    <div class="">
+                                        <button aria-label="upvote" aria-pressed="false" class="voteButton" data-click-id="upvote" id="">
+                                            <th:block  th:if = "condition">
+                                                <i class="bi bi-caret-up" style='font-size:24px'></i>
+                                            </th:block>
+                                            <th:block  th:unless = "condition">
+                                                <i class="bi bi-caret-up-fill" style='font-size:24px'></i>
+                                            </th:block>
+                                        </button>
+                                        <div class="  " style="color: rgb(26, 26, 27);">27</div>
+                                        <button aria-label="downvote" aria-pressed="false" class="voteButton" data-click-id="downvote">
+                                            <th:block th:if = "condition">
+                                                <i class="bi bi-caret-down" style='font-size:24px'></i>
+                                            </th:block>
+                                            <th:block  th:unless = "condition">
+                                                <i class="bi bi-caret-down-fill" style='font-size:24px'></i>
+                                            </th:block>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-10">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title" th:text="${post.title}"></h5>
+                                            <div class="text-muted fst-italic mb-2" th:text="${post.createdAt}"></div>
+                                            <p class="card-text" th:text="${post.content}" th:field="${post.title}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </th:block>
+                    </div>
+                </section>
+            </article>
+        </div>
+        <!-- Side widgets-->
+        <div class="col-lg-4">
+            <!-- Search widget-->
+            <div class="card mb-4">
+                <div class="card-header">About Community</div>
+                <div class="card-body">
+                    <div class="">
+                        <p th:text="${subReddit.description}"></p>
+                        <div class="text-muted fst-italic mb-2" th:text="${subReddit.createdAt}"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Subreddits List-->
+            <div class="card mb-4">
+                <div class="card-header">Subreddits</div>
+                <div class="card-body">
+                    <div class="row">
+                        <ul class="mb-0">
+                            <li th:each="subreddit : ${subreddits}"><a th:href="'/reddit/'+${subreddit.id}" th:text="${subreddit.name}"></a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
-</section>
 
-    <section class="container my-5">
-        <div class="row">
-            <th:block th:each="post : ${posts}">
-                <div class="col-md-4 mx-auto">
-                    <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title" th:field="${post.title}" th:text="*{title}">Card title</h5>
-                            <div class="row">
-                                <div class="col-md-2 mx-auto ">
-                                    <th:block  th:if = "condition">
-                                    <i class="bi bi-caret-up" style='font-size:24px'></i>
-                                    </th:block>
-                                    <th:block  th:unless = "condition">
-                                    <i class="bi bi-caret-up-fill" style='font-size:24px'></i>
-                                    </th:block>
-                                    <span>1</span>
-                                    <th:block th:if = "condition">
-                                    <i class="bi bi-caret-down" style='font-size:24px'></i>
-                                    </th:block>
-                                    <th:block  th:unless = "condition">
-                                    <i class="bi bi-caret-down-fill" style='font-size:24px'></i>
-                                    </th:block>
-                                </div>
-                                <div class="col-md-10 mx-auto ">
-<!--                                    <p class="card-text" th:field="${post.content}" th:text="${post.content}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-                                </div>
-                            </div>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-            </th:block>
-        </div>
-    </section>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</div>
 </body>
 </html>
