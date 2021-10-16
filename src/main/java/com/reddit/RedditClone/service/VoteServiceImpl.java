@@ -26,13 +26,34 @@ public class VoteServiceImpl implements VoteService {
         Vote voteByPostIdAndUserId = voteRepository.findByPostIdAndUserId(post.getId(), user.getId());
         if (voteByPostIdAndUserId != null && voteByPostIdAndUserId.isVote() == vote.isVote()) {
             voteRepository.delete(voteByPostIdAndUserId);
-            // if else
+            if (vote.isVote()) {
+                post.setVoteCount(post.getVoteCount() - 1);
+                post.setUpVoteCount(post.getUpVoteCount()-1);
+            } else {
+                post.setVoteCount(post.getVoteCount() + 1);
+                post.setDownVoteCount(post.getDownVoteCount()-1);
+            }
         }else if(voteByPostIdAndUserId != null && voteByPostIdAndUserId.isVote() != vote.isVote()){
             vote.setId(voteByPostIdAndUserId.getId());
-//            if else
+            if (vote.isVote()) {
+                post.setVoteCount(post.getVoteCount() + 2);
+                post.setDownVoteCount(post.getDownVoteCount()-1);
+                post.setUpVoteCount(post.getUpVoteCount()+1);
+
+            } else {
+                post.setVoteCount(post.getVoteCount() - 2);
+                post.setUpVoteCount(post.getUpVoteCount()-1);
+                post.setDownVoteCount(post.getDownVoteCount()+1);
+            }
             voteRepository.save(vote);
         }else {
-//            if else
+            if (vote.isVote()) {
+                post.setVoteCount(post.getVoteCount() + 1);
+                post.setUpVoteCount(post.getUpVoteCount()+1);
+            } else {
+                post.setVoteCount(post.getVoteCount() - 1);
+                post.setDownVoteCount(post.getDownVoteCount()+1);
+            }
             voteRepository.save(vote);
         }
         postRepository.save(post);
