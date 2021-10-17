@@ -28,7 +28,7 @@ public class VoteServiceImpl implements VoteService {
     @Override
     public void saveVote(Vote vote) {
         Post post = postRepository.getById(vote.getPostId());
-        User user = userRepository.findByUsername("User");
+        User user = userRepository.findByUsername("Shreya");
         vote.setUserId(user.getId());
         Vote voteByPostIdAndUserId = voteRepository.findByPostIdAndUserId(post.getId(), user.getId());
 

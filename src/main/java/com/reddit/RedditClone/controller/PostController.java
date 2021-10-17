@@ -91,6 +91,22 @@ public class PostController {
         return "sub_reddit";
     }
 
+    @RequestMapping("/controversial/{subredditId}")
+    public String getControversialPostsBySubredditId(@PathVariable Long subredditId, Model model){
+        Subreddit subreddit = subredditService.getRedditById(subredditId);
+        List<Post> posts = postService.getControversialPosts(subredditId);
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
+        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
+        Long karma = postService.getKarma(subredditId);
+
+        model.addAttribute("subReddit", subreddit);
+        model.addAttribute("posts", posts);
+        model.addAttribute("karma", karma);
+        model.addAttribute("subreddits",subreddits);
+        model.addAttribute("votes", votes);
+        return "sub_reddit";
+    }
+
     @RequestMapping("/new/{subredditId}")
     public String getAllNewPostsBySubredditId(@PathVariable Long subredditId, Model model){
         Subreddit subreddit = subredditService.getRedditById(subredditId);

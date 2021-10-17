@@ -29,6 +29,22 @@
                     </li>
                 </ul>
             </div>
+            <div th:if="${subReddit != null} and ${subReddit.id != null}" class="col-md-2">
+                <a th:href="@{'/popular/' +${subReddit.id}}">
+                    <button class="btn btn-outline-primary">Popular Posts</button>
+                </a>
+            </div>
+            <div th:if="${subReddit != null} and ${subReddit.id != null}" class="col-md-2">
+                <a th:href="@{'/controversial/' +${subReddit.id}}">
+                    <button class="btn btn-outline-primary">Controversial Posts</button>
+                </a>
+            </div>
+            <div th:if="${subReddit != null} and ${subReddit.id != null}" class="col-md-2">
+                <a th:href="@{'/new/' +${subReddit.id}}">
+                    <button class="btn btn-outline-primary">New Post</button>
+                </a>
+            </div>
+
         </div>
     </nav>
 </div>

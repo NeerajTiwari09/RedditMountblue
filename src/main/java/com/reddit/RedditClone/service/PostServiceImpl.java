@@ -107,7 +107,7 @@ public class PostServiceImpl implements  PostService{
 
     @Override
     public List<Post> getControversialPosts(Long subredditId) {
-        List<Post> posts = postRepository.findBySubredditIdOrderByVoteCount(subredditId);
+        List<Post> posts = postRepository.findControversialPosts(subredditId);
         List<Post> controversialPosts = new ArrayList<>();
 
         for(Post post : posts) {
@@ -118,7 +118,7 @@ public class PostServiceImpl implements  PostService{
 
     @Override
     public List<Post> findAllNewPostsBySubredditId(Long subredditId) {
-        return postRepository.findControversialPosts(subredditId);
+        return postRepository.findBySubredditIdOrderByCreatedAtDesc(subredditId);
     }
 
 
