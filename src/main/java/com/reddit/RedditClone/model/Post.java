@@ -20,6 +20,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    @Column(name = "content", length = 10000)
     private String content;
     private Timestamp createdAt;
     private Timestamp updatedAt;

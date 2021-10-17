@@ -15,7 +15,9 @@ public class Subreddit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name", length = 2000)
     private String name;
+    @Column(name = "description", length = 10000)
     private String description;
     @Column(name = "created_at")
     private Date createdAt;
