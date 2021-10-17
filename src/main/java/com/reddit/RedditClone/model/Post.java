@@ -1,5 +1,7 @@
 package com.reddit.RedditClone.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
@@ -8,12 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "posts")
 @Getter @Setter
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Post {
 
     @Id
@@ -51,4 +53,8 @@ public class Post {
 
     @Column(name = "down_vote_count", nullable = false)
     private Long downVoteCount = 0L;
+
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="post")
+    @OrderBy("createdDate, id")
+    private SortedSet<Comment> comments = new TreeSet<>();
 }

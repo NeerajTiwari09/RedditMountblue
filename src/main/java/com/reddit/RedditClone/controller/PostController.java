@@ -1,5 +1,6 @@
 package com.reddit.RedditClone.controller;
 
+import com.reddit.RedditClone.model.Comment;
 import com.reddit.RedditClone.model.CommunityType;
 import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.Subreddit;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class PostController {
@@ -49,9 +50,13 @@ public class PostController {
     @RequestMapping("/viewPost/{postId}")
     public String viewPost(@PathVariable Long postId, Model model){
         Post post = postService.getPostById(postId);
+//        SortedSet<Comment> commentsWithoutDuplicates = getCommentsWithoutDuplicates(0, new HashSet<Long>(), post.getComments());
+
         String url = post.getImages().get(0).getUrls();
         model.addAttribute("post",post);
         model.addAttribute("url", url);
+//        model.addAttribute("thread", commentsWithoutDuplicates);
+        model.addAttribute("rootComment", new Comment());
         return "view_post";
     }
 
