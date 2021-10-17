@@ -1,11 +1,9 @@
 package com.reddit.RedditClone.controller;
 
-import com.reddit.RedditClone.model.Comment;
-import com.reddit.RedditClone.model.CommunityType;
-import com.reddit.RedditClone.model.Post;
-import com.reddit.RedditClone.model.Subreddit;
+import com.reddit.RedditClone.model.*;
 import com.reddit.RedditClone.service.PostService;
 import com.reddit.RedditClone.service.SubredditService;
+import com.reddit.RedditClone.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +16,9 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private VoteService voteService;
 
     @Autowired
     private SubredditService subredditService;
@@ -50,12 +51,14 @@ public class PostController {
     @RequestMapping("/viewPost/{postId}")
     public String viewPost(@PathVariable Long postId, Model model){
         Post post = postService.getPostById(postId);
-//        SortedSet<Comment> commentsWithoutDuplicates = getCommentsWithoutDuplicates(0, new HashSet<Long>(), post.getComments());
-
+        SortedSet<Comment> commentsWithoutDuplicates = postService.getCommentsWithoutDuplicates(0, new HashSet<Long>(), post.getComments());
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
         String url = post.getImages().get(0).getUrls();
+
         model.addAttribute("post",post);
         model.addAttribute("url", url);
-//        model.addAttribute("thread", commentsWithoutDuplicates);
+        model.addAttribute("thread", commentsWithoutDuplicates);
+        model.addAttribute("subreddits",subreddits);
         model.addAttribute("rootComment", new Comment());
         return "view_post";
     }
@@ -69,6 +72,38 @@ public class PostController {
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("imgUrl", imgUrl);
         return "create-post";
+    }
+
+    @RequestMapping("/popular/{subredditId}")
+    public String getPopularPostsBySubredditId(@PathVariable Long subredditId, Model model){
+        Subreddit subreddit = subredditService.getRedditById(subredditId);
+        List<Post> posts = postService.getPopularPosts(subredditId);
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
+        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
+        Long karma = postService.getKarma(subredditId);
+
+        model.addAttribute("subReddit", subreddit);
+        model.addAttribute("posts", posts);
+        model.addAttribute("karma", karma);
+        model.addAttribute("subreddits",subreddits);
+        model.addAttribute("votes", votes);
+        return "sub_reddit";
+    }
+
+    @RequestMapping("/new/{subredditId}")
+    public String getAllNewPostsBySubredditId(@PathVariable Long subredditId, Model model){
+        Subreddit subreddit = subredditService.getRedditById(subredditId);
+        List<Post> posts = postService.findAllNewPostsBySubredditId(subredditId);
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
+        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
+        Long karma = postService.getKarma(subredditId);
+
+        model.addAttribute("subReddit", subreddit);
+        model.addAttribute("posts", posts);
+        model.addAttribute("karma", karma);
+        model.addAttribute("subreddits",subreddits);
+        model.addAttribute("votes", votes);
+        return "sub_reddit";
     }
 
     @PostMapping("/update")

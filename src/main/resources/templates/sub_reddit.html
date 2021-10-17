@@ -21,15 +21,14 @@
                     <header class="mb-4">
                         <h1 class="fw-bolder mb-1" th:text="${subReddit.name}">Subreddit name</h1>
                         <div class="text-muted fst-italic mb-2" th:text="${subReddit.createdAt}"></div>
+                        <span th:text="'Karma '+${karma}">Karma</span>
                     </header>
                 </div>
                 <!-- Content-->
                 <section class="">
                     <div class="row">
                         <th:block th:each="post : ${posts}">
-
                                 <div class="col-sm-2">
-
                                     <div class="">
 <!--                                                <button  aria-label="upvote" aria-pressed="false" class="voteButton" data-click-id="upvote" id="">-->
                                                     <form action="/vote" method="get" >
@@ -133,7 +132,6 @@
                     <div class="row">
                         <ul class="mb-0">
                             <li th:each="subreddit : ${subreddits}"><a th:href="'/reddit/'+${subreddit.id}" th:text="${subreddit.name}"></a></li>
-
                         </ul>
                     </div>
                 </div>
