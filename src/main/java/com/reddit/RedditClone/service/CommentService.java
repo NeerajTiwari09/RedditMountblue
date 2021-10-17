@@ -11,4 +11,6 @@ public interface CommentService {
     Comment getById(Long id);
 
     void deleteById(Long id);
+
+    void saveComment(Long postId, Comment rootComment, Long parentId, String childCommentText);
 }

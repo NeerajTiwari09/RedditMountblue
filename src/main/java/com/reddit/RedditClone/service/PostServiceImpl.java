@@ -1,5 +1,6 @@
 package com.reddit.RedditClone.service;
 
+import com.reddit.RedditClone.model.Comment;
 import com.reddit.RedditClone.model.Image;
 import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.Subreddit;
@@ -10,9 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PostServiceImpl implements  PostService{
@@ -102,13 +101,21 @@ public class PostServiceImpl implements  PostService{
         return karma;
     }
 
-    @Override
-    public List<Post> getPopularPosts(Long subredditId) {
-        return postRepository.findAllPopularPostsBySubredditId(subredditId);
-    }
+    public SortedSet<Comment> getCommentsWithoutDuplicates(int page, Set<Long> visitedComments, SortedSet<Comment> comments) {
+        page++;
+        Iterator<Comment> itr = comments.iterator();
+        while (itr.hasNext()) {
+            Comment comment = itr.next();
+            boolean addedToVisitedComments = visitedComments.add(comment.getId());
+            if (!addedToVisitedComments) {
+                itr.remove();
+                if (page != 1)
+                    return comments;
+            }
+            if (addedToVisitedComments && !comment.getComments().isEmpty())
+                getCommentsWithoutDuplicates(page, visitedComments, comment.getComments());
+        }
 
-    @Override
-    public List<Post> findAllNewPostsBySubredditId(Long subredditId) {
-        return postRepository.findBySubredditIdOrderByCreatedAtDesc(subredditId);
+        return comments;
     }
 }
