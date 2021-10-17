@@ -101,6 +101,17 @@ public class PostServiceImpl implements  PostService{
         return karma;
     }
 
+    @Override
+    public List<Post> getPopularPosts(Long subredditId) {
+        return postRepository.findAllPopularPostsBySubredditId(subredditId);
+    }
+
+    @Override
+    public List<Post> findAllNewPostsBySubredditId(Long subredditId) {
+        return postRepository.findBySubredditIdOrderByCreatedAtDesc(subredditId);
+    }
+
+   @Override
     public SortedSet<Comment> getCommentsWithoutDuplicates(int page, Set<Long> visitedComments, SortedSet<Comment> comments) {
         page++;
         Iterator<Comment> itr = comments.iterator();
