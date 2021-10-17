@@ -22,12 +22,6 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-
-//    @LazyCollection(LazyCollectionOption.FALSE)
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinTable(name = "sub_reddit_post", joinColumns = @JoinColumn(name = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "sub_reddit_id"))
-//    private Subreddit subReddit;
     private String content;
     private Timestamp createdAt;
     private Timestamp updatedAt;
@@ -45,13 +39,13 @@ public class Post {
             inverseJoinColumns = @JoinColumn(name = "image_id"))
     private List<Image> images = new ArrayList<>();
 
-    @Column(name = "vote_count", nullable = false)
+    @Column(name = "vote_count")
     private Long voteCount = 0L;
 
-    @Column(name = "up_vote_count", nullable = false)
+    @Column(name = "up_vote_count")
     private Long upVoteCount = 0L;
 
-    @Column(name = "down_vote_count", nullable = false)
+    @Column(name = "down_vote_count")
     private Long downVoteCount = 0L;
 
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="post")

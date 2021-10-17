@@ -16,5 +16,7 @@ public interface PostService {
 
     void updatePostById(Post post);
 
-    void deleteById(Long postId);
+    Long deleteById(Long postId);
+
+    long getKarma(Long subredditId);
 }

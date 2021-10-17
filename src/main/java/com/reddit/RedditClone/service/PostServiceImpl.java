@@ -29,7 +29,7 @@ public class PostServiceImpl implements  PostService{
     @Override
     public Post savePost(Post post) {
         Timestamp timestamp = Timestamp.from(Instant.now());
-        Optional<Subreddit> subreddit = subredditRepository.findById(post.getSubredditId());
+//        Optional<Subreddit> subreddit = subredditRepository.findById(post.getSubredditId());
         String url = awsService.uploadFile(post.getImage());
         List<Image> images = new ArrayList<>();
         Image image = new Image();
@@ -38,7 +38,7 @@ public class PostServiceImpl implements  PostService{
         post.setImages(images);
         post.setCreatedAt(timestamp);
         post.setUpdatedAt(timestamp);
-        post.setSubredditId(subreddit.get().getId());
+//        post.setSubredditId(subreddit.get().getId());
         return postRepository.save(post);
     }
 
@@ -61,7 +61,6 @@ public class PostServiceImpl implements  PostService{
     @Override
     public void updatePostById(Post post) {
         Optional<Post> optional = postRepository.findById(post.getId());
-
         if(!optional.isPresent()){
             return;
         }
@@ -80,7 +79,7 @@ public class PostServiceImpl implements  PostService{
     }
 
     @Override
-    public void deleteById(Long postId) {
+    public Long deleteById(Long postId) {
         Optional<Post> post = postRepository.findById(postId);
         if(post.isPresent()){
             postRepository.deleteById(postId);
@@ -90,5 +89,16 @@ public class PostServiceImpl implements  PostService{
                 awsService.deleteFile(fileName[1]);
             }
         }
+        return post.get().getSubredditId();
+    }
+
+    @Override
+    public long getKarma(Long subredditId){
+        List<Post> posts = postRepository.findAllBySubredditId(subredditId);
+        long karma = 0L;
+        for(Post post : posts){
+            karma = karma +  post.getVoteCount();
+        }
+        return karma;
     }
 }

@@ -79,8 +79,7 @@ public class PostController {
 
     @GetMapping("/delete/{postId}")
     public String deletePostById(@PathVariable Long postId){
-        postService.deleteById(postId);
-        return "Ok!";
+        Long subredditId = postService.deleteById(postId);
+        return "redirect:/reddit/"+subredditId;
     }
-
 }

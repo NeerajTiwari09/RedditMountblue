@@ -31,9 +31,9 @@
                         <label for="content" class="form-label">Content</label>
                         <textarea type="text" th:name="content" th:field="${newPost.content}" class="form-control" id="content"></textarea>
                     </div>
-
-                    <img th:if="${imgUrl!=null}" th:src="${imgUrl}" />
-
+                    <figure class="mb-4">
+                        <img class="img-fluid rounded" th:if="${imgUrl!=null}" th:src="${imgUrl}" alt="..." />
+                    </figure>
                     <input type="file" th:name="image" />
                     <input type="hidden" name="id" th:value="${newPost.id}" />
                     <button type="submit" class="btn btn-primary my-3">Submit</button>

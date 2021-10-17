@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -32,7 +33,7 @@ public class AWSService {
     }
 
     private File convertMultiPartFileToFile(MultipartFile file) {
-        File convertedFile = new File(file.getOriginalFilename());
+        File convertedFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
         try (FileOutputStream fos = new FileOutputStream(convertedFile)) {
             fos.write(file.getBytes());
         } catch (IOException e) {
@@ -57,5 +58,4 @@ public class AWSService {
         s3Client.deleteObject(bucketName, fileName);
         return fileName + " removed ...";
     }
-
 }
