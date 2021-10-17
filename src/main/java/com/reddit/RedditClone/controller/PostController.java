@@ -50,12 +50,12 @@ public class PostController {
     @RequestMapping("/viewPost/{postId}")
     public String viewPost(@PathVariable Long postId, Model model){
         Post post = postService.getPostById(postId);
-//        SortedSet<Comment> commentsWithoutDuplicates = getCommentsWithoutDuplicates(0, new HashSet<Long>(), post.getComments());
+        SortedSet<Comment> commentsWithoutDuplicates =postService.getCommentsWithoutDuplicates(0, new HashSet<Long>(), post.getComments());
 
         String url = post.getImages().get(0).getUrls();
         model.addAttribute("post",post);
         model.addAttribute("url", url);
-//        model.addAttribute("thread", commentsWithoutDuplicates);
+        model.addAttribute("thread", commentsWithoutDuplicates);
         model.addAttribute("rootComment", new Comment());
         return "view_post";
     }
