@@ -13,7 +13,7 @@
 #    - git push -f heroku master
 deploy_heroku:
   variables:
-    HEROKU_API_KEY: "34234de9-83e1-4377-b6eb-4f196c3f54ce"
+    HEROKU_API_KEY: "7864d05f-da19-49d7-908c-5cce499a635e"
   image: centos
   stage: deploy
   environment: heroku
@@ -23,7 +23,7 @@ deploy_heroku:
     - echo "Deploying for Heroku Cloud Platform"
     - echo "$HEROKU_API_KEY"
     - yum install git -y
-    - git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/test-auto-deploy.git
+    - git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/reddit-clone-application.git
     - git config --global user.email "neeraj.tiwari.17.1@mountblue.tech"
     - git config --global user.name "NeerajTiwari17"
     - git config --global push.default matching
