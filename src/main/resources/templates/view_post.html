@@ -63,7 +63,7 @@
                         </div>
                     </form>
                     <hr/>
-                    <!--            <div th:replace="fragments/comment :: commentThread"></div>-->
+                    <div th:replace="fragments/comment :: commentThread"></div>
                 </div>
             </div>
         </section>
@@ -87,9 +87,7 @@
         <div class="card-body">
           <div class="row">
             <ul class="mb-0">
-              <li><a href="#">r/mountblue</a></li>
-              <li><a href="#">r/travel</a></li>
-              <li><a href="#">r/world</a></li>
+                <li th:each="subreddit : ${subreddits}"><a th:href="'/reddit/'+${subreddit.id}" th:text="${subreddit.name}"></a></li>
             </ul>
           </div>
         </div>
