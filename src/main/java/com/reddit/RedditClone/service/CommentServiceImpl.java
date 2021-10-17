@@ -2,12 +2,13 @@ package com.reddit.RedditClone.service;
 
 import com.reddit.RedditClone.model.Comment;
 import com.reddit.RedditClone.model.Post;
+import com.reddit.RedditClone.model.User;
 import com.reddit.RedditClone.repository.CommentRepository;
 import com.reddit.RedditClone.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,5 +55,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private void populateCommentMetadata(Optional<Post> postOpt, Comment comment) {
+        User user = new User(1L, "Shreya");
+        if (postOpt.isPresent())
+            comment.setPost(postOpt.get());
+        comment.setUser(user);
+        comment.setCreatedDate(new Date(System.currentTimeMillis()));
     }
 }
