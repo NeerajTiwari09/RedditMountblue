@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "post")
 @Getter @Setter
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Post {
