@@ -60,6 +60,8 @@ public class SubredditController {
         model.addAttribute("votes", votes);
 //        model.addAttribute("currentUserId", 1);
 
+        postService.getControversialPosts(id);
+
         return "sub_reddit";
     }
 }

@@ -85,59 +85,6 @@ public class VoteServiceImpl implements VoteService {
             postRepository.save(post);
         }
 
-
-//    @Override
-//    public void saveVote(Vote vote) {
-//        Post post = postRepository.getById(vote.getPostId());
-//        User user = userRepository.findByUsername("Shreya");
-//        vote.setUserId(user.getId());
-//        Vote voteByPostIdAndUserId = voteRepository.findByPostIdAndUserId(post.getId(), user.getId());
-//
-//        //if user has already contributed but resetting the contribution.
-//        if (voteByPostIdAndUserId != null && voteByPostIdAndUserId.isVote() == vote.isVote()) {
-//            System.out.println("resetting the contribution");
-//            vote.setContributed(false);
-//            voteRepository.delete(voteByPostIdAndUserId);
-//            if (vote.isVote()) {
-//                post.setVoteCount(post.getVoteCount() - 1);
-//                post.setUpVoteCount(post.getUpVoteCount()-1);
-//            } else {
-//                post.setVoteCount(post.getVoteCount() + 1);
-//                post.setDownVoteCount(post.getDownVoteCount()-1);
-//            }
-//            //already contributes but reversing the contribution.
-//        }else if(voteByPostIdAndUserId != null && voteByPostIdAndUserId.isVote() != vote.isVote()){
-//            System.out.println("reversing the contribution");
-//            vote.setContributed(true);
-//            vote.setId(voteByPostIdAndUserId.getId());
-//            if (vote.isVote()) {
-//                post.setVoteCount(post.getVoteCount() + 2);
-//                post.setDownVoteCount(post.getDownVoteCount()-1);
-//                post.setUpVoteCount(post.getUpVoteCount()+1);
-//
-//            } else {
-////                post.setVoteCount(post.getVoteCount() - 2);
-//                post.setUpVoteCount(post.getUpVoteCount()-1);
-//                post.setDownVoteCount(post.getDownVoteCount()+1);
-//                post.setVoteCount(post.getUpVoteCount() - post.getDownVoteCount());
-//            }
-//            voteRepository.save(vote);
-//        }//contributing first time
-//        else {
-//            System.out.println("Contributing First time");
-//            vote.setContributed(true);
-//            if (vote.isVote()) {
-//                post.setVoteCount(post.getVoteCount() + 1);
-//                post.setUpVoteCount(post.getUpVoteCount()+1);
-//            } else {
-//                post.setVoteCount(post.getVoteCount() - 1);
-//                post.setDownVoteCount(post.getDownVoteCount()+1);
-//            }
-//            voteRepository.save(vote);
-//        }
-//        postRepository.save(post);
-//    }
-
     @Override
     public Map<Long,Vote> getVotesByPosts(List<Post> posts) {
         List<Long> postIds = new ArrayList<>();

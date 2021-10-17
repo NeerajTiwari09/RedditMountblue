@@ -106,9 +106,22 @@ public class PostServiceImpl implements  PostService{
     }
 
     @Override
-    public List<Post> findAllNewPostsBySubredditId(Long subredditId) {
-        return postRepository.findBySubredditIdOrderByCreatedAtDesc(subredditId);
+    public List<Post> getControversialPosts(Long subredditId) {
+        List<Post> posts = postRepository.findBySubredditIdOrderByVoteCount(subredditId);
+        List<Post> controversialPosts = new ArrayList<>();
+
+        for(Post post : posts) {
+            System.out.println("post: "+post.getVoteCount()+" : "+post.getUpVoteCount()+" : "+post.getDownVoteCount());
+        }
+        return posts;
     }
+
+    @Override
+    public List<Post> findAllNewPostsBySubredditId(Long subredditId) {
+        return postRepository.findControversialPosts(subredditId);
+    }
+
+
 
    @Override
     public SortedSet<Comment> getCommentsWithoutDuplicates(int page, Set<Long> visitedComments, SortedSet<Comment> comments) {
@@ -127,4 +140,6 @@ public class PostServiceImpl implements  PostService{
         }
         return comments;
     }
+
+
 }

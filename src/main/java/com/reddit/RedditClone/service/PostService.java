@@ -26,6 +26,8 @@ public interface PostService {
 
     List<Post> getPopularPosts(Long subredditId);
 
+    List<Post> getControversialPosts(Long subredditId);
+
     List<Post> findAllNewPostsBySubredditId(Long subredditId);
 
     SortedSet<Comment> getCommentsWithoutDuplicates(int i, Set<Long> longs, SortedSet<Comment> comments);
