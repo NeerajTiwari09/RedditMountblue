@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -13,7 +11,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
-@Table(name = "post")
+@Table(name = "posts")
 @Getter @Setter
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Post {
@@ -39,13 +37,13 @@ public class Post {
             inverseJoinColumns = @JoinColumn(name = "image_id"))
     private List<Image> images = new ArrayList<>();
 
-    @Column(name = "vote_count")
+    @Column(name = "vote_count", columnDefinition = "integer default 0")
     private Long voteCount = 0L;
 
-    @Column(name = "up_vote_count")
+    @Column(name = "up_vote_count", columnDefinition = "integer default 0")
     private Long upVoteCount = 0L;
 
-    @Column(name = "down_vote_count")
+    @Column(name = "down_vote_count", columnDefinition = "integer default 0")
     private Long downVoteCount = 0L;
 
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="post")

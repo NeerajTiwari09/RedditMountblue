@@ -36,11 +36,11 @@ public class SubredditController {
 
     @PostMapping("/saveSubreddit")
     public String saveSubreddit(@ModelAttribute("subReddit") Subreddit subreddit, Model model){
-        System.out.println(subreddit.getCommunityType().getName());
+        System.out.println("cc"+subreddit.getCommunityType().getName());
         Subreddit subredditResult = this.subredditService.saveSubreddit(subreddit);
         List<Post> posts = postService.getAllPosts();
-//        model.addAttribute("subredditResult",subredditResult);
-//        model.addAttribute("posts", posts);
+        model.addAttribute("subredditResult",subredditResult);
+        model.addAttribute("posts", posts);
         return "redirect:/reddit/"+subredditResult.getId();
     }
 
@@ -50,11 +50,12 @@ public class SubredditController {
         List<Post> posts = postService.getBySubRedditId(id);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
         Map<Long,Vote> votes = voteService.getVotesByPosts(posts);
+        Long karma = postService.getKarma(id);
 
-        System.out.println("votes: "+votes);
-
+        System.out.println("Karma: "+karma);
         model.addAttribute("subReddit", subreddit);
         model.addAttribute("posts", posts);
+        model.addAttribute("karma", karma);
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("votes", votes);
 //        model.addAttribute("currentUserId", 1);

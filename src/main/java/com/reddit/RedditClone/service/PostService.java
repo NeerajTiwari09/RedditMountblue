@@ -19,4 +19,8 @@ public interface PostService {
     Long deleteById(Long postId);
 
     long getKarma(Long subredditId);
+
+    List<Post> getPopularPosts(Long subredditId);
+
+    List<Post> findAllNewPostsBySubredditId(Long subredditId);
 }
