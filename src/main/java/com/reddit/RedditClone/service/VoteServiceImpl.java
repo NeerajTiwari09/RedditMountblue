@@ -24,6 +24,7 @@ public class VoteServiceImpl implements VoteService {
     @Autowired
     private UserRepository userRepository;
 
+
     @Override
     public void saveVote(Vote vote) {
         Post post = postRepository.getById(vote.getPostId());
@@ -32,48 +33,110 @@ public class VoteServiceImpl implements VoteService {
         Vote voteByPostIdAndUserId = voteRepository.findByPostIdAndUserId(post.getId(), user.getId());
 
         //if user has already contributed but resetting the contribution.
-        if (voteByPostIdAndUserId != null && voteByPostIdAndUserId.isVote() == vote.isVote()) {
-            System.out.println("resetting the contribution");
-            vote.setContributed(false);
-            voteRepository.delete(voteByPostIdAndUserId);
-            if (vote.isVote()) {
-                post.setVoteCount(post.getVoteCount() - 1);
-                post.setUpVoteCount(post.getUpVoteCount()-1);
-            } else {
-                post.setVoteCount(post.getVoteCount() + 1);
-                post.setDownVoteCount(post.getDownVoteCount()-1);
-            }
-            //already contributes but reversing the contribution.
-        }else if(voteByPostIdAndUserId != null && voteByPostIdAndUserId.isVote() != vote.isVote()){
-            System.out.println("reversing the contribution");
-            vote.setContributed(true);
-            vote.setId(voteByPostIdAndUserId.getId());
-            if (vote.isVote()) {
+        if (voteByPostIdAndUserId != null) {
+            //resetting the contribution
+            if (!vote.isUpVoted() && !vote.isDownVoted()) {
+                System.out.println("resetting the contribution");
+                if (voteByPostIdAndUserId.isUpVoted()) {
+                    post.setUpVoteCount(post.getUpVoteCount() - 1);
+                    post.setVoteCount(post.getVoteCount() - 1);
+                }
+                if (voteByPostIdAndUserId.isDownVoted()) {
+                    post.setDownVoteCount(post.getDownVoteCount() - 1);
+                    post.setVoteCount(post.getVoteCount() + 1);
+                }
+//                vote.setContributed(false);
+                voteRepository.delete(voteByPostIdAndUserId);
+            }//reversing the contribution if already contributed
+            else if (vote.isUpVoted() && voteByPostIdAndUserId.isDownVoted()) {
+                //reversing downvote to upvote
+                post.setUpVoteCount(post.getUpVoteCount() + 1);
+                post.setDownVoteCount(post.getDownVoteCount() - 1);
                 post.setVoteCount(post.getVoteCount() + 2);
-                post.setDownVoteCount(post.getDownVoteCount()-1);
-                post.setUpVoteCount(post.getUpVoteCount()+1);
 
-            } else {
+                voteByPostIdAndUserId.setDownVoted(!voteByPostIdAndUserId.isDownVoted());
+                voteByPostIdAndUserId.setUpVoted(!voteByPostIdAndUserId.isUpVoted());
+
+                voteRepository.save(voteByPostIdAndUserId);
+            } else if (vote.isDownVoted() && voteByPostIdAndUserId.isUpVoted()) {
+                //reversing upvote to downvote
+                post.setUpVoteCount(post.getUpVoteCount() - 1);
+                post.setDownVoteCount(post.getDownVoteCount() + 1);
                 post.setVoteCount(post.getVoteCount() - 2);
-                post.setUpVoteCount(post.getUpVoteCount()-1);
-                post.setDownVoteCount(post.getDownVoteCount()+1);
+
+                voteByPostIdAndUserId.setDownVoted(!voteByPostIdAndUserId.isDownVoted());
+                voteByPostIdAndUserId.setUpVoted(!voteByPostIdAndUserId.isUpVoted());
+
+                voteRepository.save(voteByPostIdAndUserId);
             }
-            voteRepository.save(vote);
         }//contributing first time
-        else {
-            System.out.println("Contributing First time");
-            vote.setContributed(true);
-            if (vote.isVote()) {
-                post.setVoteCount(post.getVoteCount() + 1);
-                post.setUpVoteCount(post.getUpVoteCount()+1);
-            } else {
-                post.setVoteCount(post.getVoteCount() - 1);
-                post.setDownVoteCount(post.getDownVoteCount()+1);
+            else {
+                System.out.println("Contributing First time");
+                vote.setContributed(true);
+                if (vote.isUpVoted()) {
+                    post.setUpVoteCount(post.getUpVoteCount() + 1);
+                    post.setVoteCount(post.getVoteCount() + 1);
+                } else if (vote.isDownVoted()) {
+                    post.setVoteCount(post.getVoteCount() - 1);
+                    post.setDownVoteCount(post.getDownVoteCount() + 1);
+                }
+                voteRepository.save(vote);
             }
-            voteRepository.save(vote);
+            postRepository.save(post);
         }
-        postRepository.save(post);
-    }
+
+
+//    @Override
+//    public void saveVote(Vote vote) {
+//        Post post = postRepository.getById(vote.getPostId());
+//        User user = userRepository.findByUsername("Shreya");
+//        vote.setUserId(user.getId());
+//        Vote voteByPostIdAndUserId = voteRepository.findByPostIdAndUserId(post.getId(), user.getId());
+//
+//        //if user has already contributed but resetting the contribution.
+//        if (voteByPostIdAndUserId != null && voteByPostIdAndUserId.isVote() == vote.isVote()) {
+//            System.out.println("resetting the contribution");
+//            vote.setContributed(false);
+//            voteRepository.delete(voteByPostIdAndUserId);
+//            if (vote.isVote()) {
+//                post.setVoteCount(post.getVoteCount() - 1);
+//                post.setUpVoteCount(post.getUpVoteCount()-1);
+//            } else {
+//                post.setVoteCount(post.getVoteCount() + 1);
+//                post.setDownVoteCount(post.getDownVoteCount()-1);
+//            }
+//            //already contributes but reversing the contribution.
+//        }else if(voteByPostIdAndUserId != null && voteByPostIdAndUserId.isVote() != vote.isVote()){
+//            System.out.println("reversing the contribution");
+//            vote.setContributed(true);
+//            vote.setId(voteByPostIdAndUserId.getId());
+//            if (vote.isVote()) {
+//                post.setVoteCount(post.getVoteCount() + 2);
+//                post.setDownVoteCount(post.getDownVoteCount()-1);
+//                post.setUpVoteCount(post.getUpVoteCount()+1);
+//
+//            } else {
+////                post.setVoteCount(post.getVoteCount() - 2);
+//                post.setUpVoteCount(post.getUpVoteCount()-1);
+//                post.setDownVoteCount(post.getDownVoteCount()+1);
+//                post.setVoteCount(post.getUpVoteCount() - post.getDownVoteCount());
+//            }
+//            voteRepository.save(vote);
+//        }//contributing first time
+//        else {
+//            System.out.println("Contributing First time");
+//            vote.setContributed(true);
+//            if (vote.isVote()) {
+//                post.setVoteCount(post.getVoteCount() + 1);
+//                post.setUpVoteCount(post.getUpVoteCount()+1);
+//            } else {
+//                post.setVoteCount(post.getVoteCount() - 1);
+//                post.setDownVoteCount(post.getDownVoteCount()+1);
+//            }
+//            voteRepository.save(vote);
+//        }
+//        postRepository.save(post);
+//    }
 
     @Override
     public Map<Long,Vote> getVotesByPosts(List<Post> posts) {

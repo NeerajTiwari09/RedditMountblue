@@ -33,10 +33,10 @@
                                     <div class="">
 <!--                                                <button  aria-label="upvote" aria-pressed="false" class="voteButton" data-click-id="upvote" id="">-->
                                                     <form action="/vote" method="get" >
-<!--                                                    <a th:href="@{'/vote/'+ ${post.id} +'/true'">-->
-                                                        <th:block th:if="${!votes.containsKey(post.id)} or ${votes.get(post.id).postId != post.id}">
+<!--                                                    <a th:href="@{'/vote/'+ ${post.id} +'/true'">               and ${votes.get(post.id}.vote==false}-->
+                                                        <th:block th:if="${!votes.containsKey(post.id)} or ${votes.get(post.id).postId != post.id} ">
                                                             <input type="hidden" name="postId" th:value="${post.id}" />
-                                                            <input type="hidden" name="vote" value="true" />
+                                                            <input type="hidden" name="upVote" value="true" />
                                                             <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
 
                                                             <button type="submit">
@@ -48,11 +48,12 @@
 <!--                                                    </a>-->
 
                                                     <form action="/vote" method="get" >
-<!--                                                    <a th:href="@{'/vote/'+ ${post.id} +'/false'">-->
+<!--                                                    <a th:href="@{'/vote/'+ ${post.id} +'/false'">                                 and ${votes.get(post.id).vote==true}-->
+<!--                                                        ${votes.get(post.id).postId == post.id}-->
                                                         <input type="hidden" name="postId" th:value="${post.id}" />
-                                                        <input type="hidden" name="vote" value="false" />
+                                                        <input type="hidden" name="upVote" value="false" />
                                                         <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
-                                                        <th:block  th:if="${votes.containsKey(post.id)} and ${votes.get(post.id).postId == post.id}">
+                                                        <th:block  th:if="${votes.containsKey(post.id)} and ${votes.get(post.id).downVoted}">
                                                             <button type="submit">
                                                                 <i class="bi bi-caret-up-fill" style='font-size:24px'></i>
                                                             </button>
@@ -66,12 +67,12 @@
     <!--                                        <th:block>-->
 <!--                                                <button aria-label="downvote" aria-pressed="false" class="voteButton" data-click-id="downvote">-->
                                         <form action="/vote" method="get" >
-                                            <!--                                                    <a th:href="@{'/vote/'+ ${post.id} +'/false'">-->
+                                            <!--                                                    <a th:href="@{'/vote/'+ ${post.id} +'/false'">         and ${votes.get(post.id}.vote==true-->
                                             <input type="hidden" name="postId" th:value="${post.id}" />
-                                            <input type="hidden" name="vote" value="false" />
+                                            <input type="hidden" name="downVote" value="true" />
                                             <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
                                             <button type="submit">
-                                                    <th:block th:if = "${!votes.containsKey(post.id)} or ${votes.get(post.id).postId != post.id}">
+                                                    <th:block th:if = "${!votes.containsKey(post.id)} or ${!votes.get(post.id).downVoted}">
                                                         <i class="bi bi-caret-down" style='font-size:24px'></i>
                                                     </th:block>
                                             </button>
@@ -80,7 +81,7 @@
                                         <form action="/vote" method="get" >
                                             <!--                                                    <a th:href="@{'/vote/'+ ${post.id} +'/false'">-->
                                             <input type="hidden" name="postId" th:value="${post.id}" />
-                                            <input type="hidden" name="vote" value="false" />
+                                            <input type="hidden" name="downVote" value="false" />
                                             <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
                                             <button type="submit">
                                                     <th:block  th:if="${votes.containsKey(post.id)} and ${votes.get(post.id).postId == post.id}" >
@@ -88,7 +89,7 @@
                                                     </th:block>
                                             </button>
                                         </form>
-<!--                                                </button>-->
+<!--                                                </button>              and ${votes.get(post.id}.vote==false-->
 
 <!--                                            </th:block>-->
 <!--                                        </th:block>-->

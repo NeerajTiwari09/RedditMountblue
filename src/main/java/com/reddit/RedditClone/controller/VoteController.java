@@ -18,20 +18,24 @@ public class VoteController {
 
     @RequestMapping("/saveVote")
     public String saveVote(@ModelAttribute("vote") Vote vote){
-        System.out.println("vote Controller: "+vote.isVote());
+//        System.out.println("vote Controller: "+vote.isVote());
         voteService.saveVote(vote);
         return "sub_reddit";
     }
 
     @GetMapping("/vote")
     public String changeVote(@RequestParam("postId") Long postId,
-                             @RequestParam("vote") boolean vote,
+                             @RequestParam(required = false, name = "upVote", defaultValue = "false") boolean upVote,
+                             @RequestParam(required = false, name = "downVote", defaultValue = "false") boolean downVote,
                              @RequestParam("subRedditId") Long subRedditId,
                              Model model){
-        System.out.println("vote contribution: "+vote);
+//        System.out.println("vote contribution: "+vote);
 
+        System.out.println("upvote: "+upVote);
+        System.out.println("downVote: "+downVote);
         Vote newVote = new Vote();
-        newVote.setVote(vote);
+        newVote.setUpVoted(upVote);
+        newVote.setDownVoted(downVote);
         newVote.setPostId(postId);
         newVote.setUserId(1L);
 

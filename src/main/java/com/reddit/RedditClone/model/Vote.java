@@ -17,7 +17,9 @@ public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean vote;
+//    private boolean vote;
+    private boolean upVoted;
+    private boolean downVoted;
     private Long postId;
     private Long userId;
     private boolean contributed;

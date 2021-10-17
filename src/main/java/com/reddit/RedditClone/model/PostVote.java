@@ -43,7 +43,7 @@ public class PostVote {
 
     public void setVote(Vote vote){
         this.voteId = vote.getId();
-        this.vote = vote.isVote();
+//        this.vote = vote.isVote();
         this.userId = vote.getUserId();
         this.contributed = vote.isContributed();
     }
