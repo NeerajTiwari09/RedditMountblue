@@ -71,7 +71,7 @@ public class PostController {
         model.addAttribute("newPost", post);
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("imgUrl", imgUrl);
-        return "create-post";
+        return "update-post";
     }
 
     @RequestMapping("/popular/{subredditId}")
@@ -106,10 +106,10 @@ public class PostController {
         return "sub_reddit";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/updatePost")
     public String updatePost(@ModelAttribute("post") Post post){
         postService.updatePostById(post);
-        return "my_homepage";
+        return "redirect:/viewPost/"+post.getId();
     }
 
     @GetMapping("/delete/{postId}")

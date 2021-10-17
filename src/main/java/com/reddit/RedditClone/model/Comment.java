@@ -9,15 +9,7 @@ import lombok.Setter;
 import java.sql.Date;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
+import javax.persistence.*;
 
 @Entity
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
@@ -27,18 +19,23 @@ public class Comment implements Comparable<Comment> {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+
     @Column(length=5000)
     private String text;
+
     @ManyToOne
     @JsonIgnore
     private User user;
+
     @ManyToOne
     @JsonIgnore
     private Post post;
+
     @OneToMany(mappedBy="comment")
     @OrderBy("createdDate, id")
     private SortedSet<Comment> comments = new TreeSet<>();
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="comment_id", nullable=true)
     @JsonIgnore
     private Comment comment;

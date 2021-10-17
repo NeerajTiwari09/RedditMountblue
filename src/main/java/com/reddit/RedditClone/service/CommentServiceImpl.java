@@ -48,8 +48,9 @@ public class CommentServiceImpl implements CommentService {
         else if (parentId != null) {
             Comment comment = new Comment();
             Optional<Comment> parentCommentOpt = commentRepository.findById(parentId);
-            if (parentCommentOpt.isPresent())
+            if (parentCommentOpt.isPresent()) {
                 comment.setComment(parentCommentOpt.get());
+            }
             comment.setText(childCommentText);
             populateCommentMetadata(postOpt, comment);
             commentRepository.save(comment);
@@ -57,7 +58,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private void populateCommentMetadata(Optional<Post> postOpt, Comment comment) {
-        User user = new User(1L, "Shreya");
+        User user = new User(1L, "User");
         if (postOpt.isPresent())
             comment.setPost(postOpt.get());
         comment.setUser(user);

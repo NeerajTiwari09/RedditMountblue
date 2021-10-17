@@ -65,7 +65,7 @@ public class PostServiceImpl implements  PostService{
         }
         Post existingPost = optional.get();
         Timestamp timestamp = Timestamp.from(Instant.now());
-        Optional<Subreddit> subreddit = subredditRepository.findById(post.getSubredditId());
+//        Optional<Subreddit> subreddit = subredditRepository.findById(post.getSubredditId());
         String url = awsService.uploadFile(post.getImage());
         List<Image> images = new ArrayList<>();
         Image image = new Image();
@@ -73,7 +73,6 @@ public class PostServiceImpl implements  PostService{
         images.add(image);
         existingPost.setImages(images);
         existingPost.setUpdatedAt(timestamp);
-        existingPost.setSubredditId(subreddit.get().getId());
         postRepository.save(existingPost);
     }
 
@@ -126,7 +125,6 @@ public class PostServiceImpl implements  PostService{
             if (addedToVisitedComments && !comment.getComments().isEmpty())
                 getCommentsWithoutDuplicates(page, visitedComments, comment.getComments());
         }
-
         return comments;
     }
 }

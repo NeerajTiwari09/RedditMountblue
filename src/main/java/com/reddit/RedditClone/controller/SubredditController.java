@@ -52,7 +52,7 @@ public class SubredditController {
         Map<Long,Vote> votes = voteService.getVotesByPosts(posts);
         Long karma = postService.getKarma(id);
 
-        System.out.println("Karma: "+karma);
+        System.out.println("Karma: " + karma);
         model.addAttribute("subReddit", subreddit);
         model.addAttribute("posts", posts);
         model.addAttribute("karma", karma);
