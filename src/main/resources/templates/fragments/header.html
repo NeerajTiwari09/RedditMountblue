@@ -19,8 +19,8 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form action="/search" method="get" class="d-flex">
+                    <input name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -29,6 +29,22 @@
                     </li>
                 </ul>
             </div>
+            <div th:if="${subReddit != null} and ${subReddit.id != null}" class="col-md-2">
+                <a th:href="@{'/popular/' +${subReddit.id}}">
+                    <button class="btn btn-outline-primary">Popular Posts</button>
+                </a>
+            </div>
+            <div th:if="${subReddit != null} and ${subReddit.id != null}" class="col-md-2">
+                <a th:href="@{'/controversial/' +${subReddit.id}}">
+                    <button class="btn btn-outline-primary">Controversial Posts</button>
+                </a>
+            </div>
+            <div th:if="${subReddit != null} and ${subReddit.id != null}" class="col-md-2">
+                <a th:href="@{'/new/' +${subReddit.id}}">
+                    <button class="btn btn-outline-primary">New Post</button>
+                </a>
+            </div>
+
         </div>
     </nav>
 </div>
