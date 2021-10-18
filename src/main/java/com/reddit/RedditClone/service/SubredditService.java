@@ -10,4 +10,6 @@ public interface SubredditService {
     List<Subreddit> findAllSubreddits();
 
     Subreddit getRedditById(Long id);
+
+    List<Subreddit> getSearchedPosts(String keyword);
 }

@@ -38,6 +38,18 @@ public class PostController {
         return "popular";
     }
 
+    @RequestMapping("/viewProfile")
+    public String viewProfile(Model model){
+        List<Post> posts = new ArrayList<>();
+        List<Subreddit> subreddits = new ArrayList<>();
+        List<Comment> comments = new ArrayList<>();
+
+        model.addAttribute("posts", posts);
+        model.addAttribute("comments", comments);
+        model.addAttribute("subreddits", subreddits);
+        return "view_profile";
+    }
+
     @GetMapping("/viewCreatePostPage")
     public String viewCreatePostPage(Model model){
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
@@ -148,6 +160,7 @@ public class PostController {
     public String searchPosts(@RequestParam("search") String keyword,Model model) throws ParseException {
         System.out.println("this is keyword = " +keyword);
         List<Post> posts = postService.getSearchedPosts(keyword.toLowerCase());
+        List<Subreddit> searchSubreddits = subredditService.getSearchedPosts(keyword.toLowerCase());
 
         Subreddit subreddit = subredditService.getRedditById(1L);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
@@ -158,8 +171,9 @@ public class PostController {
         model.addAttribute("posts",posts);
         model.addAttribute("karma", karma);
         model.addAttribute("subreddits",subreddits);
+        model.addAttribute("searchSubreddits",searchSubreddits);
         model.addAttribute("votes", votes);
-        return "sub_reddit";
+        return "search";
     }
 
 

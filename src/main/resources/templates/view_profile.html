@@ -10,45 +10,63 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
           integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
     <link href="main.css"  rel="stylesheet" type="text/css">
-<style>
+    <style>
+    .profile-nav{
+      text-align: center;
+      background: #fb6d19;
+    }
+    .profile-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .profile-nav li {
+      float: left;
+    }
+
+    .profile-nav li a {
+      display: block;
+      color: black;
+      text-align: center;
+      padding: 16px;
+      text-decoration: none;
+    }
+
     li{
-    list-style: none;
-}
-.sorting, .single-post{
-    background:white;
-    margin:10px;
-    padding:10px 20px;
-    border-radius: 5px;
-}
+        list-style: none;
+    }
+    .sorting, .single-post, .single-subreddit{
+        background:white;
+        margin:10px;
+        padding:10px 20px;
+        border-radius: 5px;
+    }
 
-.btn-vote{
-border: none;
+    .btn-vote{
+    border: none;
 
-}
+    }
 </style>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-
+<div>
+    <div class="profile-nav d-flex justify-content-center">
+        <ul>
+            <li><a href="#">POSTS</a></li>
+            <li><a href="#">COMMENTS</a></li>
+            <li><a href="#">UPVOTED</a></li>
+            <li><a href="#">DOWNVOTED</a></li>
+        </ul>
+    </div>
+</div>
 <div class="mt-5" style="background-color:#dae0e6; padding:30px">
     <div class="row">
         <div class="col-lg-8" >
             <!-- Post content-->
             <article>
-                <div>
-                    <header class="mb-4">
-                        <h1 class="fw-bolder mb-1" th:text="${subReddit.name}">Subreddit name</h1>
-                        <div class="text-muted fst-italic mb-2" th:text="${subReddit.createdAt}"></div>
-                        <span th:text="'Karma '+${karma}">Karma</span>
-                    </header>
-                </div>
-                <div class="sorting">
-                    <a th:href="@{'/new/'}" style="margin:10px;text-decoration:none;">New</a>
-                    <span>Top -> </span>
-                    <a href="@{'/top/t=day/'}" style="margin:10px;text-decoration:none;">Today</a>
-                    <a href="@{'/top/t=week/'}" style="margin:10px;text-decoration:none;">This Week</a>
-                    <a href="@{'/top/t=month/'}" style="margin:10px;text-decoration:none;">This Month</a>
-                </div>
                 <!-- Content-->
                 <section class="">
                     <div class="row" >
@@ -121,21 +139,27 @@ border: none;
         <div class="col-lg-4">
             <!-- Search widget-->
             <div class="card mb-4">
-                <div class="card-header">About Community</div>
-                <div class="card-body">
+                <div class="card-header justify-content-center">
+                    <h5 align="center">Profile</h5>
+                </div>
+                <div class="card-body justify-content-center">
                     <div class="">
-                        <p th:text="${subReddit.description}"></p>
-                        <div class="text-muted fst-italic mb-2" th:text="${subReddit.createdAt}"></div>
+                        <p >Manisha-97</p>
+                        <p>Karma: </p>
+                        <p>Cake day: </p>
+                        <a href="/viewCreatePostPage">New Post</a>
                     </div>
                 </div>
             </div>
             <!-- Subreddits List-->
             <div class="card mb-4">
-                <div class="card-header">Subreddits</div>
+                <div class="card-header">Your Subreddits</div>
                 <div class="card-body">
                     <div class="row">
                         <ul class="mb-0">
-                            <li th:each="subreddit : ${subreddits}"><a th:href="'/reddit/'+${subreddit.id}" th:text="${subreddit.name}"></a></li>
+                            <li th:each="subreddit : ${subreddits}">
+                                <a th:href="'/reddit/'+${subreddit.id}" th:text="${subreddit.name}"></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
