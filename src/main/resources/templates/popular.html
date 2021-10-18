@@ -3,24 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Post</title>
+  <title></title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.6.0/font/bootstrap-icons.min.css" integrity="sha512-7w04XesEFaoeeKX0oxkwayDboZB/+AKNF5IUE50fCUDUywLvDN4gv2513TLQS+RDenAeHEK3O40jZZVrkpnWWw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
         integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
-
-  <style>
-    li{
-      list-style: none;
-    }
-    .sorting, .single-post{
+  <link href="main.css"  rel="stylesheet" type="text/css">
+<style>
+  li{
+    list-style: none;
+}
+.sorting, .single-post{
     background:white;
     margin:10px;
     padding:10px 20px;
     border-radius: 5px;
-    }
+}
 
+.btn-vote{
+border: none;
+
+}
 </style>
 </head>
 <body>
@@ -39,13 +43,13 @@
         <div class="sorting">
           <a th:href="@{'/popular/new/'}" style="margin:10px;text-decoration:none;">New</a>
           <span>Top -> </span>
-          <a th:href="@{'/popular/top/t=day/'}" style="margin:10px;text-decoration:none;">Today</a>
-          <a th:href="@{'/popular/top/t=week/'}" style="margin:10px;text-decoration:none;">This Week</a>
-          <a th:href="@{'/popular/top/t=month/'}" style="margin:10px;text-decoration:none;">This Month</a>
+          <a th:href="@{'/popular/top&t=day'}" style="margin:10px;text-decoration:none;">Today</a>
+          <a th:href="@{'/popular/top&t=week'}" style="margin:10px;text-decoration:none;">This Week</a>
+          <a th:href="@{'/popular/top&t=month'}" style="margin:10px;text-decoration:none;">This Month</a>
         </div>
         <!-- Content-->
         <section class="">
-          <div class="row" >
+          <div class="row">
             <th:block th:each="post : ${posts}">
               <div class="single-post">
                 <div class="col-lg-1 col-md-1 col-sm-1">

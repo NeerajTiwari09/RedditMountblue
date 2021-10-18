@@ -3,28 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Post</title>
+    <title></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.6.0/font/bootstrap-icons.min.css" integrity="sha512-7w04XesEFaoeeKX0oxkwayDboZB/+AKNF5IUE50fCUDUywLvDN4gv2513TLQS+RDenAeHEK3O40jZZVrkpnWWw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
           integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
-
-    <style>
+    <link href="main.css"  rel="stylesheet" type="text/css">
+<style>
     li{
-      list-style: none;
-    }
-    .sorting{
+    list-style: none;
+}
+.sorting, .single-post{
     background:white;
     margin:10px;
     padding:10px 20px;
     border-radius: 5px;
-    }
-    .single-post{
-    display: inline;
-    margin:10px;
-    background:white;
-    }
+}
+
+.btn-vote{
+border: none;
+
+}
 </style>
 </head>
 <body>
@@ -60,7 +60,7 @@
                                         <input type="hidden" name="upVote" value="true" />
                                         <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
                                         <th:block th:if="${!votes.containsKey(post.id)} or  ${!votes.get(post.id).upVoted}">
-                                            <button type="submit">
+                                            <button class="btn-vote" type="submit">
                                                 <i class="bi bi-caret-up" style='font-size:24px'></i>
                                             </button>
                                         </th:block>
@@ -70,7 +70,7 @@
                                         <input type="hidden" name="upVote" value="false" />
                                         <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
                                         <th:block  th:if="${votes.containsKey(post.id)} and ${votes.get(post.id).upVoted}">
-                                            <button type="submit">
+                                            <button class="btn-vote" type="submit">
                                                 <i class="bi bi-caret-up-fill" style='font-size:24px'></i>
                                             </button>
                                         </th:block>
@@ -81,7 +81,7 @@
                                         <input type="hidden" name="downVote" value="true" />
                                         <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
                                         <th:block th:if = "${!votes.containsKey(post.id)} or ${!votes.get(post.id).downVoted}">
-                                            <button type="submit">
+                                            <button class="btn-vote" type="submit">
                                                 <i class="bi bi-caret-down" style='font-size:24px'></i>
                                             </button>
                                         </th:block>
@@ -91,7 +91,7 @@
                                         <input type="hidden" name="downVote" value="false" />
                                         <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
                                         <th:block  th:if="${votes.containsKey(post.id)} and ${votes.get(post.id).downVoted}" >
-                                            <button type="submit">
+                                            <button class="btn-vote" type="submit">
                                                 <i class="bi bi-caret-down-fill" style='font-size:24px'></i>
                                             </button>
                                         </th:block>

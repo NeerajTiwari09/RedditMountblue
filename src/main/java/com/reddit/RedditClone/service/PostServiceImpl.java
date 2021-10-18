@@ -148,6 +148,10 @@ public class PostServiceImpl implements  PostService{
         return postRepository.findAll();
     }
 
+    @Override
+    public List<Post> findAllNewPosts() {
+        return postRepository.findAllOrderByCreatedAtDesc();
+    }
 
 
 }

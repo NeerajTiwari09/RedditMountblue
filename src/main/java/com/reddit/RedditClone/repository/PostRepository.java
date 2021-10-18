@@ -24,4 +24,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("SELECT p FROM Post p WHERE p.subredditId = ?1 ORDER BY p.voteCount ASC, p.upVoteCount DESC, p.downVoteCount DESC")
     List<Post> findControversialPosts(Long subredditId);
+
+    @Query("SELECT pp FROM Post pp order by pp.upVoteCount desc")
+    List<Post> findAllOrderByCreatedAtDesc();
 }
