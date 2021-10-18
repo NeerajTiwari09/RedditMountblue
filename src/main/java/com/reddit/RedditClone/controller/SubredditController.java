@@ -58,6 +58,7 @@ public class SubredditController {
         model.addAttribute("karma", karma);
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("votes", votes);
+        model.addAttribute("postsLength", posts.size());
 //        model.addAttribute("currentUserId", 1);
 
         postService.getControversialPosts(id);

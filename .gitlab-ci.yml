@@ -24,8 +24,8 @@ deploy_heroku:
     - echo "$HEROKU_API_KEY"
     - yum install git -y
     - git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/reddit-clone-application.git
-    - git config --global user.email "neeraj.tiwari.17.1@mountblue.tech"
-    - git config --global user.name "NeerajTiwari17"
+    - git config --global user.email "mani.chintalappagari.17.1@mountblue.tech"
+    - git config --global user.name "ManiGit@98"
     - git config --global push.default matching
     - git checkout master
     - git commit --allow-empty -m "Heroku build trigger notification"

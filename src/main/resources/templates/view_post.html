@@ -32,17 +32,10 @@
       <article>
         <div>
           <div class="col-lg-4">
-<!--            <span class="sprite vote"> </span>-->
-
-            <span class="vote">
-              <svg width="36" height="36">
-                <path d="M2 10h32L18 26 2 10z" fill="currentColor"></path>
-              </svg>
-            </span>
           </div>
           <div class="col-lg-8">
             <header class="mb-4">
-              <h1 class="fw-bolder mb-1" th:text="${post.title}">Welcome to Post</h1>
+              <h5 class="fw-bolder mb-1" th:text="${post.title}">Welcome to Post</h5>
               <div class="text-muted fst-italic mb-2" th:text="${post.createdAt}">Posted on Apr 27, 2008</div>
                 <a th:href="@{'/update/'+${post.id}}"><button class="btn btn-outline-primary" type="submit">Update</button></a>
                 <a th:href="@{'/delete/'+${post.id}}"><button class="btn btn-outline-primary" type="submit">Delete</button></a>
