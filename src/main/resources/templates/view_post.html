@@ -64,7 +64,7 @@
                     <form th:action="@{/saveComment/{postId}/comments(postId=${post.id})}" method="post">
                         <div class="form-group" style="margin-top: 1.5em">
                             <label for="text">Leave a comment below</label>
-                            <textarea class="form-control" th:field="${rootComment.text}" rows="3"></textarea>
+                            <textarea class="form-control" id="text" th:field="${rootComment.text}" rows="3"></textarea>
                         </div>
                         <br>
                         <div>

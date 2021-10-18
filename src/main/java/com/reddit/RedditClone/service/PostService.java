@@ -2,8 +2,8 @@ package com.reddit.RedditClone.service;
 
 import com.reddit.RedditClone.model.Comment;
 import com.reddit.RedditClone.model.Post;
+import org.springframework.ui.Model;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -33,4 +33,5 @@ public interface PostService {
     SortedSet<Comment> getCommentsWithoutDuplicates(int i, Set<Long> longs, SortedSet<Comment> comments);
 
     List<Post> getSearchedPosts(String search);
+
 }

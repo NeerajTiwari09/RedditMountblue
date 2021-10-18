@@ -1,13 +1,11 @@
 package com.reddit.RedditClone.service;
 
-import com.reddit.RedditClone.model.Comment;
-import com.reddit.RedditClone.model.Image;
-import com.reddit.RedditClone.model.Post;
-import com.reddit.RedditClone.model.Subreddit;
+import com.reddit.RedditClone.model.*;
 import com.reddit.RedditClone.repository.PostRepository;
 import com.reddit.RedditClone.repository.SubredditRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -21,6 +19,12 @@ public class PostServiceImpl implements  PostService{
 
     @Autowired
     private SubredditRepository subredditRepository;
+
+    @Autowired
+    private SubredditService subredditService;
+
+    @Autowired
+    private VoteService voteService;
 
     @Autowired
     private AWSService awsService;
@@ -147,7 +151,5 @@ public class PostServiceImpl implements  PostService{
         }
         return postRepository.findAll();
     }
-
-
 
 }
