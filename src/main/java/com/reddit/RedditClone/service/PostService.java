@@ -31,4 +31,6 @@ public interface PostService {
     List<Post> findAllNewPostsBySubredditId(Long subredditId);
 
     SortedSet<Comment> getCommentsWithoutDuplicates(int i, Set<Long> longs, SortedSet<Comment> comments);
+
+    List<Post> getSearchedPosts(String search);
 }

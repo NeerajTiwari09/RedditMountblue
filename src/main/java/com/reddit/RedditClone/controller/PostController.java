@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.*;
 
 @Controller
@@ -117,4 +118,23 @@ public class PostController {
         Long subredditId = postService.deleteById(postId);
         return "redirect:/reddit/"+subredditId;
     }
+
+    @GetMapping("/search")
+    public String searchPosts(@RequestParam("search") String keyword,Model model) throws ParseException {
+        System.out.println("this is keyword = " +keyword);
+        List<Post> posts = postService.getSearchedPosts(keyword.toLowerCase());
+
+        Subreddit subreddit = subredditService.getRedditById(1L);
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
+        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
+        Long karma = postService.getKarma(1L);
+
+        model.addAttribute("subReddit", subreddit);
+        model.addAttribute("posts",posts);
+        model.addAttribute("karma", karma);
+        model.addAttribute("subreddits",subreddits);
+        model.addAttribute("votes", votes);
+        return "sub_reddit";
+    }
+
 }

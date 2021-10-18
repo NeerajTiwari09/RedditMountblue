@@ -141,5 +141,13 @@ public class PostServiceImpl implements  PostService{
         return comments;
     }
 
+    public List<Post> getSearchedPosts(String keyword) {
+        if (keyword != null) {
+            return postRepository.searchByString(keyword);
+        }
+        return postRepository.findAll();
+    }
+
+
 
 }
