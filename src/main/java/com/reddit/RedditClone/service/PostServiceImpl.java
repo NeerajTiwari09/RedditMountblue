@@ -173,4 +173,9 @@ public class PostServiceImpl implements  PostService{
         return "sub_reddit";
     }
 
+    @Override
+    public List<Post> getLast24HourPosts(Long subredditId){
+        return postRepository.findLast24HourPosts(subredditId);
+    }
+
 }
