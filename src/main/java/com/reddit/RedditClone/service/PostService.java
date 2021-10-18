@@ -34,4 +34,7 @@ public interface PostService {
 
     List<Post> getSearchedPosts(String search);
 
+    List<Post> getLastWeekPosts(Long subredditId);
+
+    String redirectToSubredditPage(Long subredditId, List<Post> posts , Model model);
 }

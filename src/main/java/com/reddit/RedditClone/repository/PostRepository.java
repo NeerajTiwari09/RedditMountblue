@@ -25,4 +25,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p WHERE p.subredditId = ?1 AND p.upVoteCount > 10 AND p.downVoteCount > 10 ORDER BY p.voteCount ASC, p.upVoteCount DESC, p.downVoteCount DESC")
     List<Post> findControversialPosts(Long subredditId);
 
+    @Query(value = "SELECT * FROM posts \n" +
+            "WHERE subreddit_id = ?1 AND created_at BETWEEN NOW() - INTERVAL '1 WEEK' AND NOW() \n" +
+            "ORDER BY created_at DESC;", nativeQuery = true)
+    List<Post> findLastWeekPosts(Long subredditId);
+
 }

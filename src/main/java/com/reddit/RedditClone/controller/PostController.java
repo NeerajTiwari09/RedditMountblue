@@ -163,4 +163,12 @@ public class PostController {
         return "sub_reddit";
     }
 
+    @GetMapping("/top/t=week/{subredditId}")
+    public String currentYearPosts(@PathVariable("subredditId") Long subredditId, Model model){
+        List<Post> posts = postService.getLastWeekPosts(subredditId);
+
+        model.addAttribute("posts", posts);
+        return postService.redirectToSubredditPage(subredditId, posts, model);
+    }
+
 }

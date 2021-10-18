@@ -152,4 +152,25 @@ public class PostServiceImpl implements  PostService{
         return postRepository.findAll();
     }
 
+    @Override
+    public List<Post> getLastWeekPosts(Long subredditId) {
+        return postRepository.findLastWeekPosts(subredditId);
+    }
+    @Override
+    public String redirectToSubredditPage(Long subredditId, List<Post> posts, Model model){
+        Subreddit subreddit = subredditService.getRedditById(subredditId);
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
+        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
+        Long karma = getKarma(subredditId);
+
+        System.out.println("Karma: " + karma);
+        model.addAttribute("subReddit", subreddit);
+        model.addAttribute("karma", karma);
+        model.addAttribute("subreddits",subreddits);
+        model.addAttribute("votes", votes);
+        model.addAttribute("postsLength", posts.size());
+
+        return "sub_reddit";
+    }
+
 }
