@@ -24,6 +24,16 @@ public class PostController {
     @Autowired
     private SubredditService subredditService;
 
+    @GetMapping("/popular")
+    public String popular(Model model){
+        List<Post> posts = new ArrayList<>();
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
+
+        model.addAttribute("posts", posts);
+        model.addAttribute("subreddits", subreddits);
+        return "popular";
+    }
+
     @GetMapping("/viewCreatePostPage")
     public String viewCreatePostPage(Model model){
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
