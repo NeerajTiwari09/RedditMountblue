@@ -54,8 +54,10 @@ public class PostController {
         Post post = postService.getPostById(postId);
         SortedSet<Comment> commentsWithoutDuplicates = postService.getCommentsWithoutDuplicates(0, new HashSet<Long>(), post.getComments());
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
-        String url = post.getImages().get(0).getUrls();
-
+        String url ="";
+        if(!post.getImages().isEmpty()) {
+            url = post.getImages().get(0).getUrls();
+        }
         model.addAttribute("post",post);
         model.addAttribute("url", url);
         model.addAttribute("thread", commentsWithoutDuplicates);

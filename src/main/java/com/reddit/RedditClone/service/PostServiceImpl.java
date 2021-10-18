@@ -29,12 +29,14 @@ public class PostServiceImpl implements  PostService{
     public Post savePost(Post post) {
         Timestamp timestamp = Timestamp.from(Instant.now());
 //        Optional<Subreddit> subreddit = subredditRepository.findById(post.getSubredditId());
-        String url = awsService.uploadFile(post.getImage());
-        List<Image> images = new ArrayList<>();
-        Image image = new Image();
-        image.setUrls(url);
-        images.add(image);
-        post.setImages(images);
+        if(!post.getImage().isEmpty()) {
+            String url = awsService.uploadFile(post.getImage());
+            List<Image> images = new ArrayList<>();
+            Image image = new Image();
+            image.setUrls(url);
+            images.add(image);
+            post.setImages(images);
+        }
         post.setCreatedAt(timestamp);
         post.setUpdatedAt(timestamp);
 //        post.setSubredditId(subreddit.get().getId());
@@ -66,12 +68,14 @@ public class PostServiceImpl implements  PostService{
         Post existingPost = optional.get();
         Timestamp timestamp = Timestamp.from(Instant.now());
 //        Optional<Subreddit> subreddit = subredditRepository.findById(post.getSubredditId());
-        String url = awsService.uploadFile(post.getImage());
-        List<Image> images = new ArrayList<>();
-        Image image = new Image();
-        image.setUrls(url);
-        images.add(image);
-        existingPost.setImages(images);
+        if(!post.getImage().isEmpty()) {
+            String url = awsService.uploadFile(post.getImage());
+            List<Image> images = new ArrayList<>();
+            Image image = new Image();
+            image.setUrls(url);
+            images.add(image);
+            existingPost.setImages(images);
+        }
         existingPost.setUpdatedAt(timestamp);
         postRepository.save(existingPost);
     }

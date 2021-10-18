@@ -49,7 +49,7 @@
             </header>
           </div>
         </div>
-        <figure class="mb-4">
+        <figure class="mb-4" th:if="${url != ''}">
           <img class="img-fluid rounded" th:src="${url}" alt="..." />
         </figure>
         <!-- Content-->
@@ -101,7 +101,7 @@
         <div class="card-header">Categories</div>
         <div class="card-body">
           <div class="row">
-            <ul class="mb-0">
+            <ul class="mb-0 px-5">
                 <li th:each="subreddit : ${subreddits}"><a th:href="'/reddit/'+${subreddit.id}" th:text="${subreddit.name}"></a></li>
             </ul>
           </div>
