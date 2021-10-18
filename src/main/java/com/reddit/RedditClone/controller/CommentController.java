@@ -37,10 +37,5 @@ public class CommentController {
         return "redirect:/viewPost/" + postId;
     }
 
-    @RequestMapping("/deleteComment/{id}")
-    private String deleteComment(@PathVariable Long id){
-        Comment comment = commentService.getById(id);
-        commentService.deleteById(id);
-        return "redirect:/viewPost/" + comment.getPost().getId();
-    }
+   
 }
