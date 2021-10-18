@@ -185,5 +185,4 @@ public class PostController {
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPage(subredditId, posts, model);
     }
-
 }
