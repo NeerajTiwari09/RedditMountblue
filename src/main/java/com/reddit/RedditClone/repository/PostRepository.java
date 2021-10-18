@@ -30,6 +30,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "ORDER BY created_at DESC;", nativeQuery = true)
     List<Post> findLastWeekPosts(Long subredditId);
 
+    @Query(value = "SELECT * FROM posts \n" +
+            "WHERE subreddit_id = ?1 AND created_at BETWEEN NOW() - INTERVAL '1 MONTH' AND NOW() \n" +
+            "ORDER BY created_at DESC;", nativeQuery = true)
+    List<Post> findLastMonthPosts(Long subredditId);
     @Query(value = "SELECT * FROM posts WHERE subreddit_id = ?1 AND created_at BETWEEN NOW() - INTERVAL '24 HOURS' AND NOW() ORDER BY created_at DESC", nativeQuery = true)
     List<Post> findLast24HourPosts(Long subredditId);
 

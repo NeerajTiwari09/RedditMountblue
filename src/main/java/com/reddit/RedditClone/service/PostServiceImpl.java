@@ -174,6 +174,10 @@ public class PostServiceImpl implements  PostService{
     }
 
     @Override
+    public List<Post> getLastMonthPosts(Long subredditID) {
+        return postRepository.findLastMonthPosts(subredditID);
+    }
+    @Override
     public List<Post> getLast24HourPosts(Long subredditId){
         return postRepository.findLast24HourPosts(subredditId);
     }

@@ -26,7 +26,7 @@ public class Post {
     private Timestamp updatedAt;
     private String videoUrl;
     private String author;
-    private String links;
+    private String link;
 
     private Long subredditId;
 

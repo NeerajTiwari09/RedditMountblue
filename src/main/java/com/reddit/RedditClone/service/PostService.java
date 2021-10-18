@@ -38,5 +38,7 @@ public interface PostService {
 
     String redirectToSubredditPage(Long subredditId, List<Post> posts , Model model);
 
+    List<Post> getLastMonthPosts(Long subredditID);
+
     List<Post> getLast24HourPosts(Long subredditId);
 }

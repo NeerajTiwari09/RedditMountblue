@@ -171,6 +171,13 @@ public class PostController {
         return postService.redirectToSubredditPage(subredditId, posts, model);
     }
 
+    @GetMapping("/top/t=month/{subredditId}")
+    public String currentMonthPosts(@PathVariable("subredditId") Long subredditId, Model model){
+        List<Post> posts = postService.getLastMonthPosts(subredditId);
+
+        model.addAttribute("posts", posts);
+        return postService.redirectToSubredditPage(subredditId, posts, model);
+    }
     @GetMapping("/top/t=day/{subredditId}")
     public String todayPosts(@PathVariable("subredditId") Long subredditId, Model model){
         List<Post> posts = postService.getLast24HourPosts(subredditId);
