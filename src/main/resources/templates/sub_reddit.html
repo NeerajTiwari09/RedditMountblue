@@ -12,7 +12,6 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-
 <div class="container mt-5">
     <div class="row">
         <div class="col-lg-8">
@@ -111,7 +110,7 @@
                 <div class="card-header">Subreddits</div>
                 <div class="card-body">
                     <div class="row">
-                        <ul class="mb-0">
+                        <ul class="mb-0 px-5">
                             <li th:each="subreddit : ${subreddits}"><a th:href="'/reddit/'+${subreddit.id}" th:text="${subreddit.name}"></a></li>
                         </ul>
                     </div>

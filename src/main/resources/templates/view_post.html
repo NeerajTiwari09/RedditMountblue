@@ -52,6 +52,10 @@
         <figure class="mb-4" th:if="${url != ''}">
           <img class="img-fluid rounded" th:src="${url}" alt="..." />
         </figure>
+          <div class="mb-3">
+              <label for="link" class="form-label">Link</label>
+              <input type="text" th:name="link" th:field="${post.link}" class="form-control" id="link">
+          </div>
         <!-- Content-->
         <section class="mb-5">
           <p class="fs-5 mb-4" th:text="${post.content}">Science is an enterprise that should be cherished as an activity of the free human mind. Because it transforms who we are, how we live, and it gives us an understanding of our place in the universe.
@@ -71,7 +75,7 @@
                     <form th:action="@{/saveComment/{postId}/comments(postId=${post.id})}" method="post">
                         <div class="form-group" style="margin-top: 1.5em">
                             <label for="text">Leave a comment below</label>
-                            <textarea class="form-control" th:field="${rootComment.text}" rows="3"></textarea>
+                            <textarea id="text" class="form-control" th:field="${rootComment.text}" rows="3"></textarea>
                         </div>
                         <br>
                         <div>

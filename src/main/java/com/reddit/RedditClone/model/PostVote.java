@@ -33,7 +33,7 @@ public class PostVote {
         this.updatedAt = post.getUpdatedAt();
         this.videoUrl = post.getVideoUrl();
         this.author = post.getAuthor();
-        this.links = post.getLinks();
+        this.links = post.getLink();
         this.subredditId = post.getSubredditId();
         this.images = post.getImages();
         this.voteCount = post.getVoteCount();

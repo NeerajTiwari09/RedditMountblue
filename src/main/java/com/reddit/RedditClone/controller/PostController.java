@@ -70,7 +70,10 @@ public class PostController {
     public String getUpdateViewPage(@PathVariable Long postId, Model model){
         Post post = postService.getPostById(postId);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
-        String imgUrl = post.getImages().get(0).getUrls();
+        String imgUrl = "";
+        if(!(post.getImage() == null)) {
+            imgUrl = post.getImages().get(0).getUrls();
+        }
         model.addAttribute("newPost", post);
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("imgUrl", imgUrl);
@@ -139,9 +142,7 @@ public class PostController {
 
     @GetMapping("/search")
     public String searchPosts(@RequestParam("search") String keyword,Model model) throws ParseException {
-        System.out.println("this is keyword = " +keyword);
         List<Post> posts = postService.getSearchedPosts(keyword.toLowerCase());
-
         Subreddit subreddit = subredditService.getRedditById(1L);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
         Map<Long, Vote> votes = voteService.getVotesByPosts(posts);

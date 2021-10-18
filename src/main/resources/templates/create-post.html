@@ -28,7 +28,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="content" class="form-label">Content</label>
-                        <textarea type="text" th:name="content" th:field="${newPost.content}" class="form-control" id="content"></textarea>
+                        <textarea type="text" th:name="content" th:field="${newPost.content}" rows="10" class="form-control" id="content"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="link" class="form-label">Link</label>
+                        <input type="text" th:name="link" th:field="${newPost.link}" class="form-control" id="link">
                     </div>
                     <figure class="mb-4">
                         <img class="img-fluid rounded" th:if="${imgUrl!=null}" th:src="${imgUrl}" alt="..." />

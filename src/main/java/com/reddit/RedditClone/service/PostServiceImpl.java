@@ -67,7 +67,6 @@ public class PostServiceImpl implements  PostService{
         }
         Post existingPost = optional.get();
         Timestamp timestamp = Timestamp.from(Instant.now());
-//        Optional<Subreddit> subreddit = subredditRepository.findById(post.getSubredditId());
         if(!post.getImage().isEmpty()) {
             String url = awsService.uploadFile(post.getImage());
             List<Image> images = new ArrayList<>();
@@ -76,6 +75,7 @@ public class PostServiceImpl implements  PostService{
             images.add(image);
             existingPost.setImages(images);
         }
+        existingPost.setLink(post.getLink());
         existingPost.setUpdatedAt(timestamp);
         postRepository.save(existingPost);
     }
@@ -113,7 +113,6 @@ public class PostServiceImpl implements  PostService{
     public List<Post> getControversialPosts(Long subredditId) {
         List<Post> posts = postRepository.findControversialPosts(subredditId);
         List<Post> controversialPosts = new ArrayList<>();
-
         for(Post post : posts) {
             System.out.println("post: "+post.getVoteCount()+" : "+post.getUpVoteCount()+" : "+post.getDownVoteCount());
         }
@@ -124,8 +123,6 @@ public class PostServiceImpl implements  PostService{
     public List<Post> findAllNewPostsBySubredditId(Long subredditId) {
         return postRepository.findBySubredditIdOrderByCreatedAtDesc(subredditId);
     }
-
-
 
    @Override
     public SortedSet<Comment> getCommentsWithoutDuplicates(int page, Set<Long> visitedComments, SortedSet<Comment> comments) {
@@ -151,7 +148,4 @@ public class PostServiceImpl implements  PostService{
         }
         return postRepository.findAll();
     }
-
-
-
 }

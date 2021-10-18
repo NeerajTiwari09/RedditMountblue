@@ -14,7 +14,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "lower(p.author) LIKE %?1% OR lower(p.content) LIKE %?1%")
     List<Post> searchByString(String searchString);
 
-
     @Query("SELECT pp FROM Post pp WHERE pp.subredditId= ?1 order by pp.upVoteCount desc")
     List<Post> findAllPopularPostsBySubredditId(Long subredditId);
 
