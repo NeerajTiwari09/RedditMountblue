@@ -34,7 +34,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="content" class="form-label">Content</label>
-                        <textarea type="text" th:name="content" th:field="${newPost.content}" class="form-control" id="content"></textarea>
+                        <textarea type="text" th:name="content" th:field="${newPost.content}" class="form-control" rows="10" id="content"></textarea>
                     </div>
                     <figure class="mb-4" th:if="${imgUrl != ''}">
                         <img class="img-fluid rounded" th:src="${imgUrl}" alt="..." />

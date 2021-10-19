@@ -101,7 +101,7 @@ public class PostController {
         Post post = postService.getPostById(postId);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
         String imgUrl = "";
-        if(!(post.getImage() == null)) {
+        if(!post.getImages().isEmpty()) {
             imgUrl = post.getImages().get(0).getUrls();
         }
         model.addAttribute("newPost", post);
