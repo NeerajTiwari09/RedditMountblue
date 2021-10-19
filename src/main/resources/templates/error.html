@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Something went wrong!</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<h1 class="text-danger text-center">Something Went Wrong!!</h1>
+<h1 class="text-danger text-center" th:text="${errMsg}">Error Message</h1>
+</body>
+</html>

@@ -31,19 +31,35 @@
         <div class="col-lg-8" >
             <!-- Post content-->
             <article>
-                <div th:if="${subReddit != null}">
-                    <header class="mb-4">
-                        <h1 class="fw-bolder mb-1"  th:text="${subReddit.name}">Subreddit name</h1>
+                <div>
+                    <header th:if="${subReddit != null}" class="mb-4">
+                        <h1 class="fw-bolder mb-1" th:text="${subReddit.name}">Subreddit name</h1>
                         <div class="text-muted fst-italic mb-2" th:text="${subReddit.createdAt}"></div>
                         <span th:text="'Karma '+${karma}">Karma</span>
                     </header>
+
+                    <header th:if="${subReddit == null}" class="mb-4">
+                        <h1 class="fw-bolder mb-1">Posts</h1>
+                    </header>
                 </div>
                 <div class="sorting">
-                    <a th:href="@{'/new/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">New</a>
-                    <span>Top -> </span>
-                    <a th:href="@{'/top/t=day/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">Today</a>
-                    <a th:href="@{'/top/t=week/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">This Week</a>
-                    <a th:href="@{'/top/t=month/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">This Month</a>
+                    <th:block th:if="${subReddit != null}">
+                        <a th:href="@{'/new/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">New</a>
+                        <span>Top -> </span>
+                        <a th:href="@{'/top/t=day/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">Today</a>
+                        <a th:href="@{'/top/t=week/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">This Week</a>
+                        <a th:href="@{'/top/t=month/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">This Month</a>
+                        <a th:href="@{'/top/t=year/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">This Year</a>
+                    </th:block>
+
+                    <th:block th:if="${subReddit == null}">
+                        <a href="/new" style="margin:10px;text-decoration:none;">New</a>
+                        <span>Top -> </span>
+                        <a href="/top/t=day" style="margin:10px;text-decoration:none;">Today</a>
+                        <a href="/top/t=week" style="margin:10px;text-decoration:none;">This Week</a>
+                        <a href="/top/t=month" style="margin:10px;text-decoration:none;">This Month</a>
+                        <a href="/top/t=year" style="margin:10px;text-decoration:none;">This Year</a>
+                    </th:block>
                 </div>
                 <!-- Content-->
                 <section class="">
@@ -136,7 +152,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
