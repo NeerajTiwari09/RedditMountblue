@@ -14,8 +14,8 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Override
-    public void registerUser(User user) {
+    public User registerUser(User user) {
         user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 }

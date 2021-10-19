@@ -17,19 +17,20 @@ public class UserController {
 
     @RequestMapping("/login")
     public String viewLoginPage(Model model){
-
-        return "";
+        return "login";
     }
 
     @RequestMapping("/register")
     public String viewRegistrationPage(Model model){
-
-        return "";
+        model.addAttribute("user", new User());
+        return "registration";
     }
 
-    @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") User user){
-        userService.registerUser(user);
-        return "";
+    @PostMapping("/saveUser")
+    public String registerUser(@ModelAttribute("user") User user, Model model){
+        User newUser = userService.registerUser(user);
+        model.addAttribute("user", newUser);
+        model.addAttribute("registerMessage", "success");
+        return "login";
     }
 }
