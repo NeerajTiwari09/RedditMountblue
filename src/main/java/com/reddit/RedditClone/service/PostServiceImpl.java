@@ -173,7 +173,7 @@ public class PostServiceImpl implements  PostService{
     }
 
     @Override
-    public String redirectToSubredditPage(Long subredditId, List<Post> posts, Model model){
+    public String redirectToSubredditPageById(Long subredditId, List<Post> posts, Model model){
         Subreddit subreddit = subredditService.getRedditById(subredditId);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
         Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
@@ -185,10 +185,8 @@ public class PostServiceImpl implements  PostService{
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("votes", votes);
         model.addAttribute("postsLength", posts.size());
-
         return "sub_reddit";
     }
-
 
     @Override
     public List<Post> getLast24HourPosts(){
@@ -222,10 +220,6 @@ public class PostServiceImpl implements  PostService{
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("votes", votes);
         model.addAttribute("postsLength", posts.size());
-
         return "sub_reddit";
     }
-
-
-
 }
