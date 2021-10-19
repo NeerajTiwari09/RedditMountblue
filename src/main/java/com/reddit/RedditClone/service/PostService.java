@@ -30,15 +30,30 @@ public interface PostService {
 
     List<Post> findAllNewPostsBySubredditId(Long subredditId);
 
+    List<Post> findAllNewPosts();
+
     SortedSet<Comment> getCommentsWithoutDuplicates(int i, Set<Long> longs, SortedSet<Comment> comments);
 
     List<Post> getSearchedPosts(String search);
 
-    List<Post> getLastWeekPosts(Long subredditId);
+    List<Post> getLast24HourPosts(Long subredditId);
 
-    String redirectToSubredditPage(Long subredditId, List<Post> posts , Model model);
+    List<Post> getLastWeekPosts(Long subredditId);
 
     List<Post> getLastMonthPosts(Long subredditID);
 
-    List<Post> getLast24HourPosts(Long subredditId);
+    List<Post> getLastYearPosts(Long subredditId);
+
+    String redirectToSubredditPage(Long subredditId, List<Post> posts , Model model);
+
+    List<Post> getLast24HourPosts();
+
+    List<Post> getLastWeekPosts();
+
+    List<Post> getLastMonthPosts();
+
+    List<Post> getLastYearPosts();
+
+    String redirectToSubredditPage(List<Post> posts , Model model);
+
 }

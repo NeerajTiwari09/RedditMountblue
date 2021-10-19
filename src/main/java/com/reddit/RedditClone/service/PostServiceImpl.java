@@ -125,7 +125,10 @@ public class PostServiceImpl implements  PostService{
         return postRepository.findBySubredditIdOrderByCreatedAtDesc(subredditId);
     }
 
-
+    @Override
+    public List<Post> findAllNewPosts(){
+        return postRepository.findAllNewPosts();
+    }
 
    @Override
     public SortedSet<Comment> getCommentsWithoutDuplicates(int page, Set<Long> visitedComments, SortedSet<Comment> comments) {
@@ -153,9 +156,25 @@ public class PostServiceImpl implements  PostService{
     }
 
     @Override
+    public List<Post> getLast24HourPosts(Long subredditId){
+        return postRepository.findLast24HourPosts(subredditId);
+    }
+
+    @Override
     public List<Post> getLastWeekPosts(Long subredditId) {
         return postRepository.findLastWeekPosts(subredditId);
     }
+
+    @Override
+    public List<Post> getLastMonthPosts(Long subredditID) {
+        return postRepository.findLastMonthPosts(subredditID);
+    }
+
+    @Override
+    public List<Post> getLastYearPosts(Long subredditId){
+        return postRepository.findLastYearPosts(subredditId);
+    }
+
     @Override
     public String redirectToSubredditPage(Long subredditId, List<Post> posts, Model model){
         Subreddit subreddit = subredditService.getRedditById(subredditId);
@@ -173,13 +192,43 @@ public class PostServiceImpl implements  PostService{
         return "sub_reddit";
     }
 
+
     @Override
-    public List<Post> getLastMonthPosts(Long subredditID) {
-        return postRepository.findLastMonthPosts(subredditID);
+    public List<Post> getLast24HourPosts(){
+        return postRepository.findLast24HourPosts();
     }
+
     @Override
-    public List<Post> getLast24HourPosts(Long subredditId){
-        return postRepository.findLast24HourPosts(subredditId);
+    public List<Post> getLastWeekPosts() {
+        return postRepository.findLastWeekPosts();
     }
+
+    @Override
+    public List<Post> getLastMonthPosts() {
+        return postRepository.findLastMonthPosts();
+    }
+
+    @Override
+    public List<Post> getLastYearPosts(){
+        return postRepository.findLastYearPosts();
+    }
+
+    @Override
+    public String redirectToSubredditPage(List<Post> posts, Model model){
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
+        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
+//        Long karma = getKarma(subredditId);
+
+//        System.out.println("Karma: " + karma);
+//        model.addAttribute("subReddit", subreddit);
+//        model.addAttribute("karma", karma);
+        model.addAttribute("subreddits",subreddits);
+        model.addAttribute("votes", votes);
+        model.addAttribute("postsLength", posts.size());
+
+        return "sub_reddit";
+    }
+
+
 
 }

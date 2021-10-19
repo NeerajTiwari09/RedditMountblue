@@ -133,6 +133,22 @@ public class PostController {
         return "sub_reddit";
     }
 
+    @RequestMapping("/new")
+    public String getAllNewPosts( Model model){
+//        Subreddit subreddit = subredditService.getRedditById(subredditId);
+        List<Post> posts = postService.findAllNewPosts();
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
+        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
+//        Long karma = postService.getKarma(subredditId);
+
+//        model.addAttribute("subReddit", subreddit);
+        model.addAttribute("posts", posts);
+//        model.addAttribute("karma", karma);
+        model.addAttribute("subreddits",subreddits);
+        model.addAttribute("votes", votes);
+        return "sub_reddit";
+    }
+
     @PostMapping("/updatePost")
     public String updatePost(@ModelAttribute("post") Post post){
         postService.updatePostById(post);
@@ -163,6 +179,14 @@ public class PostController {
         return "sub_reddit";
     }
 
+    @GetMapping("/top/t=day/{subredditId}")
+    public String todayPosts(@PathVariable("subredditId") Long subredditId, Model model){
+        List<Post> posts = postService.getLast24HourPosts(subredditId);
+
+        model.addAttribute("posts", posts);
+        return postService.redirectToSubredditPage(subredditId, posts, model);
+    }
+
     @GetMapping("/top/t=week/{subredditId}")
     public String currentYearPosts(@PathVariable("subredditId") Long subredditId, Model model){
         List<Post> posts = postService.getLastWeekPosts(subredditId);
@@ -178,11 +202,47 @@ public class PostController {
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPage(subredditId, posts, model);
     }
-    @GetMapping("/top/t=day/{subredditId}")
-    public String todayPosts(@PathVariable("subredditId") Long subredditId, Model model){
-        List<Post> posts = postService.getLast24HourPosts(subredditId);
+
+
+    @GetMapping("/top/t=year/{subredditId}")
+    public String currentyearPosts(@PathVariable("subredditId") Long subredditId, Model model){
+        List<Post> posts = postService.getLastYearPosts(subredditId);
 
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPage(subredditId, posts, model);
     }
+
+    @GetMapping("/top/t=day")
+    public String todayAllPosts(Model model){
+        List<Post> posts = postService.getLast24HourPosts();
+
+        model.addAttribute("posts", posts);
+        return postService.redirectToSubredditPage(posts, model);
+    }
+
+    @GetMapping("/top/t=week")
+    public String currentWeekAllPosts(Model model){
+        List<Post> posts = postService.getLastWeekPosts();
+
+        model.addAttribute("posts", posts);
+        return postService.redirectToSubredditPage(posts, model);
+    }
+
+    @GetMapping("/top/t=month")
+    public String currentMonthAllPosts(Model model){
+        List<Post> posts = postService.getLastMonthPosts();
+
+        model.addAttribute("posts", posts);
+        return postService.redirectToSubredditPage(posts, model);
+    }
+
+
+    @GetMapping("/top/t=year")
+    public String currentYearAllPosts(Model model){
+        List<Post> posts = postService.getLastYearPosts();
+
+        model.addAttribute("posts", posts);
+        return postService.redirectToSubredditPage(posts, model);
+    }
+
 }

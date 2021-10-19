@@ -20,10 +20,16 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findBySubredditIdOrderByCreatedAtDesc(Long subredditId);
 
+    @Query("SELECT p FROM Post p ORDER BY p.createdAt DESC")
+    List<Post> findAllNewPosts();
+
     List<Post> findBySubredditIdOrderByVoteCount(Long subredditId);
 
     @Query("SELECT p FROM Post p WHERE p.subredditId = ?1 AND p.upVoteCount > 10 AND p.downVoteCount > 10 ORDER BY p.voteCount ASC, p.upVoteCount DESC, p.downVoteCount DESC")
     List<Post> findControversialPosts(Long subredditId);
+
+    @Query(value = "SELECT * FROM posts WHERE subreddit_id = ?1 AND created_at BETWEEN NOW() - INTERVAL '24 HOURS' AND NOW() ORDER BY created_at DESC", nativeQuery = true)
+    List<Post> findLast24HourPosts(Long subredditId);
 
     @Query(value = "SELECT * FROM posts \n" +
             "WHERE subreddit_id = ?1 AND created_at BETWEEN NOW() - INTERVAL '1 WEEK' AND NOW() \n" +
@@ -35,7 +41,32 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "ORDER BY created_at DESC;", nativeQuery = true)
     List<Post> findLastMonthPosts(Long subredditId);
 
-    @Query(value = "SELECT * FROM posts WHERE subreddit_id = ?1 AND created_at BETWEEN NOW() - INTERVAL '24 HOURS' AND NOW() ORDER BY created_at DESC", nativeQuery = true)
-    List<Post> findLast24HourPosts(Long subredditId);
+    @Query(value = "SELECT * FROM posts \n" +
+            "WHERE subreddit_id = ?1 AND created_at BETWEEN NOW() - INTERVAL '1 YEAR' AND NOW() \n" +
+            "ORDER BY created_at DESC;", nativeQuery = true)
+    List<Post> findLastYearPosts(Long subredditId);
+
+    @Query("SELECT p FROM Post p WHERE p.upVoteCount > 10 AND p.downVoteCount > 10 ORDER BY p.voteCount ASC, p.upVoteCount DESC, p.downVoteCount DESC")
+    List<Post> findControversialPosts();
+
+    @Query(value = "SELECT * FROM posts WHERE created_at BETWEEN NOW() - INTERVAL '24 HOURS' AND NOW() ORDER BY created_at DESC", nativeQuery = true)
+    List<Post> findLast24HourPosts();
+
+    @Query(value = "SELECT * FROM posts \n" +
+            "WHERE created_at BETWEEN NOW() - INTERVAL '1 WEEK' AND NOW() \n" +
+            "ORDER BY created_at DESC;", nativeQuery = true)
+    List<Post> findLastWeekPosts();
+
+    @Query(value = "SELECT * FROM posts \n" +
+            "WHERE created_at BETWEEN NOW() - INTERVAL '1 MONTH' AND NOW() \n" +
+            "ORDER BY created_at DESC;", nativeQuery = true)
+    List<Post> findLastMonthPosts();
+
+    @Query(value = "SELECT * FROM posts \n" +
+            "WHERE created_at BETWEEN NOW() - INTERVAL '1 YEAR' AND NOW() \n" +
+            "ORDER BY created_at DESC;", nativeQuery = true)
+    List<Post> findLastYearPosts();
+
+
 
 }
