@@ -10,46 +10,39 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
         integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
   <link href="main.css"  rel="stylesheet" type="text/css">
-<style>
-  li{
-    list-style: none;
-}
-.sorting, .single-post{
-    background:white;
-    margin:10px;
-    padding:10px 20px;
-    border-radius: 5px;
-}
 
-.btn-vote{
-border: none;
-
-}
-</style>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-
 <div class="mt-5" style="background-color:#dae0e6; padding:30px">
   <div class="row">
     <div class="col-lg-8" >
       <!-- Post content-->
       <article>
         <div>
-          <header class="mb-4">
-            <h4 class="fw-bolder mb-1">Popular</h4>
-          </header>
-        </div>
-        <div class="sorting">
-          <a th:href="@{'/popular/new/'}" style="margin:10px;text-decoration:none;">New</a>
-          <span>Top -> </span>
-          <a th:href="@{'/popular/top&t=day'}" style="margin:10px;text-decoration:none;">Today</a>
-          <a th:href="@{'/popular/top&t=week'}" style="margin:10px;text-decoration:none;">This Week</a>
-          <a th:href="@{'/popular/top&t=month'}" style="margin:10px;text-decoration:none;">This Month</a>
+            <h6 class="fw-bolder mb-1">COMMUNITIES</h6>
+            <hr>
+            <div class="row">
+              <th:block th:each="sSubreddit : ${searchSubreddits}">
+                <div class="single-subreddit">
+                  <a th:href="'/reddit/'+${sSubreddit.id}" style="text-decoration:none; color:black">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title" th:text="${sSubreddit.name}" th:field="${sSubreddit.name}"></h5>
+                        <div class="text-muted fst-italic mb-2" th:text="${sSubreddit.createdAt}"></div>
+                        <p class="card-text" th:text="${sSubreddit.description}" th:field="${sSubreddit.description}" ></p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </th:block>
+            </div>
         </div>
         <!-- Content-->
         <section class="">
           <div class="row">
+            <h6 class="fw-bolder mb-1">POSTS</h6>
+            <hr>
             <th:block th:each="post : ${posts}">
               <div class="single-post">
                 <div class="col-lg-1 col-md-1 col-sm-1">
@@ -73,7 +66,7 @@ border: none;
                       </button>
                     </th:block>
                   </form>
-                  <div class="" style="color: rgb(26, 26, 27);">[[${post.voteCount}]]</div>
+                  <div class="justify-content-center" style="color: rgb(26, 26, 27);">[[${post.voteCount}]]</div>
                   <form action="/vote" method="get" >
                     <input type="hidden" name="postId" th:value="${post.id}" />
                     <input type="hidden" name="downVote" value="true" />
@@ -119,11 +112,10 @@ border: none;
     <div class="col-lg-4">
       <!-- Search widget-->
       <div class="card mb-4">
-        <div class="card-header">About Community</div>
+        <div class="card-header">&nbsp;</div>
         <div class="card-body">
           <div class="">
-<!--            <p th:text="${subReddit.description}"></p>-->
-<!--            <div class="text-muted fst-italic mb-2" th:text="${subReddit.createdAt}"></div>-->
+            <a class="nav-link active " aria-current="page" href="/createSubreddit">Create Community</a>
           </div>
         </div>
       </div>

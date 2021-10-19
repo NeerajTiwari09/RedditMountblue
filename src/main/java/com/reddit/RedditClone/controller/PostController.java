@@ -26,12 +26,28 @@ public class PostController {
 
     @GetMapping("/popular")
     public String popular(Model model){
-        List<Post> posts = new ArrayList<>();
+        List<Post> posts = postService.findAllNewPosts();
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
+//        Long karma = postService.getKarma(subredditId);
+//        model.addAttribute("karma", karma);
+        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
 
         model.addAttribute("posts", posts);
+        model.addAttribute("votes", votes);
         model.addAttribute("subreddits", subreddits);
         return "popular";
+    }
+
+    @RequestMapping("/viewProfile")
+    public String viewProfile(Model model){
+        List<Post> posts = new ArrayList<>();
+        List<Subreddit> subreddits = new ArrayList<>();
+        List<Comment> comments = new ArrayList<>();
+
+        model.addAttribute("posts", posts);
+        model.addAttribute("comments", comments);
+        model.addAttribute("subreddits", subreddits);
+        return "view_profile";
     }
 
     @GetMapping("/viewCreatePostPage")
@@ -126,6 +142,17 @@ public class PostController {
         return "sub_reddit";
     }
 
+    @RequestMapping("/popular/new/")
+    public String getNewPopularPost(Model model){
+        System.out.println("popular new");
+        List<Post> posts = postService.findAllNewPosts();
+        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
+        System.out.println("Posts = "+posts);
+        model.addAttribute("posts", posts);
+        model.addAttribute("votes", votes);
+        return "redirect:/popular/";
+    }
+
     @RequestMapping("/new/{subredditId}")
     public String getAllNewPostsBySubredditId(@PathVariable Long subredditId, Model model){
         Subreddit subreddit = subredditService.getRedditById(subredditId);
@@ -168,7 +195,10 @@ public class PostController {
 
     @GetMapping("/search")
     public String searchPosts(@RequestParam("search") String keyword,Model model) throws ParseException {
+        System.out.println("this is keyword = " +keyword);
         List<Post> posts = postService.getSearchedPosts(keyword.toLowerCase());
+        List<Subreddit> searchSubreddits = subredditService.getSearchedPosts(keyword.toLowerCase());
+
         Subreddit subreddit = subredditService.getRedditById(1L);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
         Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
@@ -178,8 +208,9 @@ public class PostController {
         model.addAttribute("posts",posts);
         model.addAttribute("karma", karma);
         model.addAttribute("subreddits",subreddits);
+        model.addAttribute("searchSubreddits",searchSubreddits);
         model.addAttribute("votes", votes);
-        return "sub_reddit";
+        return "search";
     }
 
     @GetMapping("/top/t=day/{subredditId}")

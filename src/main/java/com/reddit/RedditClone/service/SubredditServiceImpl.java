@@ -44,5 +44,10 @@ public class SubredditServiceImpl implements SubredditService{
         return subreddit.orElse(null);
     }
 
+    @Override
+    public List<Subreddit> getSearchedPosts(String keyword) {
+        return subredditRepository.searchByString(keyword);
+    }
+
 
 }

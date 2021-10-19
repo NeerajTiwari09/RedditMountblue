@@ -187,6 +187,10 @@ public class PostServiceImpl implements  PostService{
         model.addAttribute("postsLength", posts.size());
         return "sub_reddit";
     }
+    @Override
+    public List<Post> findAllNewPosts() {
+        return postRepository.findAllOrderByCreatedAtDesc();
+    }
 
     @Override
     public List<Post> getLast24HourPosts(){
