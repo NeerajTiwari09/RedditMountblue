@@ -55,9 +55,11 @@ public class PostController {
     public String getAllPosts(Model model){
         List<Post> posts = postService.getAllPosts();
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
+        Map<Long,Vote> votes = voteService.getVotesByPosts(posts);
 
         model.addAttribute("posts", posts);
         model.addAttribute("subreddits",subreddits);
+        model.addAttribute("votes", votes);
         return "sub_reddit";
     }
 
