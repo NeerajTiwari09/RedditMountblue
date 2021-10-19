@@ -42,7 +42,6 @@ public class PostServiceImpl implements  PostService{
         }
         post.setCreatedAt(timestamp);
         post.setUpdatedAt(timestamp);
-//        post.setSubredditId(subreddit.get().getId());
         return postRepository.save(post);
     }
 
@@ -120,11 +119,6 @@ public class PostServiceImpl implements  PostService{
     @Override
     public List<Post> findAllNewPostsBySubredditId(Long subredditId) {
         return postRepository.findBySubredditIdOrderByCreatedAtDesc(subredditId);
-    }
-
-    @Override
-    public List<Post> findAllNewPosts(){
-        return postRepository.findAllNewPosts();
     }
 
    @Override

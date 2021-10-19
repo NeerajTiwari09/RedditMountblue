@@ -84,7 +84,7 @@ public class PostController {
         Post post = postService.getPostById(postId);
         SortedSet<Comment> commentsWithoutDuplicates = postService.getCommentsWithoutDuplicates(0, new HashSet<Long>(), post.getComments());
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
-        String url ="";
+        String url = "";
         if(!post.getImages().isEmpty()) {
             url = post.getImages().get(0).getUrls();
         }
@@ -197,7 +197,7 @@ public class PostController {
     public String searchPosts(@RequestParam("search") String keyword,Model model) throws ParseException {
         System.out.println("this is keyword = " +keyword);
         List<Post> posts = postService.getSearchedPosts(keyword.toLowerCase());
-        List<Subreddit> searchSubreddits = subredditService.getSearchedPosts(keyword.toLowerCase());
+        List<Subreddit> searchSubreddits = subredditService.getSearchedSubreddits(keyword.toLowerCase());
 
         Subreddit subreddit = subredditService.getRedditById(1L);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
@@ -267,7 +267,6 @@ public class PostController {
     @GetMapping("/top/t=year")
     public String currentYearAllPosts(Model model){
         List<Post> posts = postService.getLastYearPosts();
-
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPage(posts, model);
     }

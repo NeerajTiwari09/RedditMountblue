@@ -18,7 +18,6 @@ public class VoteController {
 
     @RequestMapping("/saveVote")
     public String saveVote(@ModelAttribute("vote") Vote vote){
-//        System.out.println("vote Controller: "+vote.isVote());
         voteService.saveVote(vote);
         return "sub_reddit";
     }
@@ -29,10 +28,7 @@ public class VoteController {
                              @RequestParam(required = false, name = "downVote", defaultValue = "false") boolean downVote,
                              @RequestParam("subRedditId") Long subRedditId,
                              Model model){
-//        System.out.println("vote contribution: "+vote);
 
-        System.out.println("upvote: "+upVote);
-        System.out.println("downVote: "+downVote);
         Vote newVote = new Vote();
         newVote.setUpVoted(upVote);
         newVote.setDownVoted(downVote);

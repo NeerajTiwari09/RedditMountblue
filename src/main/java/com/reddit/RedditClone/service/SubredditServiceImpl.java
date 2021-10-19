@@ -45,7 +45,7 @@ public class SubredditServiceImpl implements SubredditService{
     }
 
     @Override
-    public List<Subreddit> getSearchedPosts(String keyword) {
+    public List<Subreddit> getSearchedSubreddits(String keyword) {
         return subredditRepository.searchByString(keyword);
     }
 

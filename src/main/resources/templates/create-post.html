@@ -38,7 +38,7 @@ border: none;
                     <label for="community">Choose a community</label>
                     <input name="subredditId" list="community" id="community1">
                     <datalist  id="community">
-                        <option th:each="sub: ${subreddits}" th:value="${sub.id}" th:text="${sub.name}"></option>
+                        <option th:each="sub: ${subreddits}" th:value="${sub.id}">[[${sub.name}]]</option>
                     </datalist>
 
                     <h1>Post</h1>
@@ -54,11 +54,11 @@ border: none;
                         <label for="link" class="form-label">Link</label>
                         <input type="text" th:name="link" th:field="${newPost.link}" class="form-control" id="link">
                     </div>
-                    <figure class="mb-4">
-                        <img class="img-fluid rounded" th:if="${imgUrl!=null}" th:src="${imgUrl}" alt="..." />
-                    </figure>
+                    <!--<figure class="mb-4">
+                        <img class="img-fluid rounded" th:src="${imgUrl}" alt="..." />
+                    </figure>-->
                     <input type="file" th:name="image" />
-                    <input type="hidden" name="id" th:value="${newPost.id}" />
+                    <!--<input type="hidden" name="id" th:value="${newPost.id}" />-->
                     <button type="submit" class="btn btn-primary my-3">Submit</button>
                 </form>
             </div>
