@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +26,10 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private Timestamp createdAt;
+
+    @Column(columnDefinition = "integer default 0")
+    private Long karma;
 //    private Set<Role> authorities = new HashSet<>();
 //    @OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="post")
 //    private Set<Post> features = new HashSet<>();
