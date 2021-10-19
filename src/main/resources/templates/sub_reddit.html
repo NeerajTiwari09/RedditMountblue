@@ -31,9 +31,9 @@
         <div class="col-lg-8" >
             <!-- Post content-->
             <article>
-                <div>
+                <div th:if="${subReddit != null}">
                     <header class="mb-4">
-                        <h1 class="fw-bolder mb-1" th:text="${subReddit.name}">Subreddit name</h1>
+                        <h1 class="fw-bolder mb-1"  th:text="${subReddit.name}">Subreddit name</h1>
                         <div class="text-muted fst-italic mb-2" th:text="${subReddit.createdAt}"></div>
                         <span th:text="'Karma '+${karma}">Karma</span>
                     </header>

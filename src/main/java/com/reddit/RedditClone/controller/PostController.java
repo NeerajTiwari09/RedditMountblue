@@ -51,11 +51,13 @@ public class PostController {
         return "redirect:/reddit/"+post.getSubredditId();
     }
 
-    @GetMapping("/post")
+    @GetMapping(value = {"/","/post"})
     public String getAllPosts(Model model){
         List<Post> posts = postService.getAllPosts();
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
+
         model.addAttribute("posts", posts);
-        System.out.println("posts"+posts);
+        model.addAttribute("subreddits",subreddits);
         return "sub_reddit";
     }
 

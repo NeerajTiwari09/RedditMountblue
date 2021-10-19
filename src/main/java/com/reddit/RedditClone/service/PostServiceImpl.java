@@ -28,7 +28,6 @@ public class PostServiceImpl implements  PostService{
     @Override
     public Post savePost(Post post) {
         Timestamp timestamp = Timestamp.from(Instant.now());
-//        Optional<Subreddit> subreddit = subredditRepository.findById(post.getSubredditId());
         if(!post.getImage().isEmpty()) {
             String url = awsService.uploadFile(post.getImage());
             List<Image> images = new ArrayList<>();
@@ -39,7 +38,6 @@ public class PostServiceImpl implements  PostService{
         }
         post.setCreatedAt(timestamp);
         post.setUpdatedAt(timestamp);
-//        post.setSubredditId(subreddit.get().getId());
         return postRepository.save(post);
     }
 
@@ -111,12 +109,7 @@ public class PostServiceImpl implements  PostService{
 
     @Override
     public List<Post> getControversialPosts(Long subredditId) {
-        List<Post> posts = postRepository.findControversialPosts(subredditId);
-        List<Post> controversialPosts = new ArrayList<>();
-        for(Post post : posts) {
-            System.out.println("post: "+post.getVoteCount()+" : "+post.getUpVoteCount()+" : "+post.getDownVoteCount());
-        }
-        return posts;
+        return postRepository.findControversialPosts(subredditId);
     }
 
     @Override
