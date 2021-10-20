@@ -3,6 +3,7 @@ package com.reddit.RedditClone.controller;
 import com.reddit.RedditClone.model.*;
 import com.reddit.RedditClone.service.PostService;
 import com.reddit.RedditClone.service.SubredditService;
+import com.reddit.RedditClone.service.UserService;
 import com.reddit.RedditClone.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -26,6 +27,9 @@ public class PostController {
 
     @Autowired
     private SubredditService subredditService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/popular")
     public String popular(Model model){
@@ -74,8 +78,8 @@ public class PostController {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
-
-        System.out.println(post.getImage());
+        String authorName = userService.findUserByEmail(authentication.getName()).getUsername();
+        post.setAuthor(authorName);
         postService.savePost(post);
         return "redirect:/reddit/"+post.getSubredditId();
     }
@@ -216,7 +220,6 @@ public class PostController {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
-
         Long subredditId = postService.deleteById(postId);
         return "redirect:/reddit/"+subredditId;
     }

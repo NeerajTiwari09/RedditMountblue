@@ -1,10 +1,10 @@
-package com.example.Blog;
+package com.reddit.RedditClone;
 
-import com.example.Blog.model.Comment;
-import com.example.Blog.model.Post;
-import com.example.Blog.repository.CommentRepository;
-import com.example.Blog.repository.PostRepository;
-import com.example.Blog.repository.UserRepository;
+import com.reddit.RedditClone.model.Comment;
+import com.reddit.RedditClone.model.Post;
+import com.reddit.RedditClone.repository.CommentRepository;
+import com.reddit.RedditClone.repository.PostRepository;
+import com.reddit.RedditClone.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,30 +23,36 @@ public class UserSecurity {
     @Autowired
     private CommentRepository commentRepository;
 
-    public boolean hasUserId(Authentication authentication, Integer postId) {
+    public boolean hasUserId(Authentication authentication, Long postId) {
         Optional<Post> post = postRepository.findById(postId);
-        String authorName = userRepository.findByUsername(authentication.getName()).getName();
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        for(GrantedAuthority auth : authorities){
-            if(auth.getAuthority().equals("ADMIN")){
-                return true;
-            }
+        String authorName = userRepository.findByUsername(authentication.getName()).getUsername();
+//        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+//        for(GrantedAuthority auth : authorities){
+//            if(auth.getAuthority().equals("ADMIN")){
+//                return true;
+//            }
+//        }
+        if(authorName.equals(post.get().getAuthor())){
+            System.out.println("Ture");
+        }
+        else {
+            System.out.println("false");
         }
         return post.isPresent() && post.get().getAuthor().equals(authorName);
     }
 
-    public boolean hasCommentId(Authentication authentication, Integer commentId) {
-        Optional<Comment> comment = commentRepository.findById(commentId);
-        if(hasUserId(authentication, comment.get().getPostId())){
-            return true;
-        }
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        for(GrantedAuthority auth : authorities){
-            if(auth.getAuthority().equals("ADMIN")){
-                return true;
-            }
-        }
-        String email = authentication.getName();
-        return comment.get().getEmail().equals(email);
-    }
+//    public boolean hasCommentId(Authentication authentication, Integer commentId) {
+//        Optional<Comment> comment = commentRepository.findById(commentId);
+//        if(hasUserId(authentication, comment.get().getPostId())){
+//            return true;
+//        }
+//        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+//        for(GrantedAuthority auth : authorities){
+//            if(auth.getAuthority().equals("ADMIN")){
+//                return true;
+//            }
+//        }
+//        String email = authentication.getName();
+//        return comment.get().getEmail().equals(email);
+//    }
 }

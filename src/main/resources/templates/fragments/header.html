@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,8 +94,11 @@ button {
                     <li>
                         <a class="nav-link active" style="color:#42adf0;" aria-current="page" href="/viewProfile">Profile</a>
                     </li>
-                    <li>
+                    <li sec:authorize="!isAuthenticated()">
                         <a class="nav-link active" style="color:#42adf0;" aria-current="page" href="/login">Login</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a class="nav-link active" style="color:#42adf0;" aria-current="page" th:href="@{/logout}">Logout</a>
                     </li>
                     <li>
                         <a class="nav-link active" style="color:#42adf0;" aria-current="page" href="/register">Register</a>
@@ -102,8 +106,8 @@ button {
                 </ul>
             </div>
         </div>
+        <h6 th:inline="text">Welcome! [[${#httpServletRequest.remoteUser}]]</h6>
     </nav>
-
 </div>
 </body>
 </html>

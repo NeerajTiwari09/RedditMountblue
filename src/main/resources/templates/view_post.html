@@ -83,10 +83,10 @@ padding:30px;
                         <a th:href="@{'/delete/'+${post.id}}"><button class="btn btn-outline-primary" type="submit">Delete</button></a>
                     </div>
                 </div>
-                <figure class="mb-4" th:if="${url != null}">
+                <figure class="mb-4" th:if="${url != ''}">
                     <img class="img-fluid rounded" th:src="${url}" alt="..." />
                 </figure>
-                <div class="mb-3">
+                <div class="mb-3" th:if="${post.link != ''}">
                     <label for="link" class="form-label">Link</label>
                     <a id="link" th:href="${post.link}" th:text="${post.link}"></a>
                 </div>
