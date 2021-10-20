@@ -29,4 +29,10 @@ public class Subreddit {
 
     @Transient
     private List<Post> posts;
+
+    @ManyToOne
+    @JoinTable(name = "user_subreddits",
+            joinColumns = {@JoinColumn(name = "subreddit_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private User user;
 }

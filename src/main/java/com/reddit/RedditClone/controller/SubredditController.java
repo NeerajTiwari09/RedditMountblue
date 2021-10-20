@@ -2,11 +2,13 @@ package com.reddit.RedditClone.controller;
 
 import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.Subreddit;
+import com.reddit.RedditClone.model.User;
 import com.reddit.RedditClone.model.Vote;
-import com.reddit.RedditClone.service.PostService;
-import com.reddit.RedditClone.service.SubredditService;
-import com.reddit.RedditClone.service.VoteServiceImpl;
+import com.reddit.RedditClone.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,16 +26,33 @@ public class SubredditController {
     private PostService postService;
 
     @Autowired
-    private VoteServiceImpl voteService;
+    private VoteService voteService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/createSubreddit")
     public String createSubreddit(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+
         model.addAttribute("subReddit", new Subreddit());
         return "create_subreddit";
     }
 
     @PostMapping("/saveSubreddit")
     public String saveSubreddit(@ModelAttribute("subReddit") Subreddit subreddit, Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+
+        String email = authentication.getName();
+        User user = userService.findUserByEmail(email);
+        subreddit.setUser(user);
+
         System.out.println("cc"+subreddit.getCommunityType().getName());
         Subreddit subredditResult = this.subredditService.saveSubreddit(subreddit);
         List<Post> posts = postService.getAllPosts();
