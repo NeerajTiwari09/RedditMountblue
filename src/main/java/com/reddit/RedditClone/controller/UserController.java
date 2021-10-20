@@ -17,6 +17,7 @@ public class UserController {
 
     @RequestMapping("/login")
     public String viewLoginPage(Model model){
+        model.addAttribute("user", new User());
         return "login";
     }
 
