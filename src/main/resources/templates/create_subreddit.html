@@ -31,38 +31,67 @@ border: none;
 <div th:replace="fragments/header :: header"></div>
 <section class="container border border-2 border-dark p-5" >
     <div class="row">
-        <h1>Create a Community</h1>
+            <h1 class="my-4 border-bottom border-dark py-2">Create a Community</h1>
+
+        <div class="col-md-8">
         <form th:action="@{/saveSubreddit}" method="post" th:object="${subReddit}">
             <div class="form-group">
-                <label for="subreddit">Community Name</label>
-                <input type="text" name="name" th:field="${subReddit.name}" class="form-control" id="subreddit" placeholder="Enter Community Name" required  >
+                <label for="subreddit">
+                    Community Name
+                    <span class="text-danger">*</span>
+                </label>
+                <input type="text" name="name" th:field="${subReddit.name}" class="form-control p-2 w-25 border-0 border-bottom border-dark" id="subreddit" placeholder="Enter Community Name" required  >
             </div>
-            <div class="form-group">
+            <div class="form-group my-5">
                 <label for="description">Description</label>
-                <textarea rows="4" cols="9" name="description" th:field="${subReddit.description}" class="form-control" id="description" placeholder="Description for your community"></textarea>
+                <span class="text-danger">*</span>
+                <textarea rows="5" cols="60" name="description" th:field="${subReddit.description}"
+                          class="form-control w-auto" id="description" placeholder="Description for your community" required></textarea>
             </div>
 
-            <div class="custom-control custom-radio">
-                <input type="radio" id="public" name="communityType" th:field="${subReddit.communityType.name}"
-                       th:value="public" class="custom-control-input" checked>
-                <label class="custom-control-label" for="public">Public</label>
-                <small>Anyone can view, post, and comment to this community</small>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="restricted" name="communityType" th:field="${subReddit.communityType.name}"
-                       value="restricted" class="custom-control-input">
-                <label class="custom-control-label" for="restricted">Restricted</label>
-                <small>Anyone can view this community, but only approved users can post</small>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="private" name="communityType" th:field="${subReddit.communityType.name}"
-                       value="private" class="custom-control-input">
-                <label class="custom-control-label" for="private">Private</label>
-                <small>Only approved users can view and submit to this community</small>
-            </div>
+            <section class="">
+                <label class="">Community Type</label>
+                <span class="text-danger">*</span>
 
+                <div class="custom-control custom-radio">
+                    <label class="custom-control-label" for="public">
+                        <input type="radio" id="public" name="communityType" th:field="${subReddit.communityType.name}"
+                               th:value="public" class="custom-control-input" checked>
+                        <strong>Public</strong>
+                        <small>(Anyone can view, post, and comment to this community)</small>
+                    </label>
+
+                </div>
+                <div class="custom-control custom-radio">
+                    <label class="custom-control-label" for="restricted">
+                        <input type="radio" id="restricted" name="communityType" th:field="${subReddit.communityType.name}"
+                               value="restricted" class="custom-control-input">
+                        <strong>Restricted</strong>
+                        <small>(Anyone can view this community, but only approved users can post)</small>
+                    </label>
+
+                </div>
+                <div class="custom-control custom-radio">
+                    <label class="custom-control-label" for="private">
+                        <input type="radio" id="private" name="communityType" th:field="${subReddit.communityType.name}"
+                           value="private" class="custom-control-input">
+                        <strong>Private</strong>
+                        <small>(Only approved users can view and submit to this community)</small>
+                    </label>
+
+                </div>
+            </section>
+
+<!--            <input type="hidden" name="userEmail" th:name="${subReddit.user.email}" th:value="${#httpServletRequest.remoteUser}" />-->
             <button type="submit" class="btn btn-primary my-3">Submit</button>
         </form>
+        </div>
+<!--        <div class="col-md-4">-->
+<!--            <img src="./../static/images/reddit text logo.png"-->
+<!--                 th:src="@{images/reddit text logo.png}" class=""-->
+<!--                 style="width: 200% !important; height: auto; "-->
+<!--                 alt="">-->
+<!--        </div>-->
     </div>
 </section>
 

@@ -85,14 +85,14 @@ background: url{[[@{/img/Background.jpg}]]} top left/cover no-repeat;
                     <span>You have Registered Successfully. Please Login</span>
                 </div>
                 <h2 class="title">Login</h2>
-                <form method="POST" action="@{/login}" th:object="${user}">
+                <form method="post" th:action="@{/authenticateUser}" th:object="${user}">
                     <div>
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" th:field="${user.email}" placeholder="Username">
+                        <input type="text" class="form-control" name="username" id="username" placeholder="Username">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" th:filed="${user.password}" placeholder="password">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="password">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

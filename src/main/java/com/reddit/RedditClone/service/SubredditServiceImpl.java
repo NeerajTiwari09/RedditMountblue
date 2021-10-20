@@ -3,6 +3,7 @@ package com.reddit.RedditClone.service;
 import com.reddit.RedditClone.model.CommunityType;
 import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.Subreddit;
+import com.reddit.RedditClone.model.User;
 import com.reddit.RedditClone.repository.CommunityTypeRepository;
 import com.reddit.RedditClone.repository.PostRepository;
 import com.reddit.RedditClone.repository.SubredditRepository;

@@ -5,6 +5,9 @@ import com.reddit.RedditClone.service.PostService;
 import com.reddit.RedditClone.service.SubredditService;
 import com.reddit.RedditClone.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +55,11 @@ public class PostController {
 
     @GetMapping("/viewCreatePostPage")
     public String viewCreatePostPage(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
         Post post = new Post();
 
@@ -62,6 +70,11 @@ public class PostController {
 
     @PostMapping("/savePost")
     public String savePost(@ModelAttribute("newPost") Post post){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+
         System.out.println(post.getImage());
         postService.savePost(post);
         return "redirect:/reddit/"+post.getSubredditId();
@@ -98,6 +111,11 @@ public class PostController {
 
     @GetMapping("/update/{postId}")
     public String getUpdateViewPage(@PathVariable Long postId, Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+
         Post post = postService.getPostById(postId);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
         String imgUrl = "";
@@ -183,12 +201,22 @@ public class PostController {
 
     @PostMapping("/updatePost")
     public String updatePost(@ModelAttribute("post") Post post){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+
         postService.updatePostById(post);
         return "redirect:/viewPost/"+post.getId();
     }
 
     @GetMapping("/delete/{postId}")
     public String deletePostById(@PathVariable Long postId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+
         Long subredditId = postService.deleteById(postId);
         return "redirect:/reddit/"+subredditId;
     }

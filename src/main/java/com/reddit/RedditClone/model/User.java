@@ -30,14 +30,27 @@ public class User {
 
     @Column(columnDefinition = "integer default 0")
     private Long karma;
+
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+//    @JoinTable(name = "user_subreddits",
+//            joinColumns = {@JoinColumn(name = "user_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "subreddit_id")})
+    private Set<Subreddit> subreddits = new HashSet<>();
+
+
+
+
 //    private Set<Role> authorities = new HashSet<>();
 //    @OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="post")
 //    private Set<Post> features = new HashSet<>();
-
+    
     public User(Long id, String username){
         this.id = id;
         this.username = username;
     }
+
+
 
     public User(String username){
         this.username = username;
