@@ -80,9 +80,19 @@ padding:30px;
                                 <span class="text-muted fst-italic mb-2" th:text="'Karma '+${karma}">Karma</span>
                             </div>
                             <div class="col-lg-8">
-                                <form action="">
-                                    <button class="btn btn-outline-primary" type="submit" style="border-radius: 20px;padding:5px 20px">Join</button>
-                                </form>
+                                <th:block th:if="${isSubscribed}">
+                                    <form th:action="@{/unSubscribe}" method="get">
+                                        <input type="hidden" th:value="${subReddit.id}" name="id">
+                                        <button class="btn btn-outline-primary" type="submit" style="border-radius: 20px;padding:5px 20px">Joined</button>
+                                    </form>
+                                </th:block>
+                                <th:block th:if="${!isSubscribed}">
+                                    <form th:action="@{/subscribe}" method="get">
+                                        <input type="hidden" th:value="${subReddit.id}" name="id">
+                                        <button class="btn btn-outline-primary" type="submit" style="border-radius: 20px;padding:5px 20px">Join</button>
+                                    </form>
+                                </th:block>
+
                             </div>
                         </div>
                     </header>

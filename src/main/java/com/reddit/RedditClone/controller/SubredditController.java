@@ -1,9 +1,6 @@
 package com.reddit.RedditClone.controller;
 
-import com.reddit.RedditClone.model.Post;
-import com.reddit.RedditClone.model.Subreddit;
-import com.reddit.RedditClone.model.User;
-import com.reddit.RedditClone.model.Vote;
+import com.reddit.RedditClone.model.*;
 import com.reddit.RedditClone.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -30,6 +27,9 @@ public class SubredditController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private SubscriptionService subscriptionService;
 
     @RequestMapping("/createSubreddit")
     public String createSubreddit(Model model){
@@ -69,17 +69,50 @@ public class SubredditController {
         Map<Long,Vote> votes = voteService.getVotesByPosts(posts);
         Long karma = postService.getKarma(id);
 
+        Boolean isSubscribed = false;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+            String email = authentication.getName();
+            User user = userService.findUserByEmail(email);
+            Long userId = user.getId();
+            Subscription subscription = subscriptionService.getSubscriptionBySubredditIdAndUserId(id, userId);
+            if(subscription!=null){
+                isSubscribed = true;
+            }
+        }
+
         System.out.println("Karma: " + karma);
         model.addAttribute("subReddit", subreddit);
         model.addAttribute("posts", posts);
         model.addAttribute("karma", karma);
-        model.addAttribute("subreddits",subreddits);
+        model.addAttribute("subreddits", subreddits);
         model.addAttribute("votes", votes);
         model.addAttribute("postsLength", posts.size());
+        model.addAttribute("isSubscribed", isSubscribed);
 //        model.addAttribute("currentUserId", 1);
-
         postService.getControversialPosts(id);
 
         return "sub_reddit";
+    }
+
+    @RequestMapping("/subscribe")
+    public String subscribe(@RequestParam(name = "id") Long subRedditId, Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+        System.out.println("subRedditId "+subRedditId);
+        String email = authentication.getName();
+        User user = userService.findUserByEmail(email);
+        Long userId = user.getId();
+        System.out.println("userId "+userId);
+
+        Subscription subscription = new Subscription();
+        subscription.setSubredditId(subRedditId);
+        subscription.setUserId(userId);
+
+        Subscription subscriptionResult = subscriptionService.saveSubscription(subscription);
+
+        return "redirect:/reddit/"+subRedditId;
     }
 }

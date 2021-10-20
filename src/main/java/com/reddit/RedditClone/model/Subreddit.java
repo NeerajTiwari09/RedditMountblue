@@ -35,4 +35,5 @@ public class Subreddit {
             joinColumns = {@JoinColumn(name = "subreddit_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private User user;
+
 }
