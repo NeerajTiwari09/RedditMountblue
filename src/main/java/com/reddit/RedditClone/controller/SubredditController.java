@@ -111,7 +111,7 @@ public class SubredditController {
         subscription.setSubredditId(subRedditId);
         subscription.setUserId(userId);
 
-        Subscription subscriptionResult = subscriptionService.saveSubscription(subscription);
+        subscriptionService.saveSubscription(subscription);
 
         return "redirect:/reddit/"+subRedditId;
     }

@@ -11,12 +11,12 @@ public class SubscriptionServiceImpl implements SubscriptionService{
     SubscriptionRepository subscriptionRepository;
 
     @Override
-    public Subscription saveSubscription(Subscription subscription) {
-        return subscriptionRepository.save(subscription);
+    public void saveSubscription(Subscription subscription) {
+        this.subscriptionRepository.save(subscription);
     }
 
     @Override
     public Subscription getSubscriptionBySubredditIdAndUserId(Long subredditId, Long userId) {
-        return subscriptionRepository.findBySubredditIdAndUserId(subredditId, userId);
+        return this.subscriptionRepository.findBySubredditIdAndUserId(subredditId, userId);
     }
 }
