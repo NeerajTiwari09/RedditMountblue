@@ -29,7 +29,7 @@ border: none;
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<section class="container my-5 border border-2 border-dark p-5" >
+<section class="container border border-2 border-dark p-5" >
     <div class="row">
         <h1>Create a Community</h1>
         <form th:action="@{/saveSubreddit}" method="post" th:object="${subReddit}">

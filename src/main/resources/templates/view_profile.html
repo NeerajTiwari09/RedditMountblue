@@ -15,124 +15,151 @@
       text-align: center;
       background: #fb6d19;
     }
-    .profile-nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
 
-    .profile-nav li {
-      float: left;
-    }
-
-    .profile-nav li a {
-      display: block;
-      color: black;
-      text-align: center;
-      padding: 16px;
-      text-decoration: none;
-    }
-
-    li{
+    .profile-nav li{
+        display: inline-block;
         list-style: none;
     }
-    .sorting, .single-post, .single-subreddit{
-        background:white;
+    .profile-nav li a{
+        color: black;
+        text-decoration:none;
         margin:10px;
-        padding:10px 20px;
-        border-radius: 5px;
     }
+.subreddit-div li{
+    list-style: none;
+}
+.subreddit-div li a{
+    display: block;
+     text-align: center;
+     margin:10px;
+     text-decoration:none;
+}
+.sorting, .posts-div, subreddits-div, .single-post{
+    background:white;
+    margin:10px;
+    padding:10px 20px;
+    border-radius: 5px;
 
-    .btn-vote{
-    border: none;
-
-    }
+}
+.votes-div{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.card {
+  border: none;
+  background: #fff;
+}
+button {
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  color: black;
+}
+.main{
+background-color:#dae0e6;
+padding:30px;
+}
 </style>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
 <div>
-    <div class="profile-nav d-flex justify-content-center">
+    <div class="profile-nav d-flex justify-content-center" style="padding:5px">
         <ul>
-            <li><a href="#">POSTS</a></li>
+            <li><a href="#" class="active">POSTS</a></li>
             <li><a href="#">COMMENTS</a></li>
             <li><a href="#">UPVOTED</a></li>
             <li><a href="#">DOWNVOTED</a></li>
         </ul>
     </div>
 </div>
-<div class="mt-5" style="background-color:#dae0e6; padding:30px">
+<div class="main">
     <div class="row">
-        <div class="col-lg-8" >
+        <div class="col-lg-8">
             <!-- Post content-->
             <article>
+                <div class="sorting">
+                    <th:block th:if="${subReddit != null}">
+                        <a th:href="@{'/new/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">New</a>
+                        <span>Top -> </span>
+                        <a th:href="@{'/top/t=day/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">Today</a>
+                        <a th:href="@{'/top/t=week/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">This Week</a>
+                        <a th:href="@{'/top/t=month/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">This Month</a>
+                        <a th:href="@{'/top/t=year/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">This Year</a>
+                    </th:block>
+                    <th:block th:if="${subReddit == null}">
+                        <a href="/new" style="margin:10px;text-decoration:none;">New</a>
+                        <span>Top -> </span>
+                        <a href="/popular/top/t=day" style="">Today</a>
+                        <a href="/popular/top/t=week" style="margin:10px;text-decoration:none;">This Week</a>
+                        <a href="/popular/top/t=month" style="margin:10px;text-decoration:none;">This Month</a>
+                        <a href="/popular/top/t=year" style="margin:10px;text-decoration:none;">This Year</a>
+                    </th:block>
+                </div>
                 <!-- Content-->
-                <section class="">
-                    <div class="row" >
-                        <th:block th:each="post : ${posts}">
-                            <div class="single-post">
-                                <div class="col-lg-1 col-md-1 col-sm-1">
-                                    <form action="/vote" method="get" >
-                                        <input type="hidden" name="postId" th:value="${post.id}" />
-                                        <input type="hidden" name="upVote" value="true" />
-                                        <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
-                                        <th:block th:if="${!votes.containsKey(post.id)} or  ${!votes.get(post.id).upVoted}">
-                                            <button class="btn-vote" type="submit">
-                                                <i class="bi bi-caret-up" style='font-size:24px'></i>
-                                            </button>
-                                        </th:block>
-                                    </form>
-                                    <form action="/vote" method="get" >
-                                        <input type="hidden" name="postId" th:value="${post.id}" />
-                                        <input type="hidden" name="upVote" value="false" />
-                                        <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
-                                        <th:block  th:if="${votes.containsKey(post.id)} and ${votes.get(post.id).upVoted}">
-                                            <button class="btn-vote" type="submit">
-                                                <i class="bi bi-caret-up-fill" style='font-size:24px'></i>
-                                            </button>
-                                        </th:block>
-                                    </form>
-                                    <div class="" style="color: rgb(26, 26, 27);">[[${post.voteCount}]]</div>
-                                    <form action="/vote" method="get" >
-                                        <input type="hidden" name="postId" th:value="${post.id}" />
-                                        <input type="hidden" name="downVote" value="true" />
-                                        <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
-                                        <th:block th:if = "${!votes.containsKey(post.id)} or ${!votes.get(post.id).downVoted}">
-                                            <button class="btn-vote" type="submit">
-                                                <i class="bi bi-caret-down" style='font-size:24px'></i>
-                                            </button>
-                                        </th:block>
-                                    </form>
-                                    <form action="/vote" method="get" >
-                                        <input type="hidden" name="postId" th:value="${post.id}" />
-                                        <input type="hidden" name="downVote" value="false" />
-                                        <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
-                                        <th:block  th:if="${votes.containsKey(post.id)} and ${votes.get(post.id).downVoted}" >
-                                            <button class="btn-vote" type="submit">
-                                                <i class="bi bi-caret-down-fill" style='font-size:24px'></i>
-                                            </button>
-                                        </th:block>
-                                    </form>
+                <div class="row posts-div" >
+                    <th:block th:each="post : ${posts}">
+                        <div class="col-md-1 votes-div">
+                            <form action="/vote" method="get" >
+                                <input type="hidden" name="postId" th:value="${post.id}" />
+                                <input type="hidden" name="upVote" value="true" />
+                                <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
+                                <th:block th:if="${!votes.containsKey(post.id)} or  ${!votes.get(post.id).upVoted}">
+                                    <button type="submit">
+                                        <i class="bi bi-caret-up" style='font-size:24px'></i>
+                                    </button>
+                                </th:block>
+                            </form>
+                            <form action="/vote" method="get" >
+                                <input type="hidden" name="postId" th:value="${post.id}" />
+                                <input type="hidden" name="upVote" value="false" />
+                                <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
+                                <th:block  th:if="${votes.containsKey(post.id)} and ${votes.get(post.id).upVoted}">
+                                    <button type="submit">
+                                        <i class="bi bi-caret-up-fill" style='font-size:24px'></i>
+                                    </button>
+                                </th:block>
+                            </form>
+                            <span class="" style="color: rgb(26, 26, 27);">&nbsp&nbsp&nbsp[[${post.voteCount}]]</span>
+                            <form action="/vote" method="get" >
+                                <input type="hidden" name="postId" th:value="${post.id}" />
+                                <input type="hidden" name="downVote" value="true" />
+                                <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
+                                <th:block th:if = "${!votes.containsKey(post.id)} or ${!votes.get(post.id).downVoted}">
+                                    <button type="submit">
+                                        <i class="bi bi-caret-down" style='font-size:24px'></i>
+                                    </button>
+                                </th:block>
+                            </form>
+                            <form action="/vote" method="get" >
+                                <input type="hidden" name="postId" th:value="${post.id}" />
+                                <input type="hidden" name="downVote" value="false" />
+                                <input type="hidden" name="subRedditId" th:value="${post.subredditId}" />
+                                <th:block  th:if="${votes.containsKey(post.id)} and ${votes.get(post.id).downVoted}" >
+                                    <button type="submit">
+                                        <i class="bi bi-caret-down-fill" style='font-size:24px'></i>
+                                    </button>
+                                </th:block>
+                            </form>
+                        </div>
+                        <div class="col-md-11">
+                            <a th:href="'/viewPost/'+${post.id}" style="text-decoration:none; color:black">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title" th:text="${post.title}" th:field="${post.title}"></h6>
+                                        <p class="text-muted fst-italic mb-2" th:text="${post.createdAt}"></p>
+                                        <p class="card-text" th:text="${#strings.abbreviate(post.content,100)}"></p>
+                                    </div>
                                 </div>
-                                <div class="col-lg-9 col-md-9 col-sm-9">
-                                    <a th:href="'/viewPost/'+${post.id}" style="text-decoration:none; color:black">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h5 class="card-title" th:text="${post.title}" th:field="${post.title}"></h5>
-                                                <div class="text-muted fst-italic mb-2" th:text="${post.createdAt}"></div>
-                                                <p class="card-text" th:text="${post.content}" th:field="${post.content}" ></p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </th:block>
-                    </div>
+                            </a>
+                        </div>
+                        <hr>
+                    </th:block>
                     <div th:if="postsLength == 0">
                         No post is available
                     </div>
-                </section>
+                </div>
             </article>
         </div>
         <!-- Side widgets-->
@@ -144,7 +171,7 @@
                 </div>
                 <div class="card-body justify-content-center">
                     <div class="">
-                        <p >Manisha-97</p>
+                        <p >Manisha</p>
                         <p>Karma: </p>
                         <p>Cake day: </p>
                         <a href="/viewCreatePostPage">New Post</a>
@@ -155,7 +182,7 @@
             <div class="card mb-4">
                 <div class="card-header">Your Subreddits</div>
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row subreddit-div">
                         <ul class="mb-0">
                             <li th:each="subreddit : ${subreddits}">
                                 <a th:href="'/reddit/'+${subreddit.id}" th:text="${subreddit.name}"></a>

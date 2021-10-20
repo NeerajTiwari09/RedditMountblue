@@ -10,53 +10,66 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
           integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
     <link href="../static/css/main.css"  rel="stylesheet" type="text/css">
-<style>
+    <style>
     .profile-nav{
       text-align: center;
       background: #fb6d19;
     }
-    .profile-nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
 
-    .profile-nav li {
-      float: left;
-    }
-
-    .profile-nav li a {
-      display: block;
-      color: black;
-      text-align: center;
-      padding: 16px;
-      text-decoration: none;
-    }
-
-    li{
+    .profile-nav li{
+        display: inline-block;
         list-style: none;
     }
-    .sorting, .single-post, .single-subreddit{
+    .profile-nav li a{
+        color: black;
+        text-decoration:none;
+        margin:10px;
+    }
+    .single-subreddit, .sorting, .posts-div{
         background:white;
         margin:10px;
         padding:10px 20px;
         border-radius: 5px;
     }
-
-    .btn-vote{
-    border: none;
-
-    }
+.subreddit-div li{
+    list-style: none;
+}
+.subreddit-div li a{
+    display: block;
+     text-align: center;
+     margin:10px;
+     text-decoration:none;
+}
+.sorting, .posts-div{
+    background:white;
+    margin:10px;
+    padding:10px 20px;
+    border-radius: 5px;
+}
+.votes-div{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.card {
+  border: none;
+  background: #fff;
+}
+button {
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  color: black;
+}
 </style>
 </head>
 <body>
 <div th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="../../static/images/reddit_logo.png"
-                     th:src="@{images/reddit_logo.png}"  width="70px" height="45px" alt="Reddit Logo" />
+            <a class="navbar-brand" href="/">
+                <img src="../static/images/reddit_logo.png" class="img-responsive"
+                     th:src="@{images/reddit_logo.png}"  width="90px" height="50px" alt="Reddit Logo" />
                 <!--<img src="../static/images/reddit_logo.png" class="img-responsive" alt="Responsive image"/>-->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,24 +80,24 @@
                     <input name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav me-auto mb-2">
                     <li class="nav-item">
-                        <a class="nav-link active " aria-current="page" href="/createSubreddit">Create Subreddit</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active " aria-current="page" href="/viewCreatePostPage">Create Post</a>
+                        <a class="nav-link active" style="color:#42adf0;" aria-current="page" href="/createSubreddit">Create Subreddit</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active " aria-current="page" href="/popular">Popular</a>
+                        <a class="nav-link active " style="color:#42adf0;" aria-current="page" href="/viewCreatePostPage">Create Post</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active " style="color:#42adf0;" aria-current="page" href="/popular">Popular</a>
                     </li>
                     <li>
-                        <a class="nav-link active" aria-current="page" href="/viewProfile">Profile</a>
+                        <a class="nav-link active" style="color:#42adf0;" aria-current="page" href="/viewProfile">Profile</a>
                     </li>
                     <li>
-                        <a class="nav-link active" aria-current="page" href="/login">Login</a>
+                        <a class="nav-link active" style="color:#42adf0;" aria-current="page" href="/login">Login</a>
                     </li>
                     <li>
-                        <a class="nav-link active" aria-current="page" href="/register">Register</a>
+                        <a class="nav-link active" style="color:#42adf0;" aria-current="page" href="/register">Register</a>
                     </li>
                 </ul>
             </div>

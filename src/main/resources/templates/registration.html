@@ -62,7 +62,7 @@
 }
 
 .card-2 .card-heading {
-  background: url{[[@{/img/Background.jpg}]]} top left/cover no-repeat;
+
   width: 29.1%;
   display: table-cell;
 }
@@ -79,7 +79,7 @@
 <div class="" style="background-color:#dae0e6; padding:30px">
     <div class="container">
         <div class="card card-2" >
-            <div class="card-heading"></div>
+            <div class="card-heading"  th:style="'background:url(' + @{images/loginSideImg.png} + ')  top left/cover no-repeat;'"></div>
             <div class="card-body">
 
                 <h2 class="title">Registration</h2>
