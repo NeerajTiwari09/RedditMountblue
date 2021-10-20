@@ -1,6 +1,6 @@
-package com.example.Blog.config;
+package com.reddit.RedditClone.config;
 
-import com.example.Blog.service.UserService;
+import com.reddit.RedditClone.service.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,7 +17,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserService();
+        return new UserServiceImpl();
     }
 
     @Bean
@@ -41,14 +41,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().disable();
+        http.httpBasic();
         http.authorizeRequests()
-                .antMatchers("/", "/id", "/sort", "/search", "/register", "/filter","/comment").permitAll()
-                .antMatchers("/blog/new", "/blog/update").hasAnyAuthority("ADMIN", "AUTHOR")
-                .antMatchers("/blog/publish").hasAnyAuthority("ADMIN", "AUTHOR")
+                .antMatchers("/","/register","/saveUser").permitAll()
+//                .antMatchers("").hasAnyAuthority("ADMIN", "AUTHOR")
+//                .antMatchers("").hasAnyAuthority("ADMIN", "AUTHOR")
                 .and()
                 .formLogin()
                     .loginPage("/login")
                     .loginProcessingUrl("/authenticateUser")
+                .defaultSuccessUrl("/")
                     .permitAll()
                 .and()
                     .logout()

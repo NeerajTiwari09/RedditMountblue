@@ -33,7 +33,7 @@ public class User {
 //    private Set<Role> authorities = new HashSet<>();
 //    @OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="post")
 //    private Set<Post> features = new HashSet<>();
-
+    
     public User(Long id, String username){
         this.id = id;
         this.username = username;

@@ -5,6 +5,7 @@ import com.reddit.RedditClone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ public class UserController {
 
     @RequestMapping("/login")
     public String viewLoginPage(Model model){
+        System.out.println("loginPage");
         model.addAttribute("user", new User());
         return "login";
     }
@@ -33,5 +35,11 @@ public class UserController {
         model.addAttribute("user", newUser);
         model.addAttribute("registerMessage", "success");
         return "login";
+    }
+
+    @GetMapping("/access-denied")
+    public String viewAccessDeniedPage(){
+        System.out.println("Error...");
+        return  "error";
     }
 }

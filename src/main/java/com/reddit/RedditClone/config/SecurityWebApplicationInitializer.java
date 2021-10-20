@@ -1,4 +1,4 @@
-package com.example.Blog.config;
+package com.reddit.RedditClone.config;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

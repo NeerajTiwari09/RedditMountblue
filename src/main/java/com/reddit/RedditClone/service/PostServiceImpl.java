@@ -78,6 +78,7 @@ public class PostServiceImpl implements  PostService{
             existingPost.setImages(images);
         }
         existingPost.setLink(post.getLink());
+        existingPost.setContent(post.getContent());
         existingPost.setUpdatedAt(timestamp);
         postRepository.save(existingPost);
     }
