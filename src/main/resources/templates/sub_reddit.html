@@ -81,7 +81,7 @@ padding:30px;
                             </div>
                             <div class="col-lg-8">
                                 <th:block th:if="${isSubscribed}">
-                                    <form th:action="@{/unSubscribe}" method="get">
+                                    <form th:action="@{/unsubscribe}" method="get">
                                         <input type="hidden" th:value="${subReddit.id}" name="id">
                                         <button class="btn btn-outline-primary" type="submit" style="border-radius: 20px;padding:5px 20px">Joined</button>
                                     </form>

@@ -105,14 +105,25 @@ public class SubredditController {
         String email = authentication.getName();
         User user = userService.findUserByEmail(email);
         Long userId = user.getId();
-        System.out.println("userId "+userId);
 
         Subscription subscription = new Subscription();
         subscription.setSubredditId(subRedditId);
         subscription.setUserId(userId);
-
         subscriptionService.saveSubscription(subscription);
+        return "redirect:/reddit/"+subRedditId;
+    }
 
+    @RequestMapping("/unsubscribe")
+    public String unsubscribe(@RequestParam("id") Long subRedditId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+        System.out.println("subRedditId "+subRedditId);
+        String email = authentication.getName();
+        User user = userService.findUserByEmail(email);
+        Long userId = user.getId();
+        subscriptionService.removeSubscription(subRedditId, userId);
         return "redirect:/reddit/"+subRedditId;
     }
 }

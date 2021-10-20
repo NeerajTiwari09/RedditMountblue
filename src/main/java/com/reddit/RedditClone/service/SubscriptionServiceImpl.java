@@ -19,4 +19,9 @@ public class SubscriptionServiceImpl implements SubscriptionService{
     public Subscription getSubscriptionBySubredditIdAndUserId(Long subredditId, Long userId) {
         return this.subscriptionRepository.findBySubredditIdAndUserId(subredditId, userId);
     }
+
+    @Override
+    public void removeSubscription(Long subRedditId, Long userId) {
+        this.subscriptionRepository.deleteSubscription(subRedditId, userId);
+    }
 }

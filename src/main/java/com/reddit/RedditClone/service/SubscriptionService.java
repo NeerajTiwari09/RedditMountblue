@@ -7,4 +7,6 @@ public interface SubscriptionService {
     void saveSubscription(Subscription subscription);
 
     Subscription getSubscriptionBySubredditIdAndUserId(Long subredditId, Long userId);
+
+    void removeSubscription(Long subRedditId, Long userId);
 }
