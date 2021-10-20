@@ -30,36 +30,53 @@ border: none;
 <body>
 <div th:replace="fragments/header :: header"></div>
 <div>
-    <section class="container my-5">
+    <section class="container my-5 p-5 border border-dark- rounded">
         <div class="row">
             <div class="col-md-10 mx-auto ">
-                <h1>Create a Post</h1>
+                <h1 class="my-5 text-secondary border-bottom border-danger py-3">Create a Post</h1>
                 <form action="#" th:action="@{/savePost}" th:method="post" th:object="${newPost}" enctype="multipart/form-data" >
-                    <label for="community">Choose a community</label>
-                    <input name="subredditId" list="community" id="community1">
-                    <datalist  id="community">
-                        <option th:each="sub: ${subreddits}" th:value="${sub.id}">[[${sub.name}]]</option>
-                    </datalist>
 
-                    <h1>Post</h1>
+                    <div class="form-group my-2">
+                        <label for="community">
+                            Choose a community
+                            <span class="text-danger">* &nbsp; &nbsp;</span>
+                        </label>
+                        <input name="subredditId" list="community" class="p-1 border-0 border-bottom border-dark" id="community1" placeholder="Choose Community" />
+                        <datalist  id="community">
+                            <option th:each="sub: ${subreddits}" th:value="${sub.id}" >[[${sub.name}]]</option>
+                        </datalist>
+                    </div>
+
+<!--                    <h1 class="my-5">Post</h1>-->
                     <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input type="text" th:name="title" th:field="${newPost.title}" class="form-control" id="title">
+                        <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
+                        <input type="text" th:name="title" th:field="${newPost.title}"
+                               class="form-control border-0 border-bottom border-dark" id="title" placeholder="Post Title Here" >
                     </div>
                     <div class="mb-3">
-                        <label for="content" class="form-label">Content</label>
-                        <textarea type="text" th:name="content" th:field="${newPost.content}" rows="10" class="form-control" id="content"></textarea>
+                        <label for="content" class="form-label">
+                            Content
+                            <span class="text-danger">*</span>
+                        </label>
+                        <textarea type="text" th:name="content" th:field="${newPost.content}" rows="10"
+                                  class="form-control" id="content" placeholder="Post Content Here..."></textarea>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3 my-4">
                         <label for="link" class="form-label">Link</label>
-                        <input type="text" th:name="link" th:field="${newPost.link}" class="form-control" id="link">
+                        <input type="text" th:name="link" th:field="${newPost.link}"
+                               class="form-control border-0 border-bottom border-dark" id="link" placeholder="URL" >
                     </div>
                     <!--<figure class="mb-4">
                         <img class="img-fluid rounded" th:src="${imgUrl}" alt="..." />
                     </figure>-->
-                    <input type="file" th:name="image" />
+
+                    <div class="my-4">
+                        <label class="my-3">Choose Image:</label><br />
+                        <input type="file" th:name="image" />
+                    </div>
+
                     <!--<input type="hidden" name="id" th:value="${newPost.id}" />-->
-                    <button type="submit" class="btn btn-primary my-3">Submit</button>
+                    <button type="submit" class="btn btn-primary my-3">Post</button>
                 </form>
             </div>
         </div>
