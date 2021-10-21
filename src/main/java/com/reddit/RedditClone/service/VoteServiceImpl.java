@@ -31,7 +31,7 @@ public class VoteServiceImpl implements VoteService {
         Post post = postRepository.getById(vote.getPostId());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        User user = userService.findUserByEmail(email);
+        user = userService.findUserByEmail(email);
         Optional<User> optionalUser = userRepository.findById(vote.getUserId());
         System.out.println("Saving vote");
 

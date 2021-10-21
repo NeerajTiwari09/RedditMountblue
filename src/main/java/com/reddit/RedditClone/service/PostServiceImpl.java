@@ -180,7 +180,7 @@ public class PostServiceImpl implements  PostService{
     public String redirectToSubredditPageById(Long subredditId, List<Post> posts, Model model){
         Subreddit subreddit = subredditService.getRedditById(subredditId);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
-        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
+        Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
         Long karma = getKarma(subredditId);
 
         Boolean isSubscribed = false;
