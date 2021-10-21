@@ -21,7 +21,7 @@
     <span th:text="${comment.text}">Example comment</span>
     <div>
       <button class="btn btn-link" th:id="|replyBtn-${comment.id}|" style="margin-left: 12em">Reply</button>
-      <a th:href="@{'/deleteComment/'+${comment.id}}">
+      <a th:href="@{'/deleteComment/'+${comment.id}}" th:if="${user != null} and ${user.username} == ${comment.user.username}">
         <button class="btn btn-link" th:id="|deleteBtn-${comment.id}|" style="margin-left: 1em">Delete</button>
       </a>
     </div>

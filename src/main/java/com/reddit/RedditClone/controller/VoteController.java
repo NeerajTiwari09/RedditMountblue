@@ -54,6 +54,7 @@ public class VoteController {
                              @RequestParam(required = false, name = "downVote", defaultValue = "false") boolean downVote,
                              @RequestParam("isHomePage") boolean isHomePage,
                              Model model){
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";

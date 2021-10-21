@@ -11,6 +11,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @Entity
 @Table(name = "users")
@@ -48,7 +50,9 @@ public class User {
 //            inverseJoinColumns = {@JoinColumn(name = "subreddit_id")})
     private Set<Subreddit> subredditSubscriptions = new HashSet<>();
 
-
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user")
+    @OrderBy("createdDate, id")
+    private SortedSet<Comment> comments = new TreeSet<>();
 
     public User(Long id, String username){
         this.id = id;

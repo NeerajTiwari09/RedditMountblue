@@ -5,7 +5,10 @@ import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.User;
 import com.reddit.RedditClone.repository.CommentRepository;
 import com.reddit.RedditClone.repository.PostRepository;
+import com.reddit.RedditClone.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -21,9 +24,17 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public List<Comment> findByPostId(Long postId) {
         return commentRepository.findByPostId(postId);
+    }
+
+    @Override
+    public List<Comment> findByUserId(Long userId) {
+        return commentRepository.findByUserId(userId);
     }
 
     @Override
@@ -58,7 +69,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private void populateCommentMetadata(Optional<Post> postOpt, Comment comment) {
-        User user = new User(1L, "User");
+//        User user = new User(1L, "User");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findUserByEmail(email);
+
         if (postOpt.isPresent())
             comment.setPost(postOpt.get());
         comment.setUser(user);

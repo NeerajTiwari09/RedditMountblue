@@ -95,18 +95,18 @@ button {
                         <a class="nav-link active" style="color:#42adf0;" aria-current="page" href="/viewProfile">Profile</a>
                     </li>
                     <li sec:authorize="!isAuthenticated()">
-                        <a class="nav-link active" style="color:#42adf0;" aria-current="page" href="/login">Login</a>
+                        <a class="nav-link active" style="color:#42adf0;margin-left:60px" aria-current="page" href="/login">Login</a>
                     </li>
                     <li sec:authorize="isAuthenticated()">
-                        <a class="nav-link active" style="color:#42adf0;" aria-current="page" th:href="@{/logout}">Logout</a>
+                        <a class="nav-link active" style="color:red;" aria-current="page" th:href="@{/logout}">Logout</a>
                     </li>
-                    <li>
+                    <li sec:authorize="!isAuthenticated()">
                         <a class="nav-link active" style="color:#42adf0;" aria-current="page" href="/register">Register</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <h6 th:inline="text">Welcome! [[${#httpServletRequest.remoteUser}]]</h6>
+        <h6 th:inline="text" sec:authorize="isAuthenticated()">Welcome! [[${#httpServletRequest.remoteUser}]]&nbsp&nbsp</h6>
     </nav>
 </div>
 </body>

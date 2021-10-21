@@ -1,9 +1,12 @@
 package com.reddit.RedditClone.service;
 
+import com.reddit.RedditClone.model.Subreddit;
 import com.reddit.RedditClone.model.Subscription;
 import com.reddit.RedditClone.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService{

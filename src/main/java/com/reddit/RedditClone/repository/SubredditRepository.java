@@ -14,4 +14,8 @@ public interface SubredditRepository extends JpaRepository<Subreddit, Long> {
     @Query("SELECT s FROM Subreddit s WHERE lower(s.name) LIKE %?1% OR " +
             "lower(s.description) LIKE %?1%")
     List<Subreddit> searchByString(String searchString);
+
+    @Query("SELECT s FROM Subreddit s join UserSubreddit us " +
+            "on s.id = us.subredditId WHERE us.userId = ?1")
+    List<Subreddit> searchByUser(Long id);
 }
