@@ -1,8 +1,13 @@
 package com.reddit.RedditClone.controller;
 
+import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.User;
+import com.reddit.RedditClone.service.PostService;
 import com.reddit.RedditClone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,11 +15,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PostService postService;
 
     @RequestMapping("/login")
     public String viewLoginPage(Model model){
@@ -41,5 +51,19 @@ public class UserController {
     public String viewAccessDeniedPage(){
         System.out.println("Error...");
         return  "error";
+    }
+
+    @GetMapping("/user/posts")
+    public String getUserPosts(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+        String email = authentication.getName();
+        User user = userService.findUserByEmail(email);
+        List<Post> posts = postService.findAllNewPostsByUssername(user.getUsername());
+        model.addAttribute("posts", posts);
+
+        return "view_profile";
     }
 }

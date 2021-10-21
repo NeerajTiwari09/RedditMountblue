@@ -50,5 +50,10 @@ public class SubredditServiceImpl implements SubredditService{
         return subredditRepository.searchByString(keyword);
     }
 
+    @Override
+    public List<Subreddit> searchByUser(Long id) {
+        return subredditRepository.searchByUser(id);
+    }
+
 
 }

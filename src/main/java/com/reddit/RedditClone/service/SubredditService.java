@@ -12,4 +12,6 @@ public interface SubredditService {
     Subreddit getRedditById(Long id);
 
     List<Subreddit> getSearchedSubreddits(String keyword);
+
+    List<Subreddit> searchByUser(Long id);
 }

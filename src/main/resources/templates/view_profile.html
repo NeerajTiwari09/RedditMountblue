@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
           integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
-    <link href="main.css"  rel="stylesheet" type="text/css">
     <!--#fb6d19;-->
     <style>
     .profile-nav{
@@ -66,12 +65,12 @@ padding:30px;
 <body>
 <div th:replace="fragments/header :: header"></div>
 <div>
-    <div class="profile-nav d-flex justify-content-center" style="padding:5px">
+    <div class="profile-nav d-flex justify-content-center align-self-baseline" style="padding:5px">
         <ul>
-            <li><a href="#" class="active">POSTS</a></li>
-            <li><a href="#">COMMENTS</a></li>
-            <li><a href="#">UPVOTED</a></li>
-            <li><a href="#">DOWNVOTED</a></li>
+            <li><a href="/user/posts" class="active">POSTS</a></li>
+            <li><a href="/user/comments">COMMENTS</a></li>
+            <li><a href="/user/upvoted">UPVOTED</a></li>
+            <li><a href="/user/downvoted">DOWNVOTED</a></li>
         </ul>
     </div>
 </div>
@@ -99,8 +98,8 @@ padding:30px;
                     </th:block>
                 </div>
                 <!-- Content-->
-                <div class="row posts-div" >
-                    <th:block th:each="post : ${posts}">
+                <div class="row posts-div" th:if="${posts != null}">
+                    <th:block th:each="post : ${posts}" >
                         <div class="col-md-1 votes-div">
                             <form action="/vote" method="get" >
                                 <input type="hidden" name="postId" th:value="${post.id}" />
@@ -157,6 +156,12 @@ padding:30px;
                         </div>
                         <hr>
                     </th:block>
+                    <div th:if="postsLength == 0">
+                        No post is available
+                    </div>
+                </div>
+                <div class="row posts-div" th:if="${subReddit != null}">
+                    <div th:replace="fragments/comment :: commentThread"></div>
                     <div th:if="postsLength == 0">
                         No post is available
                     </div>

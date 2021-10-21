@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.sql.Date;
 import java.util.SortedSet;
@@ -15,19 +17,24 @@ import javax.persistence.*;
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 @Getter
 @Setter
+@Table(name = "comments")
 public class Comment implements Comparable<Comment> {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length=5000)
+    @Column(columnDefinition = "text")
     private String text;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "post_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Post post;
 
@@ -37,8 +44,10 @@ public class Comment implements Comparable<Comment> {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="comment_id", nullable=true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Comment comment;
+
     private Date createdDate;
 
     @Override

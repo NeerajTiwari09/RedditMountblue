@@ -57,4 +57,6 @@ public interface PostService {
 
     String redirectToSubredditPage(List<Post> posts , Model model);
 
+    List<Post> findAllNewPostsByUssername(String author);
+
 }

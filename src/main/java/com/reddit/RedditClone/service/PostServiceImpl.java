@@ -250,4 +250,9 @@ public class PostServiceImpl implements  PostService{
         model.addAttribute("user", user);
         return "sub_reddit";
     }
+
+    @Override
+    public List<Post> findAllNewPostsByUssername(String author) {
+        return postRepository.findByAuthor(author);
+    }
 }

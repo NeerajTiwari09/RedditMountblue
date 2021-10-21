@@ -31,6 +31,9 @@ public class PostController {
     @Autowired
     private SubscriptionService subscriptionService;
 
+    @Autowired
+    private CommentService commentService;
+
     @GetMapping("/popular")
     public String popular(Model model){
         List<Post> posts = postService.findAllNewPosts();
@@ -45,9 +48,20 @@ public class PostController {
 
     @RequestMapping("/viewProfile")
     public String viewProfile(Model model){
-        List<Post> posts = new ArrayList<>();
-        List<Subreddit> subreddits = new ArrayList<>();
-        List<Comment> comments = new ArrayList<>();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+        String email = authentication.getName();
+        User user = userService.findUserByEmail(email);
+
+        List<Post> posts = postService.findAllNewPostsByUssername(user.getUsername());
+
+        List<Subreddit> subreddits = subredditService.searchByUser(user.getId());
+
+        List<Comment> comments = commentService.findByUserId(user.getId());
+
+
 
         model.addAttribute("posts", posts);
         model.addAttribute("comments", comments);
@@ -106,11 +120,16 @@ public class PostController {
         if(!post.getImages().isEmpty()) {
             url = post.getImages().get(0).getUrls();
         }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.findUserByEmail(email);
+
         model.addAttribute("post",post);
         model.addAttribute("url", url);
         model.addAttribute("thread", commentsWithoutDuplicates);
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("rootComment", new Comment());
+        model.addAttribute("user", user);
         return "view_post";
     }
 

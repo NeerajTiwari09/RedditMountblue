@@ -8,6 +8,8 @@ public interface CommentService {
 
     List<Comment> findByPostId(Long postId);
 
+    List<Comment> findByUserId(Long userId);
+
     Comment getById(Long id);
 
     void deleteById(Long id);
