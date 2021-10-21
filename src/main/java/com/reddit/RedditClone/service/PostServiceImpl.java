@@ -4,6 +4,9 @@ import com.reddit.RedditClone.model.*;
 import com.reddit.RedditClone.repository.PostRepository;
 import com.reddit.RedditClone.repository.SubredditRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -28,6 +31,12 @@ public class PostServiceImpl implements  PostService{
 
     @Autowired
     private AWSService awsService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private SubscriptionService subscriptionService;
 
     @Override
     public Post savePost(Post post) {
@@ -174,12 +183,28 @@ public class PostServiceImpl implements  PostService{
         Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
         Long karma = getKarma(subredditId);
 
+        Boolean isSubscribed = false;
+        User user = null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+            String email = authentication.getName();
+            user = userService.findUserByEmail(email);
+            Long userId = user.getId();
+            Subscription subscription = subscriptionService.getSubscriptionBySubredditIdAndUserId(subredditId, userId);
+            if(subscription!=null){
+                isSubscribed = true;
+            }
+        }
+
         System.out.println("Karma: " + karma);
+        model.addAttribute("posts", posts);
         model.addAttribute("subReddit", subreddit);
         model.addAttribute("karma", karma);
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("votes", votes);
         model.addAttribute("postsLength", posts.size());
+        model.addAttribute("isSubscribed", isSubscribed);
+        model.addAttribute("user", user);
         return "sub_reddit";
     }
     @Override
@@ -211,14 +236,18 @@ public class PostServiceImpl implements  PostService{
     public String redirectToSubredditPage(List<Post> posts, Model model){
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
         Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
-//        Long karma = getKarma(subredditId);
 
-//        System.out.println("Karma: " + karma);
-//        model.addAttribute("subReddit", subreddit);
-//        model.addAttribute("karma", karma);
+        User user = null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+            String email = authentication.getName();
+            user = userService.findUserByEmail(email);
+        }
+
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("votes", votes);
         model.addAttribute("postsLength", posts.size());
+        model.addAttribute("user", user);
         return "sub_reddit";
     }
 }

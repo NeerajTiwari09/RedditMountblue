@@ -37,6 +37,7 @@ public class VoteController {
                              @RequestParam(required = false, name = "downVote", defaultValue = "false") boolean downVote,
                              @RequestParam("subRedditId") Long subRedditId,
                              Model model){
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";

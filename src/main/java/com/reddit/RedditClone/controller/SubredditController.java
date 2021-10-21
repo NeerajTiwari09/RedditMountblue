@@ -70,10 +70,11 @@ public class SubredditController {
         Long karma = postService.getKarma(id);
 
         Boolean isSubscribed = false;
+        User user = null;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
             String email = authentication.getName();
-            User user = userService.findUserByEmail(email);
+            user = userService.findUserByEmail(email);
             Long userId = user.getId();
             Subscription subscription = subscriptionService.getSubscriptionBySubredditIdAndUserId(id, userId);
             if(subscription!=null){
@@ -89,7 +90,7 @@ public class SubredditController {
         model.addAttribute("votes", votes);
         model.addAttribute("postsLength", posts.size());
         model.addAttribute("isSubscribed", isSubscribed);
-//        model.addAttribute("currentUserId", 1);
+        model.addAttribute("user", user);
         postService.getControversialPosts(id);
 
         return "sub_reddit";

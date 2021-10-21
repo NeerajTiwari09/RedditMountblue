@@ -67,6 +67,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
 
 
-    @Query("SELECT pp FROM Post pp order by pp.upVoteCount desc")
+    @Query("SELECT pp FROM Post pp order by pp.voteCount desc")
     List<Post> findAllOrderByCreatedAtDesc();
 }

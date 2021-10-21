@@ -32,6 +32,7 @@ public class CommentController {
     public String postComment(@PathVariable Long postId, Comment rootComment,
                               @RequestParam(required=false) Long parentId,
                               @RequestParam(required=false) String childCommentText) {
+
         commentService.saveComment(postId, rootComment, parentId, childCommentText);
         return "redirect:/viewPost/" + postId;
     }

@@ -1,10 +1,7 @@
 package com.reddit.RedditClone.controller;
 
 import com.reddit.RedditClone.model.*;
-import com.reddit.RedditClone.service.PostService;
-import com.reddit.RedditClone.service.SubredditService;
-import com.reddit.RedditClone.service.UserService;
-import com.reddit.RedditClone.service.VoteService;
+import com.reddit.RedditClone.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,12 +28,13 @@ public class PostController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SubscriptionService subscriptionService;
+
     @GetMapping("/popular")
     public String popular(Model model){
         List<Post> posts = postService.findAllNewPosts();
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
-//        Long karma = postService.getKarma(subredditId);
-//        model.addAttribute("karma", karma);
         Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
 
         model.addAttribute("posts", posts);
@@ -81,6 +79,7 @@ public class PostController {
         String authorName = userService.findUserByEmail(authentication.getName()).getUsername();
         post.setAuthor(authorName);
         postService.savePost(post);
+
         return "redirect:/reddit/"+post.getSubredditId();
     }
 
@@ -89,6 +88,8 @@ public class PostController {
         List<Post> posts = postService.getAllPosts();
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
         Map<Long,Vote> votes = voteService.getVotesByPosts(posts);
+
+
 
         model.addAttribute("posts", posts);
         model.addAttribute("subreddits",subreddits);
@@ -132,22 +133,6 @@ public class PostController {
         return "update-post";
     }
 
-    @RequestMapping("/popular/{subredditId}")
-    public String getPopularPostsBySubredditId(@PathVariable Long subredditId, Model model){
-        Subreddit subreddit = subredditService.getRedditById(subredditId);
-        List<Post> posts = postService.getPopularPosts(subredditId);
-        List<Subreddit> subreddits = subredditService.findAllSubreddits();
-        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
-        Long karma = postService.getKarma(subredditId);
-
-        model.addAttribute("subReddit", subreddit);
-        model.addAttribute("posts", posts);
-        model.addAttribute("karma", karma);
-        model.addAttribute("subreddits",subreddits);
-        model.addAttribute("votes", votes);
-        return "sub_reddit";
-    }
-
     @RequestMapping("/controversial/{subredditId}")
     public String getControversialPostsBySubredditId(@PathVariable Long subredditId, Model model){
         Subreddit subreddit = subredditService.getRedditById(subredditId);
@@ -159,45 +144,6 @@ public class PostController {
         model.addAttribute("subReddit", subreddit);
         model.addAttribute("posts", posts);
         model.addAttribute("karma", karma);
-        model.addAttribute("subreddits",subreddits);
-        model.addAttribute("votes", votes);
-        return "sub_reddit";
-    }
-
-    @RequestMapping("/popular/new/")
-    public String getNewPopularPost(Model model){
-        System.out.println("popular new");
-        List<Post> posts = postService.findAllNewPosts();
-        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
-        System.out.println("Posts = "+posts);
-        model.addAttribute("posts", posts);
-        model.addAttribute("votes", votes);
-        return "redirect:/popular/";
-    }
-
-    @RequestMapping("/new/{subredditId}")
-    public String getAllNewPostsBySubredditId(@PathVariable Long subredditId, Model model){
-        Subreddit subreddit = subredditService.getRedditById(subredditId);
-        List<Post> posts = postService.findAllNewPostsBySubredditId(subredditId);
-        List<Subreddit> subreddits = subredditService.findAllSubreddits();
-        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
-        Long karma = postService.getKarma(subredditId);
-
-        model.addAttribute("subReddit", subreddit);
-        model.addAttribute("posts", posts);
-        model.addAttribute("karma", karma);
-        model.addAttribute("subreddits",subreddits);
-        model.addAttribute("votes", votes);
-        return "sub_reddit";
-    }
-
-    @RequestMapping("/new")
-    public String getAllNewPosts(Model model){
-        List<Post> posts = postService.findAllNewPosts();
-        List<Subreddit> subreddits = subredditService.findAllSubreddits();
-        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
-
-        model.addAttribute("posts", posts);
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("votes", votes);
         return "sub_reddit";
@@ -244,9 +190,18 @@ public class PostController {
         return "search";
     }
 
+    @RequestMapping("/new/{subredditId}")
+    public String getAllNewPostsBySubredditId(@PathVariable Long subredditId, Model model){
+        List<Post> posts = postService.findAllNewPostsBySubredditId(subredditId);
+
+        model.addAttribute("posts", posts);
+        return postService.redirectToSubredditPageById(subredditId, posts, model);
+    }
+
     @GetMapping("/top/t=day/{subredditId}")
     public String todayPosts(@PathVariable("subredditId") Long subredditId, Model model){
         List<Post> posts = postService.getLast24HourPosts(subredditId);
+
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPageById(subredditId, posts, model);
     }
@@ -254,6 +209,7 @@ public class PostController {
     @GetMapping("/top/t=week/{subredditId}")
     public String currentWeekPosts(@PathVariable("subredditId") Long subredditId, Model model){
         List<Post> posts = postService.getLastWeekPosts(subredditId);
+
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPageById(subredditId, posts, model);
     }
@@ -261,6 +217,7 @@ public class PostController {
     @GetMapping("/top/t=month/{subredditId}")
     public String currentMonthPosts(@PathVariable("subredditId") Long subredditId, Model model){
         List<Post> posts = postService.getLastMonthPosts(subredditId);
+
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPageById(subredditId, posts, model);
     }
@@ -269,8 +226,16 @@ public class PostController {
     @GetMapping("/top/t=year/{subredditId}")
     public String currentYearPosts(@PathVariable("subredditId") Long subredditId, Model model){
         List<Post> posts = postService.getLastYearPosts(subredditId);
+
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPageById(subredditId, posts, model);
+    }
+
+    @RequestMapping("/new")
+    public String getAllNewPosts(Model model){
+        List<Post> posts = postService.findAllNewPosts();
+        model.addAttribute("posts", posts);
+        return postService.redirectToSubredditPage(posts, model);
     }
 
     @GetMapping("/top/t=day")
@@ -293,7 +258,6 @@ public class PostController {
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPage(posts, model);
     }
-
 
     @GetMapping("/top/t=year")
     public String currentYearAllPosts(Model model){
