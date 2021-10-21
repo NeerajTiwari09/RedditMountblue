@@ -38,13 +38,17 @@ public class VoteController {
 
     @Deprecated
     @RequestMapping("/saveVote")
-    public String saveVote(@ModelAttribute("vote") Vote vote){
+    public String saveVote(@ModelAttribute("vote") Vote vote, Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
+        String email = authentication.getName();
+        User user = userService.findUserByEmail(email);
 
         voteService.saveVote(vote);
+
+        model.addAttribute("userId", user.getId());
         return "sub_reddit";
     }
 

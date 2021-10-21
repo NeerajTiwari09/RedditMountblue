@@ -46,6 +46,17 @@ public class PostController {
         model.addAttribute("posts", posts);
         model.addAttribute("votes", votes);
         model.addAttribute("subreddits", subreddits);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            model.addAttribute("userExist", false);
+        }
+        else{
+            model.addAttribute("userExist", true);
+            String email = authentication.getName();
+            User user = userService.findUserByEmail(email);
+            model.addAttribute("user", user);
+        }
         return "sub_reddit";
     }
 
@@ -109,6 +120,18 @@ public class PostController {
         model.addAttribute("posts", posts);
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("votes", votes);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            model.addAttribute("userExist", false);
+        }
+        else{
+            model.addAttribute("userExist", true);
+            String email = authentication.getName();
+            User user = userService.findUserByEmail(email);
+            model.addAttribute("user", user);
+        }
+
         return "sub_reddit";
     }
 
@@ -166,6 +189,17 @@ public class PostController {
         model.addAttribute("karma", karma);
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("votes", votes);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            model.addAttribute("userExist", false);
+        }
+        else{
+            model.addAttribute("userExist", true);
+            String email = authentication.getName();
+            User user = userService.findUserByEmail(email);
+            model.addAttribute("user", user);
+        }
         return "sub_reddit";
     }
 
@@ -182,6 +216,17 @@ public class PostController {
         model.addAttribute("karma", karma);
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("votes", votes);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            model.addAttribute("userExist", false);
+        }
+        else{
+            model.addAttribute("userExist", true);
+            String email = authentication.getName();
+            User user = userService.findUserByEmail(email);
+            model.addAttribute("user", user);
+        }
         return "sub_reddit";
     }
 
