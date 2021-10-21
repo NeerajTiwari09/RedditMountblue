@@ -77,8 +77,13 @@ padding:30px;
                             <div class="col-md-4 ">
                                 <h4 class="fw-bolder mb-1" th:text="${subReddit.name}">Subreddit name</h4>
                                 <div class="text-muted fst-italic mb-2" th:text="${subReddit.createdAt}"></div>
-                                <span class="text-muted fst-italic mb-2" th:text="'Karma '+${karma}">Karma</span>
+<!--                                <span class="text-muted fst-italic mb-2" th:text="'Karma '+${karma}">Karma</span>-->
+                                <button type="button" class="btn btn-dark shadow" disabled>
+                                    Karma <span class="badge badge-pill badge-light">9</span>
+<!--                                    <span class="sr-only"></span>-->
+                                </button>
                             </div>
+
                             <div class="col-lg-8">
                                 <th:block th:if="${isSubscribed}">
                                     <form th:action="@{/unsubscribe}" method="get">
@@ -111,7 +116,7 @@ padding:30px;
 
                     <th:block th:if="${subReddit == null}">
                         <a href="/new" style="margin:10px;text-decoration:none;">New</a>
-                        <span>Top -> </span>
+                        <span class="">Top -> </span>
                         <a href="/popular/top/t=day" style="">Today</a>
                         <a href="/popular/top/t=week" style="margin:10px;text-decoration:none;">This Week</a>
                         <a href="/popular/top/t=month" style="margin:10px;text-decoration:none;">This Month</a>
