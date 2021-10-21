@@ -47,7 +47,9 @@ public class User {
 //    @JoinTable(name = "user_subscription", joinColumns = {@JoinColumn(name = "user_id")},
 //            inverseJoinColumns = {@JoinColumn(name = "subreddit_id")})
     private Set<Subreddit> subredditSubscriptions = new HashSet<>();
-    
+
+
+
     public User(Long id, String username){
         this.id = id;
         this.username = username;

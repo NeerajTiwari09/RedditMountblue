@@ -78,8 +78,9 @@ public class PostController {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
-        String authorName = userService.findUserByEmail(authentication.getName()).getUsername();
-        post.setAuthor(authorName);
+        User user = userService.findUserByEmail(authentication.getName());
+        post.setAuthor(user.getUsername());
+        post.setUser(user);
         postService.savePost(post);
         return "redirect:/reddit/"+post.getSubredditId();
     }

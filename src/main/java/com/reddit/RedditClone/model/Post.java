@@ -50,4 +50,8 @@ public class Post {
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="post")
     @OrderBy("createdDate, id")
     private SortedSet<Comment> comments = new TreeSet<>();
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
