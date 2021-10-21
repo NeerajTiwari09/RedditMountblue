@@ -42,9 +42,8 @@ public class User {
 
 
 //    private Set<Role> authorities = new HashSet<>();
-
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="post")
-    private Set<Post> posts = new HashSet<>();
+//    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="post")
+//    private Set<Post> posts = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinTable(name = "user_subscription", joinColumns = {@JoinColumn(name = "user_id")},

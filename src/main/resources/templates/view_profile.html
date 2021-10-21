@@ -79,26 +79,8 @@ padding:30px;
         <div class="col-lg-8">
             <!-- Post content-->
             <article>
-                <div class="sorting">
-                    <th:block th:if="${subReddit != null}">
-                        <a th:href="@{'/new/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">New</a>
-                        <span>Top -> </span>
-                        <a th:href="@{'/top/t=day/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">Today</a>
-                        <a th:href="@{'/top/t=week/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">This Week</a>
-                        <a th:href="@{'/top/t=month/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">This Month</a>
-                        <a th:href="@{'/top/t=year/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">This Year</a>
-                    </th:block>
-                    <th:block th:if="${subReddit == null}">
-                        <a href="/new" style="margin:10px;text-decoration:none;">New</a>
-                        <span>Top -> </span>
-                        <a href="/popular/top/t=day" style="">Today</a>
-                        <a href="/popular/top/t=week" style="margin:10px;text-decoration:none;">This Week</a>
-                        <a href="/popular/top/t=month" style="margin:10px;text-decoration:none;">This Month</a>
-                        <a href="/popular/top/t=year" style="margin:10px;text-decoration:none;">This Year</a>
-                    </th:block>
-                </div>
                 <!-- Content-->
-                <div class="row posts-div" th:if="${posts != null}">
+                <div class="row posts-div"><!--th:if="${posts != null}"-->
                     <th:block th:each="post : ${posts}" >
                         <div class="col-md-1 votes-div">
                             <form action="/vote" method="get" >
@@ -160,10 +142,22 @@ padding:30px;
                         No post is available
                     </div>
                 </div>
-                <div class="row posts-div" th:if="${subReddit != null}">
-                    <div th:replace="fragments/comment :: commentThread"></div>
-                    <div th:if="postsLength == 0">
-                        No post is available
+                <div class="row posts-div" ><!--th:if="${subReddit != null}"-->
+                    <th:block th:each="comment : ${comments}" >
+                        <div class="col-md-11">
+                            <a th:href="'/viewPost/'+${comment.post.id}" style="text-decoration:none; color:black">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p class="text-muted fst-italic mb-2" th:text="${comment.createdDate}"></p>
+                                        <p class="card-text" th:text="${comment.text}"></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <hr>
+                    </th:block>
+                    <div th:if="${commentLength} == 0">
+                        No Comment is available
                     </div>
                 </div>
             </article>

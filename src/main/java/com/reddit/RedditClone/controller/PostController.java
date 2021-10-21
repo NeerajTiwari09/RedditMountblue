@@ -56,16 +56,16 @@ public class PostController {
         User user = userService.findUserByEmail(email);
 
         List<Post> posts = postService.findAllNewPostsByUssername(user.getUsername());
-
         List<Subreddit> subreddits = subredditService.searchByUser(user.getId());
-
         List<Comment> comments = commentService.findByUserId(user.getId());
+        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
 
-
-
+        model.addAttribute("votes", votes);
         model.addAttribute("posts", posts);
         model.addAttribute("comments", comments);
         model.addAttribute("subreddits", subreddits);
+        model.addAttribute("postsLength", posts.size());
+        model.addAttribute("commentLength", comments.size());
         return "view_profile";
     }
 
