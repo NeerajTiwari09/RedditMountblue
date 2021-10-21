@@ -38,8 +38,8 @@ public class CommentController {
 
     @RequestMapping("/deleteComment/{id}")
     private String deleteComment(@PathVariable Long id){
-        Comment comment = commentService.getById(id);
-        commentService.deleteById(id);
-        return "redirect:/viewPost/" + comment.getPost().getId();
+          Comment comment = commentService.getById(id);
+          commentService.deleteById(id);
+          return "redirect:/viewPost/" + comment.getPost().getId();
     }
 }
