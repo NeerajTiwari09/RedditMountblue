@@ -171,7 +171,7 @@ public class PostServiceImpl implements  PostService{
     public String redirectToSubredditPageById(Long subredditId, List<Post> posts, Model model){
         Subreddit subreddit = subredditService.getRedditById(subredditId);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
-        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
+        Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
         Long karma = getKarma(subredditId);
 
         System.out.println("Karma: " + karma);
@@ -210,7 +210,7 @@ public class PostServiceImpl implements  PostService{
     @Override
     public String redirectToSubredditPage(List<Post> posts, Model model){
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
-        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
+        Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
 //        Long karma = getKarma(subredditId);
 
 //        System.out.println("Karma: " + karma);

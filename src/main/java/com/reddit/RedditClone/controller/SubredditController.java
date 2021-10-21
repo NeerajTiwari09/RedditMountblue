@@ -66,7 +66,7 @@ public class SubredditController {
         Subreddit subreddit = subredditService.getRedditById(id);
         List<Post> posts = postService.getBySubRedditId(id);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
-        Map<Long,Vote> votes = voteService.getVotesByPosts(posts);
+        Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
         Long karma = postService.getKarma(id);
 
         Boolean isSubscribed = false;
@@ -101,6 +101,7 @@ public class SubredditController {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
+
         System.out.println("subRedditId "+subRedditId);
         String email = authentication.getName();
         User user = userService.findUserByEmail(email);
@@ -120,6 +121,7 @@ public class SubredditController {
             return "login";
         }
         System.out.println("subRedditId "+subRedditId);
+
         String email = authentication.getName();
         User user = userService.findUserByEmail(email);
         Long userId = user.getId();

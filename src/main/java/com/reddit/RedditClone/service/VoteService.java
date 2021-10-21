@@ -8,5 +8,5 @@ import java.util.Map;
 
 public interface VoteService {
     void saveVote(Vote vote);
-    Map<Long,Vote> getVotesByPosts(List<Post> posts);
+    Map<Long, Map<Long, Vote>> getVotesByPosts(List<Post> posts);
 }
