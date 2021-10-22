@@ -31,8 +31,8 @@ public class User {
     @Column(columnDefinition = "integer default 0")
     private Long karma;
 //    private Set<Role> authorities = new HashSet<>();
-//    @OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="post")
-//    private Set<Post> features = new HashSet<>();
+    @OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="post")
+    private Set<Post> posts = new HashSet<>();
 
     public User(Long id, String username){
         this.id = id;
