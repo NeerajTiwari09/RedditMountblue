@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
         integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
-  <link href="main.css"  rel="stylesheet" type="text/css">
   <style>
     .profile-nav{
       text-align: center;
@@ -26,15 +25,13 @@
         margin:10px;
     }
 .subreddit-div li{
-    list-style: none;
 }
 .subreddit-div li a{
     display: block;
-     text-align: center;
      margin:10px;
      text-decoration:none;
 }
-.sorting, .posts-div, subreddits-div, .single-post{
+.sorting, .subreddit, .posts-div, subreddits-div, .single-post{
     background:white;
     margin:10px;
     padding:10px 20px;
@@ -70,17 +67,16 @@ padding:30px;
         <div class="col-lg-8" >
             <!-- Post content-->
             <article>
-                <div>
+                <div class="subreddit">
                   <header th:if="${subReddit != null}" class="mb-4">
                     <h4 class="fw-bolder mb-1" th:text="${subReddit.name}">Subreddit name</h4>
                     <div class="text-muted fst-italic mb-2" th:text="${subReddit.createdAt}"></div>
                     <span th:text="'Karma '+${karma}">Karma</span>
                   </header>
-
-                  <header th:if="${subReddit == null}" class="mb-4">
-                    <h6 class="fw-bolder mb-1">Posts</h6>
-                  </header>
                 </div>
+                <header th:if="${subReddit == null}" class="mb-4">
+                    <h6 class="fw-bolder mb-1">Posts</h6>
+                </header>
                 <div class="sorting">
                     <th:block th:if="${subReddit != null}">
                       <a th:href="@{'/new/'+${subReddit.id}}" style="margin:10px;text-decoration:none;">New</a>
@@ -182,7 +178,7 @@ padding:30px;
         <div class="card mb-4">
           <div class="card-header">Subreddits</div>
           <div class="card-body">
-            <div class="row subreddit-div">
+            <div class="row subreddit-div px-5">
               <ul class="mb-0">
                 <li th:each="subreddit : ${subreddits}"><a th:href="'/reddit/'+${subreddit.id}" th:text="${subreddit.name}"></a></li>
               </ul>

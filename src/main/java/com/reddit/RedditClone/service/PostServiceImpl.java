@@ -185,6 +185,7 @@ public class PostServiceImpl implements  PostService{
 
         Boolean isSubscribed = false;
         User user = null;
+        model.addAttribute("userExist", false);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
             String email = authentication.getName();
@@ -194,6 +195,7 @@ public class PostServiceImpl implements  PostService{
             if(subscription!=null){
                 isSubscribed = true;
             }
+            model.addAttribute("userExist", true);
         }
 
         System.out.println("Karma: " + karma);
@@ -239,10 +241,12 @@ public class PostServiceImpl implements  PostService{
 //        Long karma = getKarma(subredditId);
 
         User user = null;
+        model.addAttribute("userExist", false);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
             String email = authentication.getName();
             user = userService.findUserByEmail(email);
+            model.addAttribute("userExist", true);
         }
 
         model.addAttribute("subreddits",subreddits);

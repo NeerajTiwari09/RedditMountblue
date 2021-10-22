@@ -57,6 +57,7 @@ public class VoteController {
                              @RequestParam(required = false, name = "upVote", defaultValue = "false") boolean upVote,
                              @RequestParam(required = false, name = "downVote", defaultValue = "false") boolean downVote,
                              @RequestParam("isHomePage") boolean isHomePage,
+                             @RequestParam(required = false, name = "isProfile", defaultValue = "false") boolean isProfile,
                              Model model){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -79,6 +80,9 @@ public class VoteController {
 
         if(isHomePage){
             return subredditController.getRedditById(post.getSubredditId(), model);
+        }
+        if (isProfile){
+            return postController.viewProfile(model);
         }
 
         return postController.popular(model);

@@ -26,11 +26,9 @@
         margin:10px;
     }
 .subreddit-div li{
-    list-style: none;
 }
 .subreddit-div li a{
     display: block;
-     text-align: center;
      margin:10px;
      text-decoration:none;
 }
@@ -65,17 +63,12 @@ padding:30px;
 <body>
 <div th:replace="fragments/header :: header"></div>
 <div class="main">
-    <section class="container">
+    <section class="container my-2 p-2">
         <div class="row">
-            <div class="col-md-10 mx-auto">
+            <div class="col-md-8 mx-auto p-5" style="background-color:white;border-radius: 10px;">
                 <h4>Update a Post</h4>
 
                 <form action="#" th:action="@{/updatePost}" th:method="post" th:object="${newPost}" enctype="multipart/form-data" >
-                    <!--<label for="community">Choose a community</label>
-                    <input name="subredditId" list="community" id="community1">
-                    <datalist  id="community">
-                        <option th:each="sub: ${subreddits}" th:value="${sub.id}" th:text="${sub.name}"></option>
-                    </datalist>-->
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
                         <input type="text" th:name="title" th:field="${newPost.title}" class="form-control" id="title">

@@ -64,10 +64,12 @@ public class PostController {
     public String viewProfile(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            model.addAttribute("userExist", false);
             return "login";
         }
         String email = authentication.getName();
         User user = userService.findUserByEmail(email);
+        model.addAttribute("userExist", true);
 
         List<Post> posts = postService.findAllNewPostsByUssername(user.getUsername());
         List<Subreddit> subreddits = subredditService.searchByUser(user.getId());
@@ -76,6 +78,7 @@ public class PostController {
 
         model.addAttribute("votes", votes);
         model.addAttribute("posts", posts);
+        model.addAttribute("user", user);
         model.addAttribute("comments", comments);
         model.addAttribute("subreddits", subreddits);
         model.addAttribute("postsLength", posts.size());
@@ -293,6 +296,15 @@ public class PostController {
         Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
         Long karma = postService.getKarma(1L);
 
+        User user = null;
+        model.addAttribute("userExist", false);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+            String email = authentication.getName();
+            user = userService.findUserByEmail(email);
+            model.addAttribute("userExist", true);
+        }
+
         model.addAttribute("subReddit", subreddit);
         model.addAttribute("posts",posts);
         model.addAttribute("karma", karma);
@@ -306,37 +318,9 @@ public class PostController {
     public String getAllNewPostsBySubredditId(@PathVariable Long subredditId, Model model){
         Subreddit subreddit = subredditService.getRedditById(subredditId);
         List<Post> posts = postService.findAllNewPostsBySubredditId(subredditId);
-        List<Subreddit> subreddits = subredditService.findAllSubreddits();
-        Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
-        Long karma = postService.getKarma(subredditId);
-
-        model.addAttribute("subReddit", subreddit);
         model.addAttribute("posts", posts);
-        model.addAttribute("karma", karma);
-        model.addAttribute("subreddits",subreddits);
-        model.addAttribute("votes", votes);
-        return "sub_reddit";
+        return postService.redirectToSubredditPageById(subredditId, posts, model);
     }
-
-    @RequestMapping("/new")
-    public String getAllNewPosts(Model model){
-        List<Post> posts = postService.findAllNewPosts();
-        List<Subreddit> subreddits = subredditService.findAllSubreddits();
-        Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
-
-        model.addAttribute("posts", posts);
-        model.addAttribute("subreddits",subreddits);
-        model.addAttribute("votes", votes);
-        return "sub_reddit";
-    }
-
-//    @RequestMapping("/new/{subredditId}")
-//    public String getAllNewPostsBySubredditId(@PathVariable Long subredditId, Model model){
-//        List<Post> posts = postService.findAllNewPostsBySubredditId(subredditId);
-//
-//        model.addAttribute("posts", posts);
-//        return postService.redirectToSubredditPageById(subredditId, posts, model);
-//    }
 
     @GetMapping("/top/t=day/{subredditId}")
     public String todayPosts(@PathVariable("subredditId") Long subredditId, Model model){
@@ -359,7 +343,6 @@ public class PostController {
         return postService.redirectToSubredditPageById(subredditId, posts, model);
     }
 
-
     @GetMapping("/top/t=year/{subredditId}")
     public String currentYearPosts(@PathVariable("subredditId") Long subredditId, Model model){
         List<Post> posts = postService.getLastYearPosts(subredditId);
@@ -367,16 +350,18 @@ public class PostController {
         return postService.redirectToSubredditPageById(subredditId, posts, model);
     }
 
-//    @RequestMapping("/new")
-//    public String getAllNewPosts(Model model){
-//        List<Post> posts = postService.findAllNewPosts();
-//        model.addAttribute("posts", posts);
-//        return postService.redirectToSubredditPage(posts, model);
-//    }
+    @RequestMapping("/new")
+    public String getAllNewPosts(Model model){
+        List<Post> posts = postService.findAllNewPosts();
+
+        model.addAttribute("posts", posts);
+        return postService.redirectToSubredditPage(posts, model);
+    }
 
     @GetMapping("/top/t=day")
     public String todayAllPosts(Model model){
         List<Post> posts = postService.getLast24HourPosts();
+
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPage(posts, model);
     }
@@ -394,7 +379,6 @@ public class PostController {
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPage(posts, model);
     }
-
 
     @GetMapping("/top/t=year")
     public String currentYearAllPosts(Model model){

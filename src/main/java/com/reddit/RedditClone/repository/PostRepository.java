@@ -64,7 +64,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "ORDER BY created_at DESC;", nativeQuery = true)
     List<Post> findLastYearPosts();
 
-    @Query("SELECT pp FROM Post pp order by pp.voteCount desc")
+    @Query("SELECT pp FROM Post pp order by pp.createdAt desc")
     List<Post> findAllOrderByCreatedAtDesc();
 
     List<Post> findByAuthor(String author);

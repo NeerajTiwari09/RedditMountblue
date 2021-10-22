@@ -25,20 +25,23 @@
 border: none;
 
 }
+.main{
+background-color:#dae0e6;
+padding:30px;
+}
 </style>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<div>
-    <section class="container my-5 p-5 border border-dark- rounded">
+<div class="main">
+    <section class="container my-2 p-2 border rounded" >
         <div class="row">
-            <div class="col-md-10 mx-auto ">
-                <h1 class="my-5 text-secondary border-bottom border-danger py-3">Create a Post</h1>
+            <div class="col-md-8 mx-auto p-5" style="background-color:white;border-radius: 10px;">
+                <h4 class="my-1 text-secondary border-bottom border-danger py-1">Create a Post</h4>
                 <form action="#" th:action="@{/savePost}" th:method="post" th:object="${newPost}" enctype="multipart/form-data" >
-
                     <div class="form-group my-2">
                         <label for="community">
-                            Choose a community
+                            <b>Choose a community</b>
                             <span class="text-danger">* &nbsp; &nbsp;</span>
                         </label>
                         <input name="subreddit" list="community" class="p-1 border-0 border-bottom border-dark" id="community1" placeholder="Choose Community" />
@@ -46,32 +49,26 @@ border: none;
                             <option th:each="sub: ${subreddits}" th:value="${sub.name}" >[[${sub.name}]]</option>
                         </datalist>
                     </div>
-
-<!--                    <h1 class="my-5">Post</h1>-->
                     <div class="mb-3">
-                        <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
+                        <label for="title" class="form-label"><b>Title</b> <span class="text-danger">*</span></label>
                         <input type="text" th:name="title" th:field="${newPost.title}"
                                class="form-control border-0 border-bottom border-dark" id="title" placeholder="Post Title Here" >
                     </div>
                     <div class="mb-3">
                         <label for="content" class="form-label">
-                            Content
+                            <b>Content</b>
                             <span class="text-danger">*</span>
                         </label>
-                        <textarea type="text" th:name="content" th:field="${newPost.content}" rows="10"
+                        <textarea type="text" th:name="content" th:field="${newPost.content}" rows="5"
                                   class="form-control" id="content" placeholder="Post Content Here..."></textarea>
                     </div>
                     <div class="mb-3 my-4">
-                        <label for="link" class="form-label">Link</label>
+                        <label for="link" class="form-label"><b>Link</b></label>
                         <input type="text" th:name="link" th:field="${newPost.link}"
                                class="form-control border-0 border-bottom border-dark" id="link" placeholder="URL" >
                     </div>
-                    <!--<figure class="mb-4">
-                        <img class="img-fluid rounded" th:src="${imgUrl}" alt="..." />
-                    </figure>-->
-
                     <div class="my-4">
-                        <label class="my-3">Choose Image:</label><br />
+                        <label class="my-3"><b>Choose Image:</b></label><br />
                         <input type="file" th:name="image" />
                     </div>
 

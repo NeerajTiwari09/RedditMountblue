@@ -43,11 +43,10 @@
         margin:10px;
     }
 .subreddit-div li{
-    list-style: none;
+
 }
 .subreddit-div li a{
     display: block;
-     text-align: center;
      margin:10px;
      text-decoration:none;
 }
@@ -155,7 +154,7 @@ padding:30px;
             <div class="card mb-4">
                 <div class="card-header">Communities</div>
                 <div class="card-body">
-                    <div class="row subreddit-div">
+                    <div class="row subreddit-div px-5">
                         <ul class="mb-0">
                             <li th:each="subreddit : ${subreddits}"><a th:href="'/reddit/'+${subreddit.id}" th:text="${subreddit.name}"></a></li>
                         </ul>

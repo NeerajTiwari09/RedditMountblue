@@ -72,11 +72,16 @@ background: url{[[@{/img/Background.jpg}]]} top left/cover no-repeat;
   padding: 10px 20px;
   padding-bottom: 88px;
 }
+.main{
+background-color:#dae0e6;
+padding:30px;
+height:100vh;
+}
 </style>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<div class="" style="background-color:#dae0e6; padding:30px">
+<div class="main">
     <div class="container">
         <div class="card card-2" >
             <div class="card-heading" th:style="'background:url(' + @{images/loginSideImg.png} + ')  top left/cover no-repeat;'"></div>
