@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,5 +56,30 @@ public class SubredditServiceImpl implements SubredditService{
         return subredditRepository.searchByUser(id);
     }
 
+    @Override
+    public List<Subreddit> findAllPublicAndRestrictedSubreddit() {
+        List<Subreddit> subreddits = new ArrayList<>();
+        List<Subreddit> publicSubreddits = subredditRepository.findAllByCommunityTypeName("public");
+        List<Subreddit> restrictedSubreddits = subredditRepository.findAllByCommunityTypeName("restricted");
 
+        subreddits.addAll(publicSubreddits);
+        subreddits.addAll(restrictedSubreddits);
+
+        for(Subreddit publicSubreddit : publicSubreddits){
+            System.out.println("public Subreddits: "+publicSubreddit.getName());
+        }
+
+        for(Subreddit publicSubreddit : restrictedSubreddits){
+            System.out.println("restricted Subreddits: "+publicSubreddit.getName());
+        }
+
+        return subreddits;
+    }
+
+    @Override
+    public List<Subreddit> findAllPrivateSubreddits() {
+        List<Subreddit> subreddits = null;
+        subreddits = subredditRepository.findAllByCommunityTypeName("private");
+        return subreddits;
+    }
 }

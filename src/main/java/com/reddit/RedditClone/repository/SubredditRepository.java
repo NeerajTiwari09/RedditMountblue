@@ -18,4 +18,6 @@ public interface SubredditRepository extends JpaRepository<Subreddit, Long> {
     @Query("SELECT s FROM Subreddit s join UserSubreddit us " +
             "on s.id = us.subredditId WHERE us.userId = ?1")
     List<Subreddit> searchByUser(Long id);
+
+    List<Subreddit> findAllByCommunityTypeName(String communityType);
 }

@@ -40,7 +40,12 @@ border: none;
                     Community Name
                     <span class="text-danger">*</span>
                 </label>
-                <input type="text" name="name" th:field="${subReddit.name}" class="form-control p-2 w-25 border-0 border-bottom border-dark" id="subreddit" placeholder="Enter Community Name" required  >
+                <input type="text" name="name"
+                       th:field="${subReddit.name}"
+                       class="form-control p-2 w-25 border-0 border-bottom border-dark"
+                       id="subreddit"
+                       placeholder="Enter Community Name"
+                       required  />
             </div>
             <div class="form-group my-5">
                 <label for="description">Description</label>

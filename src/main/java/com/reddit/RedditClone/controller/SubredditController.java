@@ -55,7 +55,10 @@ public class SubredditController {
 
         System.out.println("cc"+subreddit.getCommunityType().getName());
         Subreddit subredditResult = this.subredditService.saveSubreddit(subreddit);
+
         List<Post> posts = postService.getAllPosts();
+
+
         model.addAttribute("subredditResult",subredditResult);
         model.addAttribute("posts", posts);
         return "redirect:/reddit/"+subredditResult.getId();
@@ -72,6 +75,7 @@ public class SubredditController {
         Boolean isSubscribed = false;
         User user = null;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("userExist", false);
         if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
             String email = authentication.getName();
             user = userService.findUserByEmail(email);
@@ -80,6 +84,8 @@ public class SubredditController {
             if(subscription!=null){
                 isSubscribed = true;
             }
+
+            model.addAttribute("userExist", true);
         }
 
         System.out.println("Karma: " + karma);

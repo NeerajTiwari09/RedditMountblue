@@ -256,4 +256,21 @@ public class PostServiceImpl implements  PostService{
     public List<Post> findAllNewPostsByUssername(String author) {
         return postRepository.findByAuthor(author);
     }
+
+    @Override
+    public List<Post> findPostsBySubreddits(List<Subreddit> subreddits) {
+        List<Long> subredditIds = new ArrayList<>();
+
+        for(Subreddit subreddit: subreddits){
+            subredditIds.add(subreddit.getId());
+        }
+
+        List<Post> posts = postRepository.findAllBySubredditIdIn(subredditIds);
+
+        for(Post post: posts){
+            System.out.println("posts are: "+post.getTitle());
+        }
+
+        return posts;
+    }
 }

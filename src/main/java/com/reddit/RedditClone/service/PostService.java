@@ -2,6 +2,8 @@ package com.reddit.RedditClone.service;
 
 import com.reddit.RedditClone.model.Comment;
 import com.reddit.RedditClone.model.Post;
+import com.reddit.RedditClone.model.Subreddit;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.ui.Model;
 
 import java.util.HashSet;
@@ -58,5 +60,8 @@ public interface PostService {
     String redirectToSubredditPage(List<Post> posts , Model model);
 
     List<Post> findAllNewPostsByUssername(String author);
+
+    List<Post> findPostsBySubreddits(List<Subreddit> subreddits);
+
 
 }

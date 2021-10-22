@@ -99,7 +99,7 @@ public class PostController {
     }
 
     @PostMapping("/savePost")
-    public String savePost(@ModelAttribute("newPost") Post post){
+    public String savePost(@ModelAttribute("newPost") Post post, Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
@@ -108,12 +108,19 @@ public class PostController {
         post.setAuthor(user.getUsername());
         post.setUser(user);
         postService.savePost(post);
+
+        model.addAttribute("userExist", true);
+        model.addAttribute("user", user);
         return "redirect:/reddit/"+post.getSubredditId();
     }
 
     @GetMapping(value = {"/","/post"})
     public String getAllPosts(Model model){
-        List<Post> posts = postService.getAllPosts();
+//        List<Post> posts = postService.getAllPosts();
+        List<Post> posts = null;
+         List<Subreddit> selectedSubreddits = subredditService.findAllPublicAndRestrictedSubreddit();
+        posts = postService.findPostsBySubreddits(selectedSubreddits);
+
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
         Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
 
@@ -130,6 +137,8 @@ public class PostController {
             String email = authentication.getName();
             User user = userService.findUserByEmail(email);
             model.addAttribute("user", user);
+
+
         }
 
         return "sub_reddit";
@@ -260,7 +269,7 @@ public class PostController {
             return "login";
         }
         Long subredditId = postService.deleteById(postId);
-        return "redirect:/reddit/"+subredditId;
+        return "redirect:/"+subredditId;
     }
 
     @GetMapping("/search")

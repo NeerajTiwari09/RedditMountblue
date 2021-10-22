@@ -14,4 +14,8 @@ public interface SubredditService {
     List<Subreddit> getSearchedSubreddits(String keyword);
 
     List<Subreddit> searchByUser(Long id);
+
+    List<Subreddit> findAllPublicAndRestrictedSubreddit();
+
+    List<Subreddit> findAllPrivateSubreddits();
 }
