@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,6 +78,6 @@ public class CommentServiceImpl implements CommentService {
         if (postOpt.isPresent())
             comment.setPost(postOpt.get());
         comment.setUser(user);
-        comment.setCreatedDate(new Date(System.currentTimeMillis()));
+        comment.setCreatedDate(new Timestamp(System.currentTimeMillis()));
     }
 }
