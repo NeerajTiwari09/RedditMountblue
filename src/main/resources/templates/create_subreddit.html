@@ -39,21 +39,20 @@ padding:30px;
                 <h4 class="my-1 border-bottom border-dark py-1">Create a Community</h4>
                 <div class="col-md-8">
                     <form th:action="@{/saveSubreddit}" method="post" th:object="${subReddit}">
-                        <div class="form-group">
+                        <div class="form-group my-4">
                             <label for="subreddit">
                                 <b>Community Name</b>
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="text" name="name"
-                                   th:value="/r"
                                    th:field="${subReddit.name}"
-                                   class="form-control p-2 w-25 border-0 border-bottom border-dark"
+                                   class="form-control p-2 w-50 border-0 border-bottom border-dark"
                                    id="subreddit"
                                    placeholder="Enter Community Name"
                                    required  />
                             <small class="text-danger" th:text="${errMsg}"></small>
                         </div>
-                        <div class="form-group my-5">
+                        <div class="form-group my-4">
                             <label for="description"><b>Description</b></label>
                             <span class="text-danger">*</span>
                             <textarea rows="5" cols="60" name="description" th:field="${subReddit.description}"
@@ -67,7 +66,7 @@ padding:30px;
                             <div class="custom-control custom-radio">
                                 <label class="custom-control-label" for="public">
                                     <input type="radio" id="public" name="communityType" th:field="${subReddit.communityType.name}"
-                                           th:value="public" class="custom-control-input" th:checked="${isPublic}">
+                                           th:value="public" class="custom-control-input" checked="checked" th:checked="${isPublic}">
                                     <strong>Public</strong>
                                     <small>(Anyone can view, post, and comment to this community)</small>
                                 </label>

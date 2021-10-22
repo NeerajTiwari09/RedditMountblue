@@ -59,8 +59,8 @@ public class SubredditController {
         Subreddit subredditResult ;
 
         String communityName = subreddit.getName();
-        if(!communityName.startsWith("/r")){
-            subreddit.setName("/r" + communityName);
+        if(!communityName.startsWith("r/")){
+            subreddit.setName("r/" + communityName);
         }
 
         System.out.println("cc"+subreddit.getCommunityType().getName());

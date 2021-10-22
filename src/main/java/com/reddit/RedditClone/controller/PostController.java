@@ -130,7 +130,6 @@ public class PostController {
 
     @GetMapping(value = {"/","/post"})
     public String getAllPosts(Model model){
-//        List<Post> posts = postService.getAllPosts();
         List<Post> posts = null;
          List<Subreddit> selectedSubreddits = subredditService.findAllPublicAndRestrictedSubreddit();
         posts = postService.findPostsBySubreddits(selectedSubreddits);
@@ -156,7 +155,6 @@ public class PostController {
             posts.addAll(postService.findPostBySubredditIds(privateSubscribedSubredditIds));
 
         }
-
         return "sub_reddit";
     }
 
