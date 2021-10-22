@@ -45,11 +45,13 @@ padding:30px;
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="text" name="name"
+                                   th:value="/r"
                                    th:field="${subReddit.name}"
                                    class="form-control p-2 w-25 border-0 border-bottom border-dark"
                                    id="subreddit"
                                    placeholder="Enter Community Name"
                                    required  />
+                            <small class="text-danger" th:text="${errMsg}"></small>
                         </div>
                         <div class="form-group my-5">
                             <label for="description"><b>Description</b></label>
@@ -65,7 +67,7 @@ padding:30px;
                             <div class="custom-control custom-radio">
                                 <label class="custom-control-label" for="public">
                                     <input type="radio" id="public" name="communityType" th:field="${subReddit.communityType.name}"
-                                           th:value="public" class="custom-control-input" checked>
+                                           th:value="public" class="custom-control-input" th:checked="${isPublic}">
                                     <strong>Public</strong>
                                     <small>(Anyone can view, post, and comment to this community)</small>
                                 </label>

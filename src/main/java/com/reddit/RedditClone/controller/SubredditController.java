@@ -35,10 +35,12 @@ public class SubredditController {
     public String createSubreddit(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
+            String errMsg = "Please Login First to create a Community!!";
+            model.addAttribute("errMsg", errMsg);
+            return "error";
         }
-
         model.addAttribute("subReddit", new Subreddit());
+        model.addAttribute("isPublic", true);
         return "create_subreddit";
     }
 
@@ -46,18 +48,31 @@ public class SubredditController {
     public String saveSubreddit(@ModelAttribute("subReddit") Subreddit subreddit, Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
+            String errMsg = "Please Login First to create a Community!!";
+            model.addAttribute("errMsg", errMsg);
+            return "error";
         }
 
         String email = authentication.getName();
         User user = userService.findUserByEmail(email);
         subreddit.setUser(user);
+        Subreddit subredditResult ;
+
+        String communityName = subreddit.getName();
+        if(!communityName.startsWith("/r")){
+            subreddit.setName("/r" + communityName);
+        }
 
         System.out.println("cc"+subreddit.getCommunityType().getName());
-        Subreddit subredditResult = this.subredditService.saveSubreddit(subreddit);
+        try{
+            subredditResult = this.subredditService.saveSubreddit(subreddit);
+        } catch(Exception ex){
+            String errMsg = "Please provide a unique community name!!";
+            model.addAttribute("errMsg", errMsg);
+            return "create_subreddit";
+        }
 
         List<Post> posts = postService.getAllPosts();
-
 
         model.addAttribute("subredditResult",subredditResult);
         model.addAttribute("posts", posts);

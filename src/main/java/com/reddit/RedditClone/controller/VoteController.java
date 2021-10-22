@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,13 +57,17 @@ public class VoteController {
     public String changeVote(@RequestParam("postId") Long postId,
                              @RequestParam(required = false, name = "upVote", defaultValue = "false") boolean upVote,
                              @RequestParam(required = false, name = "downVote", defaultValue = "false") boolean downVote,
-                             @RequestParam("isHomePage") boolean isHomePage,
+                             @RequestParam(required = false, name = "isHomePage", defaultValue = "false") boolean isHomePage,
                              @RequestParam(required = false, name = "isProfile", defaultValue = "false") boolean isProfile,
-                             Model model){
+                             @RequestParam(required = false, name = "isSearch", defaultValue = "false") boolean isSearch,
+                             @RequestParam(required = false, name = "keyword", defaultValue = "") String keyword,
+                             Model model) throws ParseException {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
+            String errMsg = "Sorry!! Please Login First!";
+            model.addAttribute("errMsg", errMsg);
+            return "error";
         }
         System.out.println("change Vote controller");
         String email = authentication.getName();
@@ -81,8 +86,13 @@ public class VoteController {
         if(isHomePage){
             return subredditController.getRedditById(post.getSubredditId(), model);
         }
+
         if (isProfile){
             return postController.viewProfile(model);
+        }
+
+        if(isSearch){
+            return postController.searchPosts(keyword, model);
         }
 
         return postController.popular(model);

@@ -38,7 +38,6 @@ public class PostController {
     public String popular(Model model){
         List<Post> posts = postService.findAllNewPosts();
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
-//        Map<Long, Vote> votes = voteService.getVotesByPosts(posts);
 //        Long karma = postService.getKarma(subredditId);
 //        model.addAttribute("karma", karma);
         Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
@@ -90,7 +89,9 @@ public class PostController {
     public String viewCreatePostPage(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
+            String errMsg = "Please Login First to create a Post!!";
+            model.addAttribute("errMsg", errMsg);
+            return "error";
         }
         String email = authentication.getName();
         User user = userService.findUserByEmail(email);
@@ -112,7 +113,9 @@ public class PostController {
         Subreddit subreddit = subredditService.getSubredditByName(subredditName);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
+            String errMsg = "Please Login First to create a Post!!";
+            model.addAttribute("errMsg", errMsg);
+            return "error";
         }
         User user = userService.findUserByEmail(authentication.getName());
         post.setAuthor(user.getUsername());
@@ -183,7 +186,9 @@ public class PostController {
     public String getUpdateViewPage(@PathVariable Long postId, Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
+            String errMsg = "You are not an authorised to delete this post!!";
+            model.addAttribute("errMsg", errMsg);
+            return "error";
         }
 
         Post post = postService.getPostById(postId);
@@ -265,10 +270,12 @@ public class PostController {
     }
 
     @PostMapping("/updatePost")
-    public String updatePost(@ModelAttribute("post") Post post){
+    public String updatePost(@ModelAttribute("post") Post post, Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
+            String errMsg = "You are not authorised to update this post!!";
+            model.addAttribute("errMsg", errMsg);
+            return "error";
         }
 
         postService.updatePostById(post);
@@ -276,13 +283,15 @@ public class PostController {
     }
 
     @GetMapping("/delete/{postId}")
-    public String deletePostById(@PathVariable Long postId){
+    public String deletePostById(@PathVariable Long postId, Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
+            String errMsg = "You are not authorised to delete this post!!";
+            model.addAttribute("errMsg", errMsg);
+            return "error";
         }
         Long subredditId = postService.deleteById(postId);
-        return "redirect:/"+subredditId;
+        return "redirect:/reddit/"+subredditId;
     }
 
     @GetMapping("/search")
@@ -311,6 +320,8 @@ public class PostController {
         model.addAttribute("subreddits",subreddits);
         model.addAttribute("searchSubreddits",searchSubreddits);
         model.addAttribute("votes", votes);
+        model.addAttribute("user", user);
+        model.addAttribute("keyword", keyword);
         return "search";
     }
 

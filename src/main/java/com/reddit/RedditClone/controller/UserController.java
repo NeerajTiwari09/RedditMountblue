@@ -57,7 +57,9 @@ public class UserController {
     public String getUserPosts(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
+            String errMsg = "Login first to view your profile!!";
+            model.addAttribute("errMsg", errMsg);
+            return "error";
         }
         String email = authentication.getName();
         User user = userService.findUserByEmail(email);

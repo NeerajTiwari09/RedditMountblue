@@ -133,8 +133,8 @@ height:100vh;
                                      <input type="hidden" name="isHomePage" th:value="${subReddit} != null" />
                                      <th:block th:if="${!userExist
                                                         or !votes.containsKey(post.id)
-                                                        or !votes.get(post.id).containsKey(userId)
-                                                        or !votes.get(post.id).get(userId).upVoted }" >
+                                                        or !votes.get(post.id).containsKey(user.id)
+                                                        or !votes.get(post.id).get(user.id).upVoted }" >
                                          <button type="submit">
                                              <i class="bi bi-caret-up" style='font-size:24px'></i>
                                          </button>
@@ -146,9 +146,8 @@ height:100vh;
                                      <input type="hidden" name="isHomePage" th:value="${subReddit} != null" />
                                      <th:block  th:if="${userExist
                                                         and votes.containsKey(post.id)}
-                                                        and ${votes.get(post.id).containsKey(userId)}
-                                                        and ${votes.get(post.id).get(userId).upVoted} ">
-<!--                                         and ${votes.get(post.id).userId == #authentication.getPrincipal().getUserId()}-->
+                                                        and ${votes.get(post.id).containsKey(user.id)}
+                                                        and ${votes.get(post.id).get(user.id).upVoted} ">
                                          <button type="submit">
                                              <i class="bi bi-caret-up-fill" style='font-size:24px'></i>
                                          </button>
@@ -161,8 +160,8 @@ height:100vh;
                                      <input type="hidden" name="isHomePage" th:value="${subReddit} != null" />
                                      <th:block th:if = "${!userExist
                                                         or !votes.containsKey(post.id)}
-                                                        or ${!votes.get(post.id).containsKey(userId)}
-                                                        or ${!votes.get(post.id).get(userId).downVoted}">
+                                                        or ${!votes.get(post.id).containsKey(user.id)}
+                                                        or ${!votes.get(post.id).get(user.id).downVoted}">
                                          <button type="submit">
                                              <i class="bi bi-caret-down" style='font-size:24px'></i>
                                          </button>
@@ -174,8 +173,8 @@ height:100vh;
                                      <input type="hidden" name="isHomePage" th:value="${subReddit} != null" />
                                      <th:block  th:if="${userExist
                                                         and votes.containsKey(post.id)}
-                                                        and ${votes.get(post.id).containsKey(userId)}
-                                                        and  ${votes.get(post.id).get(userId).downVoted}" >
+                                                        and ${votes.get(post.id).containsKey(user.id)}
+                                                        and  ${votes.get(post.id).get(user.id).downVoted}" >
                                          <button type="submit">
                                              <i class="bi bi-caret-down-fill" style='font-size:24px'></i>
                                          </button>

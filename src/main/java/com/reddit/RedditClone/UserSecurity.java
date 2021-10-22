@@ -25,7 +25,8 @@ public class UserSecurity {
 
     public boolean hasUserId(Authentication authentication, Long postId) {
         Optional<Post> post = postRepository.findById(postId);
-        String authorName = userRepository.findByUsername(authentication.getName()).getUsername();
+
+        String authorName = userRepository.findByEmail(authentication.getName()).getUsername();
 //        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 //        for(GrantedAuthority auth : authorities){
 //            if(auth.getAuthority().equals("ADMIN")){

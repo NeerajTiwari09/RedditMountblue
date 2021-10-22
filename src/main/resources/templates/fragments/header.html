@@ -80,7 +80,7 @@ padding:30px;
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <form action="/search" method="get" class="d-flex">
-                    <input name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input name="search"  th:value="${keyword != null ? keyword : ''}" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
                 <ul class="navbar-nav me-auto mb-2">
