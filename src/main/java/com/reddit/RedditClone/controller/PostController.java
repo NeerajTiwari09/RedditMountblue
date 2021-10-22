@@ -170,7 +170,8 @@ public class PostController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.findUserByEmail(email);
-
+        Subreddit subreddit = subredditService.findById(post.getSubredditId());
+        model.addAttribute("sub_reddit", subreddit);
         model.addAttribute("post",post);
         model.addAttribute("url", url);
         model.addAttribute("thread", commentsWithoutDuplicates);

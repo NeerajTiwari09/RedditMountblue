@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class SubredditServiceImpl implements SubredditService{
     @Override
     public Subreddit saveSubreddit(Subreddit subreddit) {
         CommunityType communityType = this.communityTypeRepository.findByName(subreddit.getCommunityType().getName());
-        subreddit.setCreatedAt(new Date(System.currentTimeMillis()));
+        subreddit.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         subreddit.setCommunityType(communityType);
         return this.subredditRepository.save(subreddit);
     }
@@ -82,6 +83,11 @@ public class SubredditServiceImpl implements SubredditService{
     @Override
     public List<Subreddit> findAllRestrictedSubreddits() {
         return subredditRepository.findAllByCommunityTypeName("restricted");
+    }
+
+    @Override
+    public Subreddit findById(Long subredditId) {
+        return subredditRepository.getById(subredditId);
     }
 
     @Override

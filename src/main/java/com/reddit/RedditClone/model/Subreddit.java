@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,7 @@ public class Subreddit {
     @Column(name = "description", columnDefinition = "text")
     private String description;
     @Column(name = "created_at")
-    private Date createdAt;
+    private Timestamp createdAt;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "sub_reddit_type", joinColumns = @JoinColumn(name = "id"),

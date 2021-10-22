@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Post</title>
+    <link rel="icon" type="image/png" href="./../static/images/reddit.png" th:href="@{/images/reddit.png}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.6.0/font/bootstrap-icons.min.css" integrity="sha512-7w04XesEFaoeeKX0oxkwayDboZB/+AKNF5IUE50fCUDUywLvDN4gv2513TLQS+RDenAeHEK3O40jZZVrkpnWWw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -26,7 +27,6 @@
     	})
       })
 </script>
-
     <style>
     .profile-nav{
       text-align: center;
@@ -91,7 +91,7 @@ padding:30px;
                     <div class="col-md-7">
                         <header class="mb-4">
                             <h6 class="fw-bolder mb-1" th:text="${post.title}">Welcome to Post</h6>
-                            <div class="text-muted fst-italic mb-2" th:text="${post.createdAt}">Posted on Apr 27, 2008</div>
+                            <div class="text-muted fst-italic mb-2">[[${#dates.format(post.createdAt, 'MMM dd, yyyy h:mm a')}]]</div>
                         </header>
                     </div>
                     <div class="col-md-5" th:if="${user != null} and ${user.username} == ${post.author}">
@@ -144,9 +144,9 @@ padding:30px;
             <div class="card mb-4">
                 <div class="card-header">About Community</div>
                 <div class="card-body">
-                    <div class="" th:if="${subReddit != null}">
-                        <p th:text="${subReddit.description}"></p>
-                        <div class="text-muted fst-italic mb-2" th:text="${subReddit.createdAt}"></div>
+                    <div class="" th:if="${sub_reddit != null}">
+                        <p th:text="${sub_reddit.description}"></p>
+                        <div class="text-muted fst-italic mb-2" th:text="${sub_reddit.createdAt}"></div>
                     </div>
                 </div>
             </div>

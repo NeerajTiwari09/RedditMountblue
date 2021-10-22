@@ -41,10 +41,6 @@ public class User {
     private Set<Subreddit> subreddits = new HashSet<>();
 
 
-//    private Set<Role> authorities = new HashSet<>();
-//    @OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="post")
-//    private Set<Post> features = new HashSet<>();
-
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinTable(name = "user_subscription", joinColumns = {@JoinColumn(name = "user_id")},
 //            inverseJoinColumns = {@JoinColumn(name = "subreddit_id")})
@@ -58,8 +54,6 @@ public class User {
         this.id = id;
         this.username = username;
     }
-
-
 
     public User(String username){
         this.username = username;

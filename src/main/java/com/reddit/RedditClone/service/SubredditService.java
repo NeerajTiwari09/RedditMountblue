@@ -30,4 +30,6 @@ public interface SubredditService {
     List<Subreddit> findAllPublicSubreddits();
 
     List<Subreddit> findAllRestrictedSubreddits();
+
+    Subreddit findById(Long subredditId);
 }
