@@ -138,6 +138,8 @@ public class PostController {
             User user = userService.findUserByEmail(email);
             model.addAttribute("user", user);
 
+            List<Long> privateSubscribedSubredditIds = subscriptionService.getSubscribedSubredditIdsByActiveUser(user.getId());
+            posts.addAll(postService.findPostBySubredditIds(privateSubscribedSubredditIds));
 
         }
 

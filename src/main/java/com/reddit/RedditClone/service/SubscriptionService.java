@@ -12,4 +12,6 @@ public interface SubscriptionService {
     Subscription getSubscriptionBySubredditIdAndUserId(Long subredditId, Long userId);
 
     void removeSubscription(Long subRedditId, Long userId);
+
+    List<Long> getSubscribedSubredditIdsByActiveUser(Long activeUserId);
 }

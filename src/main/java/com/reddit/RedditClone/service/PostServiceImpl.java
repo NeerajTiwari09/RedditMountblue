@@ -270,7 +270,12 @@ public class PostServiceImpl implements  PostService{
         for(Post post: posts){
             System.out.println("posts are: "+post.getTitle());
         }
+        return posts;
+    }
 
+    @Override
+    public List<Post> findPostBySubredditIds(List<Long> subredditIds) {
+        List<Post> posts = postRepository.findAllBySubredditIdIn(subredditIds);
         return posts;
     }
 }

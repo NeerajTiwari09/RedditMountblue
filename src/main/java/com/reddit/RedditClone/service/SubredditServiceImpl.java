@@ -80,6 +80,9 @@ public class SubredditServiceImpl implements SubredditService{
     public List<Subreddit> findAllPrivateSubreddits() {
         List<Subreddit> subreddits = null;
         subreddits = subredditRepository.findAllByCommunityTypeName("private");
+        for(Subreddit publicSubreddit : subreddits){
+            System.out.println("private Subreddits: "+publicSubreddit.getName());
+        }
         return subreddits;
     }
 }

@@ -79,7 +79,7 @@ padding:30px;
                                 <div class="text-muted fst-italic mb-2" th:text="${subReddit.createdAt}"></div>
 <!--                                <span class="text-muted fst-italic mb-2" th:text="'Karma '+${karma}">Karma</span>-->
                                 <button type="button" class="btn btn-dark shadow" disabled>
-                                    Karma <span class="badge badge-pill badge-light">9</span>
+                                    Karma <span class="badge badge-pill badge-light"  th:text="${karma}">9</span>
 <!--                                    <span class="sr-only"></span>-->
                                 </button>
                             </div>

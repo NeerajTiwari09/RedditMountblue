@@ -63,5 +63,7 @@ public interface PostService {
 
     List<Post> findPostsBySubreddits(List<Subreddit> subreddits);
 
+    List<Post> findPostBySubredditIds(List<Long> subredditIds);
+
 
 }

@@ -6,9 +6,13 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
 
     Subscription findBySubredditIdAndUserId(Long subredditId, Long userId);
+
+    List<Subscription> findBySubredditIdInAndUserId(List<Long> subredditId, Long userId);
 
     @Transactional
     @Modifying
