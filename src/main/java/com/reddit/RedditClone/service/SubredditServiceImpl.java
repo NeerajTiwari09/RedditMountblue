@@ -1,9 +1,7 @@
 package com.reddit.RedditClone.service;
 
 import com.reddit.RedditClone.model.CommunityType;
-import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.Subreddit;
-import com.reddit.RedditClone.model.User;
 import com.reddit.RedditClone.repository.CommunityTypeRepository;
 import com.reddit.RedditClone.repository.PostRepository;
 import com.reddit.RedditClone.repository.SubredditRepository;
@@ -26,6 +24,9 @@ public class SubredditServiceImpl implements SubredditService{
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private SubscriptionService subscriptionService;
 
     @Override
     public Subreddit saveSubreddit(Subreddit subreddit) {
@@ -59,19 +60,9 @@ public class SubredditServiceImpl implements SubredditService{
     @Override
     public List<Subreddit> findAllPublicAndRestrictedSubreddit() {
         List<Subreddit> subreddits = new ArrayList<>();
-        List<Subreddit> publicSubreddits = subredditRepository.findAllByCommunityTypeName("public");
-        List<Subreddit> restrictedSubreddits = subredditRepository.findAllByCommunityTypeName("restricted");
 
-        subreddits.addAll(publicSubreddits);
-        subreddits.addAll(restrictedSubreddits);
-
-        for(Subreddit publicSubreddit : publicSubreddits){
-            System.out.println("public Subreddits: "+publicSubreddit.getName());
-        }
-
-        for(Subreddit publicSubreddit : restrictedSubreddits){
-            System.out.println("restricted Subreddits: "+publicSubreddit.getName());
-        }
+        subreddits.addAll(findAllPublicSubreddits());
+        subreddits.addAll(findAllRestrictedSubreddits());
 
         return subreddits;
     }
@@ -80,9 +71,30 @@ public class SubredditServiceImpl implements SubredditService{
     public List<Subreddit> findAllPrivateSubreddits() {
         List<Subreddit> subreddits = null;
         subreddits = subredditRepository.findAllByCommunityTypeName("private");
-        for(Subreddit publicSubreddit : subreddits){
-            System.out.println("private Subreddits: "+publicSubreddit.getName());
-        }
+        return subreddits;
+    }
+
+    @Override
+    public List<Subreddit> findAllPublicSubreddits() {
+        return subredditRepository.findAllByCommunityTypeName("public");
+    }
+
+    @Override
+    public List<Subreddit> findAllRestrictedSubreddits() {
+        return subredditRepository.findAllByCommunityTypeName("restricted");
+    }
+
+    @Override
+    public List<Subreddit> getAllSubscribedPrivateSubreddits(Long activeUser) {
+        List<Long> subredditIds = subscriptionService.getSubscribedPrivateSubredditIdsByActiveUser(activeUser);
+        List<Subreddit> subreddits = subredditRepository.findAllById(subredditIds);
+        return subreddits;
+    }
+
+    @Override
+    public List<Subreddit> getAllSubscribedRestrictedSubreddits(Long activeUser) {
+        List<Long> subredditIds = subscriptionService.getSubscribedRestrictedSubredditIdsByActiveUser(activeUser);
+        List<Subreddit> subreddits = subredditRepository.findAllById(subredditIds);
         return subreddits;
     }
 

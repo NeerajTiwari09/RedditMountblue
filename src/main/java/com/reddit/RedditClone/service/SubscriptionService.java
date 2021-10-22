@@ -9,11 +9,15 @@ import java.util.List;
 public interface SubscriptionService {
     void saveSubscription(Subscription subscription);
 
+    //private
     Subscription getSubscriptionBySubredditIdAndUserId(Long subredditId, Long userId);
 
     void removeSubscription(Long subRedditId, Long userId);
 
-    List<Long> getSubscribedSubredditIdsByActiveUser(Long activeUserId);
+    List<Long> getSubscribedPrivateSubredditIdsByActiveUser(Long activeUserId);
+
+    List<Long> getSubscribedRestrictedSubredditIdsByActiveUser(Long activeUserId);
 
     boolean isUserSubscribed(Long subredditId, Long userId);
+
 }

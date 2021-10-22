@@ -89,9 +89,15 @@ public class PostController {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
+        String email = authentication.getName();
+        User user = userService.findUserByEmail(email);
 
-        List<Subreddit> subreddits = subredditService.findAllSubreddits();
+        List<Subreddit> subreddits = new ArrayList<>();
         Post post = new Post();
+
+        subreddits.addAll(subredditService.findAllPublicSubreddits());
+        subreddits.addAll(subredditService.getAllSubscribedPrivateSubreddits(user.getId()));
+        subreddits.addAll(subredditService.getAllSubscribedRestrictedSubreddits(user.getId()));
 
         model.addAttribute("subreddits" ,subreddits);
         model.addAttribute("newPost" ,post);
@@ -140,7 +146,7 @@ public class PostController {
             User user = userService.findUserByEmail(email);
             model.addAttribute("user", user);
 
-            List<Long> privateSubscribedSubredditIds = subscriptionService.getSubscribedSubredditIdsByActiveUser(user.getId());
+            List<Long> privateSubscribedSubredditIds = subscriptionService.getSubscribedPrivateSubredditIdsByActiveUser(user.getId());
             posts.addAll(postService.findPostBySubredditIds(privateSubscribedSubredditIds));
 
         }

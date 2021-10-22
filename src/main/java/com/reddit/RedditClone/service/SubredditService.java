@@ -19,7 +19,15 @@ public interface SubredditService {
 
     List<Subreddit> findAllPrivateSubreddits();
 
+    List<Subreddit> getAllSubscribedPrivateSubreddits(Long activeUser);
+
+    List<Subreddit> getAllSubscribedRestrictedSubreddits(Long activeUser);
+
     boolean isSubredditPrivate(Subreddit subreddit);
 
     Subreddit getSubredditByName(String subredditName);
+
+    List<Subreddit> findAllPublicSubreddits();
+
+    List<Subreddit> findAllRestrictedSubreddits();
 }

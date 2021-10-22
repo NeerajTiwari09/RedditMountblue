@@ -33,7 +33,7 @@ public class SubscriptionServiceImpl implements SubscriptionService{
     }
 
     @Override
-    public List<Long> getSubscribedSubredditIdsByActiveUser(Long activeUserId) {
+    public List<Long> getSubscribedPrivateSubredditIdsByActiveUser(Long activeUserId) {
         List<Subreddit> privateSubreddits = subredditService.findAllPrivateSubreddits();
         List<Long> privateSubredditIds = new ArrayList<>();
 
@@ -54,6 +54,27 @@ public class SubscriptionServiceImpl implements SubscriptionService{
     }
 
     @Override
+    public List<Long> getSubscribedRestrictedSubredditIdsByActiveUser(Long activeUserId) {
+        List<Subreddit> restrictedSubreddits = subredditService.findAllRestrictedSubreddits();
+        List<Long> restrictedSubredditIds = new ArrayList<>();
+
+        for(Subreddit subreddit: restrictedSubreddits){
+            restrictedSubredditIds.add(subreddit.getId());
+        }
+
+        List<Subscription> subscriptions = subscriptionRepository.findBySubredditIdInAndUserId(restrictedSubredditIds, activeUserId);
+        List<Long> subredditIds = new ArrayList<>();
+
+        for(Subscription subscription: subscriptions) {
+            if(subscription.getUserId() == activeUserId){
+                subredditIds.add(subscription.getSubredditId());
+                System.out.println("subscribed subreddit id: "+subscription.getSubredditId());
+            }
+        }
+        return subredditIds;
+    }
+
+    @Override
     public boolean isUserSubscribed(Long subredditId, Long userId) {
         Subscription subscription = subscriptionRepository.findBySubredditIdAndUserId(subredditId, userId);
         if(subscription != null){
@@ -61,4 +82,6 @@ public class SubscriptionServiceImpl implements SubscriptionService{
         }
         return false;
     }
+
+
 }
