@@ -85,4 +85,12 @@ public class SubredditServiceImpl implements SubredditService{
         }
         return subreddits;
     }
+
+    @Override
+    public boolean isSubredditPrivate(Subreddit subreddit) {
+        if (subreddit.getCommunityType().getName().equals("private")){
+            return true;
+        }
+        return false;
+    }
 }

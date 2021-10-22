@@ -66,14 +66,10 @@ public class SubredditController {
 
     @GetMapping("/reddit/{id}")
     public String getRedditById(@PathVariable Long id, Model model){
-        Subreddit subreddit = subredditService.getRedditById(id);
-        List<Post> posts = postService.getBySubRedditId(id);
-        List<Subreddit> subreddits = subredditService.findAllSubreddits();
-        Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
-        Long karma = postService.getKarma(id);
-
         Boolean isSubscribed = false;
         User user = null;
+        List<Post> posts = null;
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("userExist", false);
         if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
@@ -84,17 +80,41 @@ public class SubredditController {
             if(subscription!=null){
                 isSubscribed = true;
             }
-
             model.addAttribute("userExist", true);
         }
 
+        Subreddit subreddit = subredditService.getRedditById(id);
+
+        //if sub-reddit is private and the current user is subscribed to it then only fetch it.
+        if (subredditService.isSubredditPrivate(subreddit)
+                && user!= null
+                && subscriptionService.isUserSubscribed(subreddit.getId(), user.getId())){
+
+            posts = postService.getBySubRedditId(id);
+            System.out.println("private comm posts are overriding posts...");
+        }
+        //if sub-reddit is not private
+        if(!subredditService.isSubredditPrivate(subreddit)) {
+            posts = postService.getBySubRedditId(id);
+        }
+
+        if(posts != null){
+            Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
+            model.addAttribute("votes", votes);
+            model.addAttribute("postsLength", posts.size());
+            model.addAttribute("posts", posts);
+        }
+
+
+        List<Subreddit> subreddits = subredditService.findAllSubreddits();
+
+
+        Long karma = postService.getKarma(id);
+
         System.out.println("Karma: " + karma);
         model.addAttribute("subReddit", subreddit);
-        model.addAttribute("posts", posts);
         model.addAttribute("karma", karma);
         model.addAttribute("subreddits", subreddits);
-        model.addAttribute("votes", votes);
-        model.addAttribute("postsLength", posts.size());
         model.addAttribute("isSubscribed", isSubscribed);
         model.addAttribute("user", user);
         postService.getControversialPosts(id);

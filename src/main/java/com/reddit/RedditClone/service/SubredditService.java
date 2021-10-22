@@ -18,4 +18,7 @@ public interface SubredditService {
     List<Subreddit> findAllPublicAndRestrictedSubreddit();
 
     List<Subreddit> findAllPrivateSubreddits();
+
+    boolean isSubredditPrivate(Subreddit subreddit);
+
 }

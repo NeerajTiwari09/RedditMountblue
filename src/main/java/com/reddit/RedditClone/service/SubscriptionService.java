@@ -14,4 +14,6 @@ public interface SubscriptionService {
     void removeSubscription(Long subRedditId, Long userId);
 
     List<Long> getSubscribedSubredditIdsByActiveUser(Long activeUserId);
+
+    boolean isUserSubscribed(Long subredditId, Long userId);
 }

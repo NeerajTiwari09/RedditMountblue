@@ -52,4 +52,13 @@ public class SubscriptionServiceImpl implements SubscriptionService{
         }
         return subredditIds;
     }
+
+    @Override
+    public boolean isUserSubscribed(Long subredditId, Long userId) {
+        Subscription subscription = subscriptionRepository.findBySubredditIdAndUserId(subredditId, userId);
+        if(subscription != null){
+            return true;
+        }
+        return false;
+    }
 }
