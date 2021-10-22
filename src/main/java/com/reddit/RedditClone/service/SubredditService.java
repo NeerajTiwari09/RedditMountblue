@@ -21,4 +21,5 @@ public interface SubredditService {
 
     boolean isSubredditPrivate(Subreddit subreddit);
 
+    Subreddit getSubredditByName(String subredditName);
 }

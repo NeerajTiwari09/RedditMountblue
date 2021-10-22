@@ -41,9 +41,9 @@ border: none;
                             Choose a community
                             <span class="text-danger">* &nbsp; &nbsp;</span>
                         </label>
-                        <input name="subredditId" list="community" class="p-1 border-0 border-bottom border-dark" id="community1" placeholder="Choose Community" />
+                        <input name="subreddit" list="community" class="p-1 border-0 border-bottom border-dark" id="community1" placeholder="Choose Community" />
                         <datalist  id="community">
-                            <option th:each="sub: ${subreddits}" th:value="${sub.id}" >[[${sub.name}]]</option>
+                            <option th:each="sub: ${subreddits}" th:value="${sub.name}" >[[${sub.name}]]</option>
                         </datalist>
                     </div>
 

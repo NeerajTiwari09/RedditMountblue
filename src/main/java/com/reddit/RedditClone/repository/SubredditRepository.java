@@ -20,4 +20,6 @@ public interface SubredditRepository extends JpaRepository<Subreddit, Long> {
     List<Subreddit> searchByUser(Long id);
 
     List<Subreddit> findAllByCommunityTypeName(String communityType);
+
+    Subreddit findByName(String subredditName);
 }

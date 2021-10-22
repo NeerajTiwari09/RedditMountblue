@@ -99,7 +99,8 @@ public class PostController {
     }
 
     @PostMapping("/savePost")
-    public String savePost(@ModelAttribute("newPost") Post post, Model model){
+    public String savePost(@ModelAttribute("newPost") Post post,@RequestParam("subreddit") String subredditName, Model model){
+        Subreddit subreddit = subredditService.getSubredditByName(subredditName);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
@@ -107,6 +108,7 @@ public class PostController {
         User user = userService.findUserByEmail(authentication.getName());
         post.setAuthor(user.getUsername());
         post.setUser(user);
+        post.setSubredditId(subreddit.getId());
         postService.savePost(post);
 
         model.addAttribute("userExist", true);

@@ -93,4 +93,10 @@ public class SubredditServiceImpl implements SubredditService{
         }
         return false;
     }
+
+    @Override
+    public Subreddit getSubredditByName(String subredditName) {
+        return subredditRepository.findByName(subredditName);
+
+    }
 }
