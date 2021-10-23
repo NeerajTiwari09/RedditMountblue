@@ -44,7 +44,7 @@ padding:30px;
                             <b>Choose a community</b>
                             <span class="text-danger">* &nbsp; &nbsp;</span>
                         </label>
-                        <input name="subreddit" list="community" class="p-1 border-0 border-bottom border-dark" id="community1" placeholder="Choose Community" />
+                        <input name="subreddit" list="community" class="p-1 border-0 border-bottom border-dark" id="community1" placeholder="Choose Community" required/>
                         <datalist  id="community">
                             <option th:each="sub: ${subreddits}" th:value="${sub.name}" >[[${sub.name}]]</option>
                         </datalist>
@@ -52,7 +52,7 @@ padding:30px;
                     <div class="mb-3">
                         <label for="title" class="form-label"><b>Title</b> <span class="text-danger">*</span></label>
                         <input type="text" th:name="title" th:field="${newPost.title}"
-                               class="form-control border-0 border-bottom border-dark" id="title" placeholder="Post Title Here" >
+                               class="form-control border-0 border-bottom border-dark" id="title" placeholder="Post Title Here" required>
                     </div>
                     <div class="mb-3">
                         <label for="content" class="form-label">
@@ -60,7 +60,7 @@ padding:30px;
                             <span class="text-danger">*</span>
                         </label>
                         <textarea type="text" th:name="content" th:field="${newPost.content}" rows="5"
-                                  class="form-control" id="content" placeholder="Post Content Here..."></textarea>
+                                  class="form-control" id="content" placeholder="Post Content Here..." required></textarea>
                     </div>
                     <div class="mb-3 my-4">
                         <label for="link" class="form-label"><b>Link</b></label>
