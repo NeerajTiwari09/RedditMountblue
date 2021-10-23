@@ -41,9 +41,15 @@ public class UserController {
 
     @PostMapping("/saveUser")
     public String registerUser(@ModelAttribute("user") User user, Model model){
-        User newUser = userService.registerUser(user);
-        model.addAttribute("user", newUser);
-        model.addAttribute("registerMessage", "success");
+        try {
+            User newUser = userService.registerUser(user);
+            model.addAttribute("user", newUser);
+            model.addAttribute("registerMessage", "success");
+        }catch (Exception e){
+            String errMsg = "Please provide a unique email!!";
+            model.addAttribute("errMsg", errMsg);
+            return "registration";
+        }
         return "login";
     }
 

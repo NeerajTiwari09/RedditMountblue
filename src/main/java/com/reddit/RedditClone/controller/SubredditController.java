@@ -62,8 +62,11 @@ public class SubredditController {
         if(!communityName.startsWith("r/")){
             subreddit.setName("r/" + communityName);
         }
-
-        System.out.println("cc"+subreddit.getCommunityType().getName());
+        if(subreddit.getCommunityType() == null){
+            String errMsg = "Please provide a community type!!";
+            model.addAttribute("errCommunityType", errMsg);
+            return "create_subreddit";
+        }
         try{
             subredditResult = this.subredditService.saveSubreddit(subreddit);
         } catch(Exception ex){

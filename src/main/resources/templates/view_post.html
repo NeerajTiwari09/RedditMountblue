@@ -146,7 +146,7 @@ padding:30px;
                 <div class="card-body">
                     <div class="" th:if="${sub_reddit != null}">
                         <p th:text="${sub_reddit.description}"></p>
-                        <div class="text-muted fst-italic mb-2" th:text="${sub_reddit.createdAt}"></div>
+                        <div class="text-muted fst-italic mb-2">[[${#dates.format(sub_reddit.createdAt, 'MMM dd, yyyy h:mm a')}]]</div>
                     </div>
                 </div>
             </div>
