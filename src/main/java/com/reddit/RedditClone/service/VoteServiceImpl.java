@@ -32,9 +32,7 @@ public class VoteServiceImpl implements VoteService {
         vote.setUserId(user.getId());
         Vote voteByPostIdAndUserId = voteRepository.findByPostIdAndUserId(post.getId(), user.getId());
 
-        //if user has already contributed but resetting the contribution.
         if (voteByPostIdAndUserId != null) {
-            //resetting the contribution
             if (!vote.isUpVoted() && !vote.isDownVoted()) {
                 System.out.println("resetting the contribution");
                 if (voteByPostIdAndUserId.isUpVoted()) {
@@ -45,11 +43,9 @@ public class VoteServiceImpl implements VoteService {
                     post.setDownVoteCount(post.getDownVoteCount() - 1);
                     post.setVoteCount(post.getVoteCount() + 1);
                 }
-//                vote.setContributed(false);
                 voteRepository.delete(voteByPostIdAndUserId);
-            }//reversing the contribution if already contributed
+            }
             else if (vote.isUpVoted() && voteByPostIdAndUserId.isDownVoted()) {
-                //reversing downvote to upvote
                 post.setUpVoteCount(post.getUpVoteCount() + 1);
                 post.setDownVoteCount(post.getDownVoteCount() - 1);
                 post.setVoteCount(post.getVoteCount() + 2);
@@ -59,7 +55,6 @@ public class VoteServiceImpl implements VoteService {
 
                 voteRepository.save(voteByPostIdAndUserId);
             } else if (vote.isDownVoted() && voteByPostIdAndUserId.isUpVoted()) {
-                //reversing upvote to downvote
                 post.setUpVoteCount(post.getUpVoteCount() - 1);
                 post.setDownVoteCount(post.getDownVoteCount() + 1);
                 post.setVoteCount(post.getVoteCount() - 2);
@@ -69,7 +64,7 @@ public class VoteServiceImpl implements VoteService {
 
                 voteRepository.save(voteByPostIdAndUserId);
             }
-        }//contributing first time
+        }
             else {
                 System.out.println("Contributing First time");
                 vote.setContributed(true);
