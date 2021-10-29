@@ -4,9 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-
 @SpringBootApplication
 @EnableJpaRepositories(basePackages="com.reddit.RedditClone.repository")
 public class RedditCloneApplication {
