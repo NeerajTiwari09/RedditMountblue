@@ -53,6 +53,47 @@ public class Comment implements Comparable<Comment> {
 
     private Timestamp createdDate;
 
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinTable(
+            name = "comment_upvotes",
+            joinColumns = @JoinColumn(name = "comment_id"),
+            inverseJoinColumns = @JoinColumn(name = "id")
+    )
+    private Set<User> upVotes = new HashSet<>();
+
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinTable(
+            name = "comment_downvotes",
+            joinColumns = @JoinColumn(name = "comment_id"),
+            inverseJoinColumns = @JoinColumn(name = "id")
+    )
+    private Set<User> downVotes = new HashSet<>();
+
+    public Set<User> getUpVotes() {
+        return upVotes;
+    }
+
+    public void setUpVotes(Set<User> upVotes) {
+        this.upVotes = upVotes;
+    }
+
+    public Set<User> getDownVotes() {
+        return downVotes;
+    }
+
+    public void setDownVotes(Set<User> downVotes) {
+        this.downVotes = downVotes;
+    }
+
+    public Integer getRating() {
+        if (upVotes != null && downVotes != null) {
+            return upVotes.size() - downVotes.size();
+        }
+        return 0;
+    }
+
 
 
     @Override

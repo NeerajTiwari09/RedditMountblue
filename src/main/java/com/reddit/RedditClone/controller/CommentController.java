@@ -37,15 +37,15 @@ public class CommentController {
 
 
     @ResponseBody
-    public List<Comment> getComments (@PathVariable Long postId) {
+    public List<Comment> getComments(@PathVariable Long postId) {
         List<Comment> findByPostId = commentService.findByPostId(postId);
         return findByPostId;
     }
 
     @PostMapping("/saveComment/{postId}/comments")
     public String postComment(@PathVariable Long postId, Comment rootComment,
-                              @RequestParam(required=false) Long parentId,
-                              @RequestParam(required=false) String childCommentText) {
+                              @RequestParam(required = false) Long parentId,
+                              @RequestParam(required = false) String childCommentText) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
@@ -58,7 +58,7 @@ public class CommentController {
     }
 
     @RequestMapping("/deleteComment/{id}")
-    private String deleteComment(@PathVariable Long id){
+    private String deleteComment(@PathVariable Long id) {
         Comment comment = commentService.getById(id);
         comment.setComment(null);
         commentRepository.save(comment);
@@ -67,6 +67,58 @@ public class CommentController {
     }
 
 
+    @GetMapping("/commentUpvote/{cmtId}")
+    public String upvoteComment(@PathVariable(name = "cmtId") Long cmtId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+        String email = authentication.getName();
+        User user = userService.findUserByEmail(email);
+        Comment comment = commentService.getById(cmtId);
+        Set<User> upVotes = comment.getUpVotes();
+        Set<User> downVotes = comment.getDownVotes();
+
+        if (upVotes.contains(user)) {
+            upVotes.remove(user);
+        } else {
+            if (downVotes.contains(user)) {
+                downVotes.remove(user);
+            }
+            upVotes.add(user);
+        }
+        comment.setUpVotes(upVotes);
+        comment.setDownVotes(downVotes);
+        commentRepository.save(comment);
+        return "redirect:/viewPost/" + comment.getPost().getId();
+    }
+
+    @GetMapping("/commentDownvote/{cmtId}")
+    public String commentDownvote(@PathVariable(name = "cmtId") Long cmtId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+        String email = authentication.getName();
+        User user = userService.findUserByEmail(email);
+        Comment comment = commentService.getById(cmtId);
+        Set<User> upVotes = comment.getUpVotes();
+        Set<User> downVotes = comment.getDownVotes();
+
+        if (downVotes.contains(user)) {
+            downVotes.remove(user);
+        } else {
+            if (upVotes.contains(user)) {
+                upVotes.remove(user);
+            }
+            downVotes.add(user);
+        }
+
+        comment.setUpVotes(upVotes);
+        comment.setDownVotes(downVotes);
+        commentRepository.save(comment);
+        return "redirect:/viewPost/" + comment.getPost().getId();
+    }
 
 
 }
