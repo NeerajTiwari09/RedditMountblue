@@ -31,10 +31,11 @@ public class Subreddit {
     @Transient
     private List<Post> posts;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "user_subreddits",
             joinColumns = {@JoinColumn(name = "subreddit_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private User user;
+
 
 }

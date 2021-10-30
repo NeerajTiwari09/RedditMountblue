@@ -1,5 +1,6 @@
 package com.reddit.RedditClone.controller;
 
+import com.amazonaws.services.apigateway.model.Model;
 import com.reddit.RedditClone.model.Comment;
 import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.User;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class CommentController {
@@ -63,6 +65,8 @@ public class CommentController {
         commentService.deleteById(id);
         return "redirect:/viewPost/" + comment.getPost().getId();
     }
+
+
 
 
 }

@@ -35,15 +35,15 @@ public class User {
 
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
-//    @JoinTable(name = "user_subreddits",
-//            joinColumns = {@JoinColumn(name = "user_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "subreddit_id")})
+ /*   @JoinTable(name = "user_subreddits",
+         joinColumns = {@JoinColumn(name = "user_id")},
+         inverseJoinColumns = {@JoinColumn(name = "subreddit_id")})*/
     private Set<Subreddit> subreddits = new HashSet<>();
 
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "user_subscription", joinColumns = {@JoinColumn(name = "user_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "subreddit_id")})
+  /*  @JoinTable(name = "user_subscription", joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "subreddit_id")})*/
     private Set<Subreddit> subredditSubscriptions = new HashSet<>();
 
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user")

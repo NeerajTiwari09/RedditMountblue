@@ -10,6 +10,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.persistence.*;
@@ -50,6 +52,8 @@ public class Comment implements Comparable<Comment> {
     private Comment comment;
 
     private Timestamp createdDate;
+
+
 
     @Override
     public int hashCode() {
